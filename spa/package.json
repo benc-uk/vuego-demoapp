@@ -1,5 +1,5 @@
 {
-  "name": "spa",
+  "name": "vuego-demoapp-spa",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,6 +7,8 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "bootstrap-vue": "^2.0.0-rc.6",
+    "buefy": "^0.6.5",
     "vue": "^2.5.13",
     "vue-router": "^3.0.1"
   },

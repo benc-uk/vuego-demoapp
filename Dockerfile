@@ -20,7 +20,7 @@ WORKDIR /build
 COPY server.go .
 RUN apk update && apk add git
 RUN go get github.com/gorilla/mux
-RUN go build -o server . 
+RUN go build -o server
 
 #
 # Assemble

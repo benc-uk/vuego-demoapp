@@ -1,31 +1,33 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/app/about">About</router-link> | 
-      <router-link to="/app/goats">Goats</router-link>
-    </div>
-    <router-view/>
+
+    <b-navbar toggleable="md" type="dark" variant="primary">
+      <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+      <b-navbar-brand to="/"><img src="./assets/vuejs.svg" height="50px"></b-navbar-brand>
+      <b-collapse is-nav id="nav_collapse">
+        <b-navbar-nav>
+          <b-nav-item to="/app/home"><i class="fas fa-home"></i>&nbsp; Home</b-nav-item>
+          <b-nav-item to="/app/info"><i class="fas fa-cogs"></i>&nbsp; Sys Info</b-nav-item>
+          <b-nav-item to="/app/about"><i class="far fa-info-circle"></i>&nbsp; About</b-nav-item>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
+
+    <br/>
+    <b-container>
+      <router-view/>
+    </b-container>
+
   </div>
 </template>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  font-size: 40px;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+  html {
+    font-size: 20px;
+  } 
+
+  #app, html, body {
+    height: 100%;
+    background-color: #317256;
   }
-}
 </style>
