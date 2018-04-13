@@ -30,6 +30,7 @@ func main() {
 	// Routing
 	router := mux.NewRouter()
 	router.HandleFunc("/api/info", apiInfoRoute)
+	router.HandleFunc("/api/metrics", apiMetricsRoute)
 
 	// These are SPA routes we want to handle in app, so redirect to index.html
 	router.PathPrefix("/app").HandlerFunc(spaIndexRoute)

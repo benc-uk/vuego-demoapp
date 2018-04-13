@@ -4,7 +4,7 @@
       <i class="fas fa-cogs"></i>&nbsp; System Info
     </div>
     <div class="card-body">
-      <loading v-if="!info"></loading>
+      <spinner v-if="!info"></spinner>
 
       <table v-if="info" class="table table-hover">
         <tbody>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import Loading from './Loading.vue'
+import Spinner from './Spinner.vue'
 const info = null;
 
 export default {
@@ -30,7 +30,7 @@ export default {
   },
 
   components: {
-    'loading': Loading,
+    Spinner,
   },
 
   created () {

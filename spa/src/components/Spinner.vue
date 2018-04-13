@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: 'loading'
+  name: 'spinner'
 }
 </script>
 
@@ -22,7 +22,7 @@ export default {
 .spinner > div {
   width: 28px;
   height: 28px;
-  background-color: #333;
+  background-color: #1f573e;
 
   border-radius: 100%;
   display: inline-block;
