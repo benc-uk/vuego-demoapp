@@ -13,13 +13,14 @@ import (
 
 // SysInfo is generic holder for passsing data back
 type SysInfo struct {
-	Hostname      string
-	OS            string
-	Arch          string
-	Cpus          int
-	GoVersion     string
-	NetRemoteAddr string
-	NetHost       string
+	Hostname      string   `json:"hostname"`
+	OS            string   `json:"os"`
+	Arch          string   `json:"architecture"`
+	Cpus          int      `json:"cpuCount"`
+	GoVersion     string   `json:"goVersion"`
+	NetRemoteAddr string   `json:"netRemoteAddress"`
+	NetHost       string   `json:"netHost"`
+	EnvVars       []string `json:"envVars"`
 }
 
 // Real time system metrics
@@ -30,9 +31,19 @@ type Metrics struct {
 	Cpu        float64
 }
 
-func apiInfoRoute(resp http.ResponseWriter, req *http.Request) {
+type Routes struct {
+	contentDir  string
+	disableCORS bool
+}
+
+//
+// /api/info - Return system information and properties
+//
+func (r *Routes) apiInfoRoute(resp http.ResponseWriter, req *http.Request) {
 	// CORS is for wimps
-	resp.Header().Set("Access-Control-Allow-Origin", "*")
+	if r.disableCORS {
+		resp.Header().Set("Access-Control-Allow-Origin", "*")
+	}
 
 	var info SysInfo
 
@@ -44,6 +55,7 @@ func apiInfoRoute(resp http.ResponseWriter, req *http.Request) {
 	info.Cpus = runtime.NumCPU()
 	info.NetRemoteAddr = req.RemoteAddr
 	info.NetHost = req.Host
+	info.EnvVars = os.Environ()
 
 	// JSON-ify our info
 	js, err := json.Marshal(info)
@@ -57,9 +69,14 @@ func apiInfoRoute(resp http.ResponseWriter, req *http.Request) {
 	resp.Write(js)
 }
 
-func apiMetricsRoute(resp http.ResponseWriter, req *http.Request) {
+//
+// /api/metrics - Return system metrics cpu, mem, etc
+//
+func (r *Routes) apiMetricsRoute(resp http.ResponseWriter, req *http.Request) {
 	// CORS is for wimps
-	resp.Header().Set("Access-Control-Allow-Origin", "*")
+	if r.disableCORS {
+		resp.Header().Set("Access-Control-Allow-Origin", "*")
+	}
 
 	var metrics Metrics
 
@@ -93,7 +110,10 @@ func apiMetricsRoute(resp http.ResponseWriter, req *http.Request) {
 	resp.Write(js)
 }
 
-func spaIndexRoute(resp http.ResponseWriter, req *http.Request) {
+//
+// Special route to handle serving
+//
+func (r *Routes) spaIndexRoute(resp http.ResponseWriter, req *http.Request) {
 	resp.Header().Set("Access-Control-Allow-Origin", "*")
 	http.ServeFile(resp, req, contentDir+"/index.html")
 }

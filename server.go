@@ -28,19 +28,20 @@ func main() {
 	}
 
 	// Routing
-	router := mux.NewRouter()
-	router.HandleFunc("/api/info", apiInfoRoute)
-	router.HandleFunc("/api/metrics", apiMetricsRoute)
+	muxrouter := mux.NewRouter()
+	routes := Routes{contentDir: contentDir, disableCORS: true}
+	muxrouter.HandleFunc("/api/info", routes.apiInfoRoute)
+	muxrouter.HandleFunc("/api/metrics", routes.apiMetricsRoute)
 
 	// These are SPA routes we want to handle in app, so redirect to index.html
-	router.PathPrefix("/app").HandlerFunc(spaIndexRoute)
+	muxrouter.PathPrefix("/app").HandlerFunc(routes.spaIndexRoute)
 
 	// Handle static content
 	fileServer := http.FileServer(http.Dir(contentDir))
-	router.PathPrefix("/").Handler(http.StripPrefix("/", fileServer))
+	muxrouter.PathPrefix("/").Handler(http.StripPrefix("/", fileServer))
 
 	// Start server
 	fmt.Printf("### Starting server listening on %v\n", serverPort)
 	fmt.Printf("### Serving static content from '%v'\n", contentDir)
-	http.ListenAndServe(":"+serverPort, router)
+	http.ListenAndServe(":"+serverPort, muxrouter)
 }

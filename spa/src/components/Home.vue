@@ -11,8 +11,8 @@
       <a href="https://golang.org/" target="_blank"><img src="../assets/go.svg" style="height:80px"/></a>&nbsp;
       <a href="https://vuejs.org/" target="_blank"><img src="../assets/logo.png" style="height:80px"/></a> 
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <b-button border-variant="dark" href="https://github.com/benc-uk/vuego-demoapp" target="_blank" size="lg" variant="info">Source on <i class="fab fa-github"></i></b-button> &nbsp;
-      <b-button  href="https://hub.docker.com/r/bencuk/vuego-demoapp/" target="_blank" size="lg" variant="info">Docker Image <i class="fab fa-docker"></i></b-button>
+      <b-button border-variant="dark" href="https://github.com/benc-uk/vuego-demoapp" target="_blank" size="lg" variant="info">Source <i class="fab fa-github"></i></b-button> &nbsp;
+      <b-button  href="https://hub.docker.com/r/bencuk/vuego-demoapp/" target="_blank" size="lg" variant="info">Docker <i class="fab fa-docker"></i></b-button>
     </p>
   </b-jumbotron>
 </template>
