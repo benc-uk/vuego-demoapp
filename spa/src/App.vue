@@ -1,3 +1,9 @@
+<!--
+Core app component, just template no code/logic
+----------------------------------------------
+Ben C, April 2018
+-->
+
 <template>
   <div id="app">
 

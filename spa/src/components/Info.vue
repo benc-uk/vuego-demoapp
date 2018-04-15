@@ -1,3 +1,9 @@
+<!--
+Info page, fetches system info data from API
+--------------------------------------------
+Ben C, April 2018
+-->
+
 <template>
   <div class="card">
     <div class="card-header bg-success h3">

@@ -1,3 +1,9 @@
+<!--
+Dial/gauge component, wrapper around gauge.js library
+-----------------------------------------------------
+Ben C, April 2018
+-->
+
 <template>
   <div>
     <canvas ref="can">{{ value }}</canvas>

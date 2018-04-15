@@ -1,3 +1,9 @@
+<!--
+Loading spinner, just HTML & CSS3
+----------------------------------------------
+Ben C, April 2018
+-->
+
 <template>
   <div class="spinner">
     <div class="bounce1"></div>

@@ -1,3 +1,9 @@
+<!--
+Home page
+----------------------------------------------
+Ben C, April 2018
+-->
+
 <template>
   <b-jumbotron bg-variant="primary" text-variant="white" border-variant="dark">
     <template slot="header">

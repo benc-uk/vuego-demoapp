@@ -1,5 +1,5 @@
 #
-# Build and bundle Vue.js SPA 
+# Build and bundle the Vue.js SPA 
 #
 FROM node:8-alpine AS vue-build
 WORKDIR /build
@@ -13,7 +13,7 @@ COPY spa/ .
 RUN npm run build
 
 #
-# Build Go app
+# Build the Go app / server
 #
 FROM golang:1.10-alpine AS go-build
 WORKDIR /build/src/app
@@ -25,7 +25,7 @@ COPY vendor ./vendor/
 RUN go build -o server
 
 #
-# Assemble the server binary and Vue bundle
+# Assemble the server binary and Vue bundle into a single app
 #
 FROM alpine:3.7
 WORKDIR /app 

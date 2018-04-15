@@ -1,3 +1,9 @@
+<!--
+Monitoring page, fetches metrics data from API
+----------------------------------------------
+Ben C, April 2018
+-->
+
 <template>
   <div class="card">
     <div class="card-header bg-success h3">
@@ -70,8 +76,8 @@ export default {
       let delta = newTot - this.prevNetBytes;
       if(this.prevNetBytes) {
         this.prevNetBytes = newTot;
-        // Scalling factor here is mostly arbitrary to get nice looking numbers
-        return delta / 1000;//Math.min( (delta/1000000) * 100, 100);
+        // Scaling factor here is mostly arbitrary to get nice looking numbers
+        return delta / 1000;
       } else {
         this.prevNetBytes = newTot;
         return 0;

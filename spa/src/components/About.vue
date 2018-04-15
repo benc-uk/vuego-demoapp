@@ -1,3 +1,9 @@
+<!--
+About page
+-----------------
+Ben C, April 2018
+-->
+
 <template>
   <div class="card">
     <div class="card-header bg-success h3">

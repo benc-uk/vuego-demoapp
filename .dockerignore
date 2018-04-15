@@ -4,6 +4,6 @@
 Dockerfile
 
 server
-go-demoapp
+vuego-demoapp
 server.exe
-go-demoapp.exe
+vuego-demoapp.exe

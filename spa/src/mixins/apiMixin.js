@@ -1,8 +1,10 @@
 //
-// All API logic here, mixin with a Component that needs to call the API
+// Mixin added to components, all API logic here 
+// ----------------------------------------------
+// Ben C, April 2018
 //
-export default {
 
+export default {
   data: function () {
     return {
       apiEndpoint: "/api"
