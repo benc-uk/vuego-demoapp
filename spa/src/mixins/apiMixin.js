@@ -5,7 +5,7 @@ export default {
 
   data: function () {
     return {
-      apiEndpoint: "//localhost:4000/api"
+      apiEndpoint: "/api"
     }
   },
   
