@@ -1,35 +1,37 @@
 #
 # Build and bundle Vue.js SPA 
 #
-FROM node:alpine AS vue-build
+FROM node:8-alpine AS vue-build
 WORKDIR /build
 
+RUN apk update && apk add git
 COPY spa/package.json .
+COPY spa/package-lock.json .
 RUN npm install 
 
-COPY spa/src ./src
-COPY spa/public ./public
+COPY spa/ .
 RUN npm run build
 
 #
 # Build Go app
 #
 FROM golang:1.10-alpine AS go-build
-WORKDIR /build 
+WORKDIR /build/src/app
+ENV GOPATH=/build
 
-COPY server.go .
-RUN apk update && apk add git
-RUN go get github.com/gorilla/mux
+COPY *.go ./
+COPY vendor ./vendor/
+
 RUN go build -o server
 
 #
-# Assemble
+# Assemble the server binary and Vue bundle
 #
 FROM alpine:3.7
 WORKDIR /app 
 
 COPY --from=vue-build /build/dist . 
-COPY --from=go-build /build/server . 
+COPY --from=go-build /build/src/app/server . 
 
 ENV PORT 4000
 EXPOSE 4000

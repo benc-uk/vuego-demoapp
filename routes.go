@@ -8,7 +8,9 @@ import (
 	"time"
 
 	"github.com/shirou/gopsutil/cpu"
+	"github.com/shirou/gopsutil/disk"
 	"github.com/shirou/gopsutil/mem"
+	"github.com/shirou/gopsutil/net"
 )
 
 // SysInfo is generic holder for passsing data back
@@ -25,10 +27,13 @@ type SysInfo struct {
 
 // Real time system metrics
 type Metrics struct {
-	MemPercent float64
-	MemTotal   uint64
-	MemUsed    uint64
-	Cpu        float64
+	MemTotal     uint64  `json:"memTotal"`
+	MemUsed      uint64  `json:"memUsed"`
+	CpuPerc      float64 `json:"cpuPerc"`
+	DiskTotal    uint64  `json:"diskTotal"`
+	DiskFree     uint64  `json:"diskFree"`
+	NetBytesSent uint64  `json:"netBytesSent"`
+	NetBytesRecv uint64  `json:"netBytesRecv"`
 }
 
 type Routes struct {
@@ -64,7 +69,7 @@ func (r *Routes) apiInfoRoute(resp http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	// Shoot JSON result back down them internet tubes
+	// Fire JSON result back down the internet tubes
 	resp.Header().Set("Content-Type", "application/json")
 	resp.Write(js)
 }
@@ -86,7 +91,6 @@ func (r *Routes) apiMetricsRoute(resp http.ResponseWriter, req *http.Request) {
 		http.Error(resp, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	metrics.MemPercent = memStats.UsedPercent
 	metrics.MemTotal = memStats.Total
 	metrics.MemUsed = memStats.Used
 
@@ -96,7 +100,25 @@ func (r *Routes) apiMetricsRoute(resp http.ResponseWriter, req *http.Request) {
 		http.Error(resp, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	metrics.Cpu = cpuStats[0]
+	metrics.CpuPerc = cpuStats[0]
+
+	// Disk and filesystem usage stuff
+	diskStats, err := disk.Usage("/")
+	if err != nil {
+		http.Error(resp, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	metrics.DiskTotal = diskStats.Total
+	metrics.DiskFree = diskStats.Free
+
+	// Network stuff
+	netStats, err := net.IOCounters(false)
+	if err != nil {
+		http.Error(resp, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	metrics.NetBytesRecv = netStats[0].BytesRecv
+	metrics.NetBytesSent = netStats[0].BytesSent
 
 	// JSON-ify our metrics
 	js, err := json.Marshal(metrics)
@@ -105,7 +127,7 @@ func (r *Routes) apiMetricsRoute(resp http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	// Shoot JSON result back down them internet tubes
+	// Fire JSON result back down the internet tubes
 	resp.Header().Set("Content-Type", "application/json")
 	resp.Write(js)
 }

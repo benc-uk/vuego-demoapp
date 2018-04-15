@@ -1,12 +1,12 @@
 <template>
   <div class="card">
     <div class="card-header bg-success h3">
-      <i class="fas fa-cogs"></i>&nbsp; System Info
+      <i class="fas fa-cogs"></i>&nbsp; System Information
     </div>
     <div class="card-body">
-      <spinner v-if="!infoComputed"></spinner>
+      <spinner v-if="!info"></spinner>
 
-      <table v-if="infoComputed" class="table table-hover">
+      <table v-if="info" class="table table-hover">
         <tbody>
           <tr v-for="(val, key) in infoComputed">
             <td ><b>{{ key | titleify }}</b></td>
@@ -15,18 +15,22 @@
         </tbody>        
       </table>
 
-      <h4>Environment Variables</h4>
-      <pre>{{envVars}}</pre>
-
+      <div v-if="info">
+        <h4>Environment Variables</h4>
+        <pre>{{envVars}}</pre>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import apiMixin from "../mixins/apiMixin.js";
 import Spinner from "./Spinner.vue";
 const info = null;
 
 export default {
+  mixins: [apiMixin],
+
   data: function() {
     return {
       info: info
@@ -44,13 +48,16 @@ export default {
 
   methods: {
     getInfo: function() {
-      fetch("http://localhost:4000/api/info")
+      fetch(`${this.apiEndpoint}/info`)
         .then(resp => {
           return resp.json();
         })
         .then(json => {
           this.info = json;
-        });
+        })
+        .catch(err => {
+          console.log(err);
+        })
     }
   },
 
@@ -85,7 +92,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   pre {
     background-color: #222;
     color:rgb(59, 190, 33);

@@ -8,6 +8,7 @@
         <b-navbar-nav>
           <b-nav-item to="/app/home"><i class="fas fa-home"></i>&nbsp; Home</b-nav-item>
           <b-nav-item to="/app/info"><i class="fas fa-cogs"></i>&nbsp; Sys Info</b-nav-item>
+          <b-nav-item to="/app/monitor"><i class="far fa-tachometer-alt"></i>&nbsp; Monitor</b-nav-item>
           <b-nav-item to="/app/about"><i class="far fa-info-circle"></i>&nbsp; About</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
@@ -29,5 +30,8 @@
   #app, html, body {
     height: 100%;
     background-color: #317256;
+  }
+  .b-navbar-nav {
+    color: red;
   }
 </style>

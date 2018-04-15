@@ -1,6 +1,6 @@
 {
   "name": "vuego-demoapp-spa",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -8,8 +8,8 @@
   },
   "dependencies": {
     "bootstrap-vue": "^2.0.0-rc.6",
-    "buefy": "^0.6.5",
     "vue": "^2.5.13",
+    "vue-canvas-gauges": "0.0.0",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
@@ -20,8 +20,7 @@
     "vue-template-compiler": "^2.5.13"
   },
   "browserslist": [
-    "> 1%",
-    "last 2 versions",
+    "last 1 versions",
     "not ie <= 8"
   ]
 }

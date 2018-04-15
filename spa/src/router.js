@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './components/Home.vue'
 import About from './components/About.vue'
 import Info from './components/Info.vue'
+import Monitor from './components/Monitor.vue'
 
 Vue.use(Router)
 
@@ -24,6 +25,11 @@ export default new Router({
       name: 'info',
       component: Info
     },
+    {
+      path: '/app/monitor',
+      name: 'monitor',
+      component: Monitor
+    },    
     {
       path: '/app/about',
       name: 'about',

@@ -8,7 +8,6 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import './scss/theme.scss'
 
 Vue.use(BootstrapVue);
-
 Vue.config.productionTip = false
 
 new Vue({
