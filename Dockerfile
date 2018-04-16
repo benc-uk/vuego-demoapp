@@ -18,8 +18,8 @@ FROM golang:1.10-alpine AS go-build
 WORKDIR /build/src/app
 ENV GOPATH=/build
 
-COPY *.go ./
-COPY vendor ./vendor/
+COPY goserver/*.go ./
+COPY goserver/vendor ./vendor/
 
 RUN go build -o server
 

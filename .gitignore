@@ -13,8 +13,6 @@
 
 **/yarn-error.log
 
-# Named binaries
-server
-vuego-demoapp
-server.exe
-vuego-demoapp.exe
+# Go binaries
+goserver/goserver
+goserver/server
