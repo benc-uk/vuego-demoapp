@@ -21,8 +21,11 @@ Ben C, April 2018
     </b-navbar>
 
     <br/>
+
     <b-container>
-      <router-view/>
+      <transition name="fade">
+        <router-view/>
+      </transition>
     </b-container>
 
   </div>
@@ -40,4 +43,13 @@ Ben C, April 2018
   .b-navbar-nav {
     color: red;
   }
+
+  .fade-enter-active {
+    transition: transform 0.4s ease-out;
+    transform-origin: top;
+  }
+  .fade-enter /* .fade-leave-active below version 2.1.8 */ {
+    transform: scaleY(0);
+  }
+
 </style>
