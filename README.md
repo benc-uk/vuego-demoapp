@@ -18,7 +18,7 @@ This is a simple web application with a Go server/backend and a Vue.js SPA (Sing
 
 ## Server API
 The Go server component performs two tasks
-- Serve the Vue.js app to the user. As this is a SPA, this is static content, i.e. HTML, JS & CSS files and any images. 
+- Serve the Vue.js app to the user. As this is a SPA, this is static content, i.e. HTML, JS & CSS files and any images. Note. The Vue.js app needs to be 'built' before it can be served, this bundles everything up correctly
 - Provide a simple REST API for data to be displayed & rendered by the Vue.js app. This API is very simple currently has two routes:
   - `GET /api/info` - Returns system information and various properties as JSON
   - `GET /api/metrics` - Returns monitoring metrics for CPU, memory, disk and network. This data comes from the *gopsutils* library
