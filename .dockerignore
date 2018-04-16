@@ -3,7 +3,4 @@
 .git
 Dockerfile
 
-server
-vuego-demoapp
-server.exe
-vuego-demoapp.exe
+server/server

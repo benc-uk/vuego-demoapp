@@ -15,13 +15,13 @@ RUN npm run build
 # Build the Go app / server
 #
 FROM golang:1.10-alpine AS go-build
-WORKDIR /build/src/app
+WORKDIR /build/src/server
 ENV GOPATH=/build
 
-COPY goserver/*.go ./
-COPY goserver/vendor ./vendor/
+COPY server/*.go ./
+COPY server/vendor ./vendor/
 
-RUN go build -o server
+RUN go build
 
 #
 # Assemble the server binary and Vue bundle into a single app
@@ -30,7 +30,7 @@ FROM alpine:3.7
 WORKDIR /app 
 
 COPY --from=vue-build /build/dist . 
-COPY --from=go-build /build/src/app/server . 
+COPY --from=go-build /build/src/server/server . 
 
 ENV PORT 4000
 EXPOSE 4000

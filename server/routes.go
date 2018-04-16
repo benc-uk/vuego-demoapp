@@ -44,7 +44,7 @@ type Routes struct {
 //
 // /api/info - Return system information and properties
 //
-func (r *Routes) apiInfoRoute(resp http.ResponseWriter, req *http.Request) {
+func (r Routes) apiInfoRoute(resp http.ResponseWriter, req *http.Request) {
 	// CORS is for wimps
 	if r.disableCORS {
 		resp.Header().Set("Access-Control-Allow-Origin", "*")
@@ -77,7 +77,7 @@ func (r *Routes) apiInfoRoute(resp http.ResponseWriter, req *http.Request) {
 //
 // /api/metrics - Return system metrics cpu, mem, etc
 //
-func (r *Routes) apiMetricsRoute(resp http.ResponseWriter, req *http.Request) {
+func (r Routes) apiMetricsRoute(resp http.ResponseWriter, req *http.Request) {
 	// CORS is for wimps
 	if r.disableCORS {
 		resp.Header().Set("Access-Control-Allow-Origin", "*")
@@ -135,7 +135,10 @@ func (r *Routes) apiMetricsRoute(resp http.ResponseWriter, req *http.Request) {
 //
 // Special route to handle serving
 //
-func (r *Routes) spaIndexRoute(resp http.ResponseWriter, req *http.Request) {
-	resp.Header().Set("Access-Control-Allow-Origin", "*")
+func (r Routes) spaIndexRoute(resp http.ResponseWriter, req *http.Request) {
+	if r.disableCORS {
+		resp.Header().Set("Access-Control-Allow-Origin", "*")
+	}
+
 	http.ServeFile(resp, req, contentDir+"/index.html")
 }
