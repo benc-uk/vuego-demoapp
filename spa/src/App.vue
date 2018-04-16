@@ -23,7 +23,7 @@ Ben C, April 2018
     <br/>
 
     <b-container>
-      <transition name="fade">
+      <transition name="slidedown">
         <router-view/>
       </transition>
     </b-container>
@@ -31,11 +31,10 @@ Ben C, April 2018
   </div>
 </template>
 
-<style lang="scss">
+<style>
   html {
     font-size: 20px;
   } 
-
   #app, html, body {
     height: 100%;
     background-color: #317256;
@@ -43,13 +42,11 @@ Ben C, April 2018
   .b-navbar-nav {
     color: red;
   }
-
-  .fade-enter-active {
+  .slidedown-enter-active {
     transition: transform 0.4s ease-out;
     transform-origin: top;
   }
-  .fade-enter /* .fade-leave-active below version 2.1.8 */ {
+  .slidedown-enter {
     transform: scaleY(0);
   }
-
 </style>

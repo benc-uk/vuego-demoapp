@@ -19,7 +19,8 @@ Vue.use(BootstrapVue);
 Vue.config.productionTip = false
 
 // Root Vue instance
+// Mount on the <div id="root"> and render the template of the App component
 new Vue({
   router,
   render: h => h(App)
-}).$mount('#app')
+}).$mount('#root')

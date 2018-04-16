@@ -5,8 +5,7 @@ FROM node:8-alpine AS vue-build
 WORKDIR /build
 
 RUN apk update && apk add git
-COPY spa/package.json .
-COPY spa/package-lock.json .
+COPY spa/package*.json ./
 RUN npm install 
 
 COPY spa/ .
