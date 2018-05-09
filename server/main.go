@@ -29,9 +29,14 @@ func main() {
 
 	// Routing
 	muxrouter := mux.NewRouter()
-	routes := Routes{contentDir: contentDir, disableCORS: true}
+	routes := Routes{contentDir: contentDir,
+		disableCORS:   true,
+		darkskyApiKey: "686028df24bb828907074f434121b2c0",
+		ipstackApiKey: "e588291416844e390b0ea16b59671f30",
+	}
 	muxrouter.HandleFunc("/api/info", routes.apiInfoRoute)
 	muxrouter.HandleFunc("/api/metrics", routes.apiMetricsRoute)
+	muxrouter.HandleFunc("/api/weather", routes.weatherRoute)
 
 	// These are SPA routes we want to handle in app, so redirect to index.html
 	muxrouter.PathPrefix("/app").HandlerFunc(routes.spaIndexRoute)

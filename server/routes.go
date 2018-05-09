@@ -2,9 +2,12 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"runtime"
+	"strings"
 	"time"
 
 	"github.com/shirou/gopsutil/cpu"
@@ -36,9 +39,25 @@ type Metrics struct {
 	NetBytesRecv uint64  `json:"netBytesRecv"`
 }
 
+// Real time system metrics
+type Weather struct {
+	IpAddress string         `json:"ipAddress"`
+	GeoInfo   ipstackApiData `json:"geo"`
+}
+
+// Real time system metrics
+type ipstackApiData struct {
+	City    string  `json:"city"`
+	Country string  `json:"country_name"`
+	Lat     float64 `json:"latitude"`
+	Long    float64 `json:"longitude"`
+}
+
 type Routes struct {
-	contentDir  string
-	disableCORS bool
+	contentDir    string
+	disableCORS   bool
+	darkskyApiKey string
+	ipstackApiKey string
 }
 
 //
@@ -141,4 +160,52 @@ func (r Routes) spaIndexRoute(resp http.ResponseWriter, req *http.Request) {
 	}
 
 	http.ServeFile(resp, req, contentDir+"/index.html")
+}
+
+//
+// Weather info
+//
+func (r Routes) weatherRoute(resp http.ResponseWriter, req *http.Request) {
+	if r.disableCORS {
+		resp.Header().Set("Access-Control-Allow-Origin", "*")
+	}
+
+	var weather Weather
+
+	ip := req.Header.Get("x-forwarded-for")
+	if len(ip) == 0 {
+		ip = req.RemoteAddr
+	}
+	//ip = "5.81.113.174:51557"
+	if strings.Contains(ip, ":") {
+		ip = strings.Split(ip, ":")[0]
+
+	}
+	weather.IpAddress = ip
+
+	var netClient = &http.Client{Timeout: time.Second * 10}
+	url := fmt.Sprintf("http://api.ipstack.com/%v?access_key=%v", ip, r.ipstackApiKey)
+	apiresponse, err := netClient.Get(url)
+	body, err := ioutil.ReadAll(apiresponse.Body)
+	var ipstackData ipstackApiData
+	err = json.Unmarshal(body, &ipstackData)
+	if err != nil {
+		http.Error(resp, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	if len(ipstackData.City) == 0 {
+		http.Error(resp, string(body), http.StatusInternalServerError)
+		return
+	}
+	weather.GeoInfo = ipstackData
+
+	// JSON-ify our weather info
+	js, err := json.Marshal(weather)
+	if err != nil {
+		http.Error(resp, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	// Fire JSON result back down the internet tubes
+	resp.Header().Set("Content-Type", "application/json")
+	resp.Write(js)
 }
