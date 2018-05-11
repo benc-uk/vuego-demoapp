@@ -176,7 +176,6 @@ func (r Routes) weatherRoute(resp http.ResponseWriter, req *http.Request) {
 	if len(ip) == 0 {
 		ip = req.RemoteAddr
 	}
-	//ip = "5.81.113.174:51557"
 	if strings.Contains(ip, ":") {
 		ip = strings.Split(ip, ":")[0]
 
