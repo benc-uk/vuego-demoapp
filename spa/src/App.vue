@@ -12,10 +12,11 @@ Ben C, April 2018
       <b-navbar-brand to="/"><img src="./assets/vuejs.svg" height="50px"></b-navbar-brand>
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
-          <b-nav-item to="/app/home"><i class="fas fa-home"></i>&nbsp; Home</b-nav-item>
-          <b-nav-item to="/app/info"><i class="fas fa-cogs"></i>&nbsp; Sys Info</b-nav-item>
-          <b-nav-item to="/app/monitor"><i class="far fa-tachometer-alt"></i>&nbsp; Monitor</b-nav-item>
-          <b-nav-item to="/app/about"><i class="far fa-info-circle"></i>&nbsp; About</b-nav-item>
+          
+          <b-nav-item to="/app/home"><font-awesome-icon icon="home"/>&nbsp; Home</b-nav-item>
+          <b-nav-item to="/app/info"><font-awesome-icon icon="cogs"/>&nbsp; Sys Info</b-nav-item>
+          <b-nav-item to="/app/monitor"><font-awesome-icon icon="tachometer-alt"/>&nbsp; Monitor</b-nav-item>
+          <b-nav-item to="/app/about"><font-awesome-icon icon="info-circle"/>&nbsp; About</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
