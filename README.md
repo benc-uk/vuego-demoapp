@@ -72,7 +72,7 @@ Run with `docker run -d -p 4000:4000 bencuk/vuego-demoapp`
 
 
 ## Application Insights 
-Todo
+Waiting for golang support
 
 
 ## Azure Templates
@@ -83,4 +83,5 @@ Templates for deployment to Azure with "quick deploy" buttons are [here](azure/)
 |When|What|
 |-|-|
 |April 2018|Project created|
+|July 2018|Updated Vue CLI config & moved to Golang 1.11|
 
