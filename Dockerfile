@@ -15,7 +15,7 @@ RUN npm run build
 # Build the Go app / server
 #
 #FROM golang:1.10-alpine AS go-build
-FROM golang:1.11beta2-alpine3.8 AS go-build
+FROM bencuk/golang:1.11beta2-alpine3.8 AS go-build
 WORKDIR /build/src/server
 
 RUN apk add git
