@@ -13,5 +13,7 @@
 
 **/yarn-error.log
 
-# Go binaries
+# Go stuff
 server/server
+server/server.exe
+**/go.sum

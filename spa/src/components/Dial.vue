@@ -12,8 +12,7 @@ Ben C, April 2018
 </template>
 
 <script>
-
-import { Gauge } from  '../js/gauge.min.js'
+import { Gauge } from '../js/gauge.min.js';
 
 var staticZones = [
   { strokeStyle: "#30B32D", min: 0, max: 70 },

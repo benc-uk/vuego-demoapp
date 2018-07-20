@@ -14,20 +14,28 @@ RUN npm run build
 #
 # Build the Go app / server
 #
-FROM golang:1.10-alpine AS go-build
+#FROM golang:1.10-alpine AS go-build
+FROM golang:1.11beta2-alpine3.8 AS go-build
 WORKDIR /build/src/server
-ENV GOPATH=/build
+
+RUN apk add git
+RUN apk add gcc
+RUN apk add musl-dev
 
 COPY server/*.go ./
-COPY server/vendor ./vendor/
+COPY server/go.mod ./
 
 RUN go build
 
 #
 # Assemble the server binary and Vue bundle into a single app
 #
-FROM alpine:3.7
+FROM alpine:3.8
 WORKDIR /app 
+LABEL org.label-schema.name="vuego-demoapp" \
+      org.label-schema.description="Demonstration Vue.js and Go web app" \    
+      org.label-schema.version="1.0.1" \
+      org.label-schema.vcs-url=https://github.com/benc-uk/vuego-demoapp
 
 COPY --from=vue-build /build/dist . 
 COPY --from=go-build /build/src/server/server . 

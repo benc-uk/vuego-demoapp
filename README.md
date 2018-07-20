@@ -27,27 +27,29 @@ The Go server component performs two tasks
 ## Building & Running Locally
 
 ### 1. Pre-reqs
-- You will need [Go installed and configured](https://golang.org/doc/install)
-- Once Go is setup, make sure you place this project folder under your `GOPATH` and in the **src** folder e.g. `$GOPATH/src/vuego-demoapp`. There are alternative ways of setting this up, but unless you are comfortable with Go and its tools this is the simplest approach.
-```
-cd $GOPATH
-git clone https://github.com/benc-uk/vuego-demoapp.git
-```
 - Install [Node.js](https://nodejs.org/en/)
 - Install [Vue CLI](https://github.com/vuejs/vue-cli)
+- You will need [Go v1.11 installed and configured](https://golang.org/dl/). **NOTE. At the time of writing v1.11 is in beta, but it has the module support required by the project**
+- Once Go v1.11 is installed, also make sure you have the GOPATH environmental variable set up 
+- Clone the project to any directory where you do development work
+```
+git clone https://github.com/benc-uk/vuego-demoapp.git
+```
 
 ### 2. Building the Vue.js SPA
 To build and bundle the SPA run the following. This will output the resulting app (HTML, CSS, JS, assets, etc) to `spa/dist`
 ```
 cd spa
+npm install
 npm run build
 ```
 
 ### 3. Building the Go server
 To build the Go server component run the following. This will create an executable called `server` or `server.exe` 
+(Note. On Linux the beta version of Go is invoked via the `go1.11beta2` command. The actual beta number might be different. One Windows the beta exe is just called `go`)
 ```
 cd server
-go build
+go1.11beta2 build
 ```
 
 ### 4. Running the combined app

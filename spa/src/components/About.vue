@@ -11,7 +11,7 @@ Ben C, April 2018
     </div>
     <div class="card-body">
       Developed by Ben Coleman, 2018<br/>
-      Version: 0.2.1
+      Version: 1.0.1
     </div>
   </div>
 </template>
