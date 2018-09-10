@@ -7,7 +7,7 @@ Ben C, April 2018
 <template>
   <div class="card">
     <div class="card-header bg-success h3">
-      <i class="fas fa-cogs"></i>&nbsp; System Information
+      <fa icon="cogs" />&nbsp; System Information
     </div>
     <div class="card-body">
       <spinner v-if="!info"></spinner>

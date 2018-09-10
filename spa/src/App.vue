@@ -13,11 +13,11 @@ Ben C, April 2018
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
           
-          <b-nav-item to="/app/home"><font-awesome-icon icon="home"/>&nbsp; Home</b-nav-item>
-          <b-nav-item to="/app/info"><font-awesome-icon icon="cogs"/>&nbsp; Sys Info</b-nav-item>
-          <b-nav-item to="/app/monitor"><font-awesome-icon icon="tachometer-alt"/>&nbsp; Monitor</b-nav-item>
-          <b-nav-item to="/app/weather"><font-awesome-icon icon="umbrella"/>&nbsp; Weather</b-nav-item>
-          <b-nav-item to="/app/about"><font-awesome-icon icon="info-circle"/>&nbsp; About</b-nav-item>
+          <b-nav-item to="/app/home"><fa icon="home"/>&nbsp; Home</b-nav-item>
+          <b-nav-item to="/app/info"><fa icon="cogs"/>&nbsp; Sys Info</b-nav-item>
+          <b-nav-item to="/app/monitor"><fa icon="tachometer-alt"/>&nbsp; Monitor</b-nav-item>
+          <b-nav-item to="/app/weather"><fa icon="umbrella"/>&nbsp; Weather</b-nav-item>
+          <b-nav-item to="/app/about"><fa icon="info-circle"/>&nbsp; About</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>

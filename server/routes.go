@@ -208,6 +208,10 @@ func (r Routes) weatherRoute(resp http.ResponseWriter, req *http.Request) {
 	var netClient = &http.Client{Timeout: time.Second * 10}
 	url := fmt.Sprintf("http://api.ipstack.com/%s?access_key=%s&format=1", ip, r.ipstackAPIKey)
 	apiresponse, err := netClient.Get(url)
+	if err != nil {
+		http.Error(resp, err.Error(), http.StatusInternalServerError)
+		return
+	}
 	body, err := ioutil.ReadAll(apiresponse.Body)
 
 	// Handle response and create object from JSON, and store in weather object
@@ -218,7 +222,7 @@ func (r Routes) weatherRoute(resp http.ResponseWriter, req *http.Request) {
 		return
 	}
 	if len(ipstackData.City) == 0 {
-		http.Error(resp, string(body), http.StatusInternalServerError)
+		http.Error(resp, fmt.Sprintf("{\"msg\": \"Error no data for IP %v\"}", ip), http.StatusInternalServerError)
 		return
 	}
 	weather.GeoInfo = ipstackData
@@ -226,6 +230,10 @@ func (r Routes) weatherRoute(resp http.ResponseWriter, req *http.Request) {
 	// Second API call is to Dark Sky to fetch weather data
 	url = fmt.Sprintf("https://api.darksky.net/forecast/%s/%v,%v?exclude=minutely,hourly,daily&units=si", r.darkskyAPIKey, weather.GeoInfo.Lat, weather.GeoInfo.Long)
 	apiresponse, err = netClient.Get(url)
+	if err != nil {
+		http.Error(resp, err.Error(), http.StatusInternalServerError)
+		return
+	}
 	body, err = ioutil.ReadAll(apiresponse.Body)
 
 	// Handle response and create object from JSON, and store in weather object

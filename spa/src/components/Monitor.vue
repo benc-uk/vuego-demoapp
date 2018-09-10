@@ -7,7 +7,7 @@ Ben C, April 2018
 <template>
   <div class="card">
     <div class="card-header bg-success h3">
-      <i class="far fa-tachometer-alt"></i>&nbsp; Monitoring
+      <fa icon="tachometer-alt" />&nbsp; Monitoring
     </div>
     <div class="card-body">
       <spinner v-if="!metrics"></spinner>

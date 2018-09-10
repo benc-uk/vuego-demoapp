@@ -7,7 +7,7 @@ Ben C, Sept 2018
 <template>
   <div class="card">
     <div class="card-header bg-success h3">
-      <font-awesome-icon icon="umbrella"/>&nbsp; Weather
+      <fa icon="umbrella"/>&nbsp; Weather
     </div>
     <div class="card-body">
       <spinner v-if="!weather"></spinner>

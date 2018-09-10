@@ -1,7 +1,7 @@
 //
 // Main starting point for Vue.js SPA
 // ----------------------------------------------
-// Ben C, April 2018
+// Ben C, Sept 2018
 //
 
 import Vue from 'vue'
@@ -21,7 +21,7 @@ import { faGithub, faDocker } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 // Register icons and component
 fontAwesomeLib.add([faHome, faCogs, faTachometerAlt, faInfoCircle, faGithub, faDocker, faUmbrella])
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component('fa', FontAwesomeIcon)
 
 // We have to register this globally for some reason
 import VueSkycons from 'vue-skycons'
