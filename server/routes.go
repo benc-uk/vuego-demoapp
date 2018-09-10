@@ -21,43 +21,59 @@ type SysInfo struct {
 	Hostname      string   `json:"hostname"`
 	OS            string   `json:"os"`
 	Arch          string   `json:"architecture"`
-	Cpus          int      `json:"cpuCount"`
+	CPUs          int      `json:"cpuCount"`
 	GoVersion     string   `json:"goVersion"`
 	NetRemoteAddr string   `json:"netRemoteAddress"`
 	NetHost       string   `json:"netHost"`
 	EnvVars       []string `json:"envVars"`
 }
 
-// Real time system metrics
+// Metrics are real time system counters
 type Metrics struct {
 	MemTotal     uint64  `json:"memTotal"`
 	MemUsed      uint64  `json:"memUsed"`
-	CpuPerc      float64 `json:"cpuPerc"`
+	CPUPerc      float64 `json:"cpuPerc"`
 	DiskTotal    uint64  `json:"diskTotal"`
 	DiskFree     uint64  `json:"diskFree"`
 	NetBytesSent uint64  `json:"netBytesSent"`
 	NetBytesRecv uint64  `json:"netBytesRecv"`
 }
 
-// Real time system metrics
+// Weather holds data about the weather
 type Weather struct {
-	IpAddress string         `json:"ipAddress"`
-	GeoInfo   ipstackApiData `json:"geo"`
+	IPAddress   string         `json:"ipAddress"`
+	GeoInfo     ipstackAPIData `json:"location"`
+	WeatherInfo darkskyAPIData `json:"weather"`
 }
 
-// Real time system metrics
-type ipstackApiData struct {
+// ipstackAPIData holds results of IPStack API call
+type ipstackAPIData struct {
 	City    string  `json:"city"`
 	Country string  `json:"country_name"`
 	Lat     float64 `json:"latitude"`
 	Long    float64 `json:"longitude"`
 }
 
+// darkskyAPIData holds results of Dark Sky API call
+type darkskyAPIData struct {
+	Timezone  string `json:"timezone"`
+	Currently struct {
+		Summary           string  `json:"summary"`
+		Icon              string  `json:"icon"`
+		PrecipProbability float32 `json:"precipProbability"`
+		Temperature       float32 `json:"temperature"`
+		WindSpeed         float32 `json:"windSpeed"`
+		UVIndex           float32 `json:"uvIndex"`
+		Humidity          float32 `json:"humidity"`
+	} `json:"currently"`
+}
+
+// Routes is our exported class
 type Routes struct {
 	contentDir    string
 	disableCORS   bool
-	darkskyApiKey string
-	ipstackApiKey string
+	darkskyAPIKey string
+	ipstackAPIKey string
 }
 
 //
@@ -76,7 +92,7 @@ func (r Routes) apiInfoRoute(resp http.ResponseWriter, req *http.Request) {
 	info.GoVersion = runtime.Version()
 	info.OS = runtime.GOOS
 	info.Arch = runtime.GOARCH
-	info.Cpus = runtime.NumCPU()
+	info.CPUs = runtime.NumCPU()
 	info.NetRemoteAddr = req.RemoteAddr
 	info.NetHost = req.Host
 	info.EnvVars = os.Environ()
@@ -119,7 +135,7 @@ func (r Routes) apiMetricsRoute(resp http.ResponseWriter, req *http.Request) {
 		http.Error(resp, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	metrics.CpuPerc = cpuStats[0]
+	metrics.CPUPerc = cpuStats[0]
 
 	// Disk and filesystem usage stuff
 	diskStats, err := disk.Usage("/")
@@ -152,7 +168,7 @@ func (r Routes) apiMetricsRoute(resp http.ResponseWriter, req *http.Request) {
 }
 
 //
-// Special route to handle serving
+// Special route to handle serving static SPA content with a JS router
 //
 func (r Routes) spaIndexRoute(resp http.ResponseWriter, req *http.Request) {
 	if r.disableCORS {
@@ -170,23 +186,32 @@ func (r Routes) weatherRoute(resp http.ResponseWriter, req *http.Request) {
 		resp.Header().Set("Access-Control-Allow-Origin", "*")
 	}
 
+	// Top level JSON container object
 	var weather Weather
 
+	// Try to guess calling IP address
 	ip := req.Header.Get("x-forwarded-for")
+	//ip = "86.134.117.146"
 	if len(ip) == 0 {
 		ip = req.RemoteAddr
 	}
+	if (strings.HasPrefix(ip, "127.0.0.1") || strings.HasPrefix(ip, "[::1]")) {
+		http.Error(resp, "Localhost not allowed", http.StatusNotAcceptable)
+		return
+	}
 	if strings.Contains(ip, ":") {
 		ip = strings.Split(ip, ":")[0]
-
 	}
-	weather.IpAddress = ip
+	weather.IPAddress = ip
 
+	// First API call is to IPStack to reverse lookup IP into location (lat & long)
 	var netClient = &http.Client{Timeout: time.Second * 10}
-	url := fmt.Sprintf("http://api.ipstack.com/%v?access_key=%v", ip, r.ipstackApiKey)
+	url := fmt.Sprintf("http://api.ipstack.com/%s?access_key=%s&format=1", ip, r.ipstackAPIKey)
 	apiresponse, err := netClient.Get(url)
 	body, err := ioutil.ReadAll(apiresponse.Body)
-	var ipstackData ipstackApiData
+
+	// Handle response and create object from JSON, and store in weather object
+	var ipstackData ipstackAPIData
 	err = json.Unmarshal(body, &ipstackData)
 	if err != nil {
 		http.Error(resp, err.Error(), http.StatusInternalServerError)
@@ -198,13 +223,27 @@ func (r Routes) weatherRoute(resp http.ResponseWriter, req *http.Request) {
 	}
 	weather.GeoInfo = ipstackData
 
-	// JSON-ify our weather info
-	js, err := json.Marshal(weather)
+	// Second API call is to Dark Sky to fetch weather data
+	url = fmt.Sprintf("https://api.darksky.net/forecast/%s/%v,%v?exclude=minutely,hourly,daily&units=si", r.darkskyAPIKey, weather.GeoInfo.Lat, weather.GeoInfo.Long)
+	apiresponse, err = netClient.Get(url)
+	body, err = ioutil.ReadAll(apiresponse.Body)
+
+	// Handle response and create object from JSON, and store in weather object
+	var darkskyData darkskyAPIData
+	err = json.Unmarshal(body, &darkskyData)
+	if err != nil {
+		http.Error(resp, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	weather.WeatherInfo = darkskyData
+
+	// JSON-ify our completed weather info object
+	jsonResp, err := json.Marshal(weather)
 	if err != nil {
 		http.Error(resp, err.Error(), http.StatusInternalServerError)
 		return
 	}
 	// Fire JSON result back down the internet tubes
 	resp.Header().Set("Content-Type", "application/json")
-	resp.Write(js)
+	resp.Write(jsonResp)
 }

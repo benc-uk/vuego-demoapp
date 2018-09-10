@@ -14,7 +14,7 @@ RUN npm run build
 #
 # Build the Go app / server
 #
-FROM golang:1.11-rc-alpine3.8 as go-build
+FROM golang:1.11-alpine3.8 as go-build
 WORKDIR /build/src/server
 
 RUN apk add git
@@ -33,7 +33,7 @@ FROM alpine:3.8
 WORKDIR /app 
 LABEL org.label-schema.name="vuego-demoapp" \
       org.label-schema.description="Demonstration Vue.js and Go web app" \    
-      org.label-schema.version="1.0.1" \
+      org.label-schema.version="1.5.0" \
       org.label-schema.vcs-url=https://github.com/benc-uk/vuego-demoapp
 
 COPY --from=vue-build /build/dist . 

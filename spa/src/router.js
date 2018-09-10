@@ -10,6 +10,7 @@ import Home from './components/Home.vue'
 import About from './components/About.vue'
 import Info from './components/Info.vue'
 import Monitor from './components/Monitor.vue'
+import Weather from './components/Weather.vue'
 
 Vue.use(Router)
 
@@ -36,6 +37,11 @@ export default new Router({
       name: 'monitor',
       component: Monitor
     },    
+    {
+      path: '/app/weather',
+      name: 'weather',
+      component: Weather
+    },   
     {
       path: '/app/about',
       name: 'about',

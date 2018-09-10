@@ -7,12 +7,22 @@
 export default {
   data: function () {
     return {
-      apiEndpoint: "/api"
-      //apiEndpoint: "http://localhost:4000/api"
+      //apiEndpoint: "/api"
+      apiEndpoint: "http://localhost:4000/api"
     }
   },
   
   methods: {
+    apiGetWeather: function() {  
+      return fetch(`${this.apiEndpoint}/weather`)
+        .then(resp => {
+          return resp.json();
+        })
+        .catch(err => {
+          console.log(`### API Error! ${err}`);
+        })
+    },
+
     apiGetMetrics: function() {  
       return fetch(`${this.apiEndpoint}/metrics`)
         .then(resp => {

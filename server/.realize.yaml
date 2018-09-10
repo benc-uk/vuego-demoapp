@@ -1,0 +1,22 @@
+settings:
+  legacy:
+    force: true             // force polling watcher instead fsnotifiy
+    interval: 200ms         // polling interval
+schema:
+- name: /mnt/c/Dev/vuego-demoapp/server
+  path: /mnt/c/Dev/vuego-demoapp/server
+  commands:
+    install:
+      status: true
+    run:
+      status: true
+  watcher:
+    extensions:
+    - go
+    paths:
+    - /
+    ignore:
+      paths:
+      - .git
+      - .realize
+      - vendor

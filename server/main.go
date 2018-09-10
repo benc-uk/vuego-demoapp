@@ -29,10 +29,11 @@ func main() {
 
 	// Routing
 	muxrouter := mux.NewRouter()
-	routes := Routes{contentDir: contentDir,
+	routes := Routes{
+		contentDir:    contentDir,
 		disableCORS:   true,
-		darkskyApiKey: "686028df24bb828907074f434121b2c0",
-		ipstackApiKey: "e588291416844e390b0ea16b59671f30",
+		darkskyAPIKey: "725f2b6bd8d8aa6ce91b85006771e89f",
+		ipstackAPIKey: "e588291416844e390b0ea16b59671f30",
 	}
 	muxrouter.HandleFunc("/api/info", routes.apiInfoRoute)
 	muxrouter.HandleFunc("/api/metrics", routes.apiMetricsRoute)

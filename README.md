@@ -29,7 +29,7 @@ The Go server component performs two tasks
 ### 1. Pre-reqs
 - Install [Node.js](https://nodejs.org/en/)
 - Install [Vue CLI](https://github.com/vuejs/vue-cli)
-- You will need [Go v1.11 installed and configured](https://golang.org/dl/). **NOTE. At the time of writing v1.11 is in beta, but it has the module support required by the project**
+- You will need [Go v1.11 installed and configured](https://golang.org/dl/).
 - Once Go v1.11 is installed, also make sure you have the GOPATH environmental variable set up 
 - Clone the project to any directory where you do development work
 ```

@@ -14,7 +14,7 @@ Ben C, April 2018
 
       <table v-if="info" class="table table-hover">
         <tbody>
-          <tr v-for="(val, key) in infoComputed">
+          <tr v-for="(val, key) in infoComputed" :key="key">
             <td ><b>{{ key | titleify }}</b></td>
             <td>{{ val }}</td>
           </tr>
@@ -80,6 +80,7 @@ export default {
   computed: {
     infoComputed: function () {
       var result = {};
+      // Skip over envVars property, as we'll handle that one seperately
       for (let k in this.info) {
         if(k != "envVars") result[k] = this.info[k]
       }
