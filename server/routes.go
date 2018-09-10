@@ -9,6 +9,7 @@ import (
 	"runtime"
 	"strings"
 	"time"
+	"crypto/tls"
 
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/disk"
@@ -205,7 +206,11 @@ func (r Routes) weatherRoute(resp http.ResponseWriter, req *http.Request) {
 	weather.IPAddress = ip
 
 	// First API call is to IPStack to reverse lookup IP into location (lat & long)
-	var netClient = &http.Client{Timeout: time.Second * 10}
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+	var netClient = &http.Client{Timeout: time.Second * 10, Transport: tr}
+	
 	url := fmt.Sprintf("http://api.ipstack.com/%s?access_key=%s&format=1", ip, r.ipstackAPIKey)
 	apiresponse, err := netClient.Get(url)
 	if err != nil {
