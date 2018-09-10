@@ -22,6 +22,7 @@ The Go server component performs two tasks
 - Provide a simple REST API for data to be displayed & rendered by the Vue.js app. This API is very simple currently has two routes:
   - `GET /api/info` - Returns system information and various properties as JSON
   - `GET /api/metrics` - Returns monitoring metrics for CPU, memory, disk and network. This data comes from the *gopsutils* library
+  - `GET /api/weather` - Returns weather data for the location determined automatically from the calling IP address, uses IPStack and DarkSky REST APIs
   
 
 ## Building & Running Locally
@@ -29,8 +30,8 @@ The Go server component performs two tasks
 ### 1. Pre-reqs
 - Install [Node.js](https://nodejs.org/en/)
 - Install [Vue CLI](https://github.com/vuejs/vue-cli)
-- You will need [Go v1.11 installed and configured](https://golang.org/dl/).
-- Once Go v1.11 is installed, also make sure you have the GOPATH environmental variable set up 
+- You will need [Go v1.11+ installed and configured](https://golang.org/dl/).
+- Once Go v1.11+ is installed, also make sure you have the GOPATH environmental variable set up 
 - Clone the project to any directory where you do development work
 ```
 git clone https://github.com/benc-uk/vuego-demoapp.git
@@ -46,10 +47,9 @@ npm run build
 
 ### 3. Building the Go server
 To build the Go server component run the following. This will create an executable called `server` or `server.exe` 
-(Note. On Linux the beta version of Go is invoked via the `go1.11beta2` command. The actual beta number might be different. One Windows the beta exe is just called `go`)
 ```
 cd server
-go1.11beta2 build
+go build
 ```
 
 ### 4. Running the combined app
@@ -84,4 +84,5 @@ Templates for deployment to Azure with "quick deploy" buttons are [here](azure/)
 |-|-|
 |April 2018|Project created|
 |July 2018|Updated Vue CLI config & moved to Golang 1.11|
+|Sept 2018|Updated with weather API and weather view|
 
