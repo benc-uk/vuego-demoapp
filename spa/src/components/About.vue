@@ -10,7 +10,7 @@ Ben C, April 2018
       <fa icon="info-circle" />&nbsp; About
     </div>
     <div class="card-body">
-      Developed by Ben Coleman, 2018<br/>
+      Developed by Ben Coleman, 2018/2019<br/>
       Version: {{ version }}
     </div>
   </div>
