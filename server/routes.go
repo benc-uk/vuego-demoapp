@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -9,7 +10,6 @@ import (
 	"runtime"
 	"strings"
 	"time"
-	"crypto/tls"
 
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/disk"
@@ -196,7 +196,7 @@ func (r Routes) weatherRoute(resp http.ResponseWriter, req *http.Request) {
 	if len(ip) == 0 {
 		ip = req.RemoteAddr
 	}
-	if (strings.HasPrefix(ip, "127.0.0.1") || strings.HasPrefix(ip, "[::1]")) {
+	if strings.HasPrefix(ip, "127.0.0.1") || strings.HasPrefix(ip, "[::1]") {
 		http.Error(resp, "Localhost not allowed", http.StatusNotAcceptable)
 		return
 	}
@@ -210,7 +210,7 @@ func (r Routes) weatherRoute(resp http.ResponseWriter, req *http.Request) {
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
 	var netClient = &http.Client{Timeout: time.Second * 10, Transport: tr}
-	
+
 	url := fmt.Sprintf("http://api.ipstack.com/%s?access_key=%s&format=1", ip, r.ipstackAPIKey)
 	apiresponse, err := netClient.Get(url)
 	if err != nil {
