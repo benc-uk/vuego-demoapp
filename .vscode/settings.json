@@ -1,0 +1,4 @@
+{
+  "go.useLanguageServer": false,
+  "go.formatTool": "goimports"
+}
