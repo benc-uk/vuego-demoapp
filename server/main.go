@@ -35,16 +35,21 @@ func main() {
 		darkskyAPIKey: "725f2b6bd8d8aa6ce91b85006771e89f",
 		ipstackAPIKey: "e588291416844e390b0ea16b59671f30",
 	}
+
+	// API routes
 	muxrouter.HandleFunc("/api/info", routes.apiInfoRoute)
 	muxrouter.HandleFunc("/api/metrics", routes.apiMetricsRoute)
 	muxrouter.HandleFunc("/api/weather", routes.weatherRoute)
 
-	// These are SPA routes we want to handle in app, so redirect to index.html
-	muxrouter.PathPrefix("/app").HandlerFunc(routes.spaIndexRoute)
-
-	// Handle static content
+	// Handle static content, we have to explicitly put our top level dirs in here
+	// - otherwise the NotFoundHandler will catch them
 	fileServer := http.FileServer(http.Dir(contentDir))
-	muxrouter.PathPrefix("/").Handler(http.StripPrefix("/", fileServer))
+	muxrouter.PathPrefix("/js").Handler(http.StripPrefix("/", fileServer))
+	muxrouter.PathPrefix("/css").Handler(http.StripPrefix("/", fileServer))
+	muxrouter.PathPrefix("/img").Handler(http.StripPrefix("/", fileServer))
+
+	// EVERYTHING else redirect to index.html
+	muxrouter.NotFoundHandler = http.HandlerFunc(routes.spaIndexRoute) 
 
 	// Start server
 	fmt.Printf("### Starting server listening on %v\n", serverPort)

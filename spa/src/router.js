@@ -8,6 +8,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './components/Home.vue'
 import About from './components/About.vue'
+import Error from './components/Error.vue'
 import Info from './components/Info.vue'
 import Monitor from './components/Monitor.vue'
 import Weather from './components/Weather.vue'
@@ -23,29 +24,34 @@ export default new Router({
       component: Home
     },
     {
-      path: '/app/home',
+      path: '/home',
       name: 'apphome',
       component: Home
     },
     {
-      path: '/app/info',
+      path: '/info',
       name: 'info',
       component: Info
     },
     {
-      path: '/app/monitor',
+      path: '/monitor',
       name: 'monitor',
       component: Monitor
     },    
     {
-      path: '/app/weather',
+      path: '/weather',
       name: 'weather',
       component: Weather
     },   
     {
-      path: '/app/about',
+      path: '/about',
       name: 'about',
       component: About
+    }, 
+    {
+      path: '*',
+      name: 'catchall',
+      component: Error
     }    
   ]
 })

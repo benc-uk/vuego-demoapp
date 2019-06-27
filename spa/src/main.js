@@ -16,11 +16,11 @@ import './scss/theme.scss'
 
 // Font Awesome has Vue.js support, import some icons we'll use
 import { library as fontAwesomeLib } from '@fortawesome/fontawesome-svg-core'
-import { faHome, faCogs, faTachometerAlt, faInfoCircle, faUmbrella } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faCogs, faTachometerAlt, faInfoCircle, faUmbrella, faBomb } from '@fortawesome/free-solid-svg-icons'
 import { faGithub, faDocker } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 // Register icons and component
-fontAwesomeLib.add([faHome, faCogs, faTachometerAlt, faInfoCircle, faGithub, faDocker, faUmbrella])
+fontAwesomeLib.add([faHome, faCogs, faTachometerAlt, faInfoCircle, faGithub, faDocker, faUmbrella, faBomb])
 Vue.component('fa', FontAwesomeIcon)
 
 // We have to register this globally for some reason
