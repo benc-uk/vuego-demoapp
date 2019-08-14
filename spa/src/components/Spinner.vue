@@ -30,20 +30,26 @@ export default {
   height: 28px;
   background-color: #1f573e;
 
-  border-radius: 100%;
+  border-radius: 0%;
+  margin: 1px;
   display: inline-block;
   -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
   animation: sk-bouncedelay 1.4s infinite ease-in-out both;
 }
 
 .spinner .bounce1 {
-  -webkit-animation-delay: -0.32s;
-  animation-delay: -0.32s;
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
 }
 
 .spinner .bounce2 {
-  -webkit-animation-delay: -0.16s;
-  animation-delay: -0.16s;
+  -webkit-animation-delay: -0.24s;
+  animation-delay: -0.24s;
+}
+
+.spinner .bounce3 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
 }
 
 @-webkit-keyframes sk-bouncedelay {

@@ -65,6 +65,8 @@ stages:
     displayName: 'Configure Prod App Settings'
     pool:
       vmImage: Ubuntu-16.04
+    variables:
+      - group: vuego-demoapp-vars
     steps:
       - task: AzureCLI@1
         displayName: 'Set webapp config'
@@ -73,7 +75,9 @@ stages:
           scriptLocation: inlineScript
           inlineScript: |
             az webapp config appsettings set -g $(res-group) -n $(appservice-name) --settings \
-            RELEASE=$(Build.BuildNumber) 
+            RELEASE=$(Build.BuildNumber) \
+            WEATHER_API_KEY=$(weather-key) \
+            IPSTACK_API_KEY=$(ipstack-key)
 
   # - job: removeNonProd
   #   displayName: 'Remove Non Prod Apps'
