@@ -30,8 +30,8 @@ The Go server component performs two tasks
 ### 1. Pre-reqs
 - Install [Node.js](https://nodejs.org/en/)
 - Install [Vue CLI](https://github.com/vuejs/vue-cli)
-- You will need [Go v1.11+ installed and configured](https://golang.org/dl/).
-- Once Go v1.11+ is installed, also make sure you have the GOPATH environmental variable set up 
+- You will need [Go v1.12+ installed and configured](https://golang.org/dl/).
+- Once Go v1.12+ is installed, also make sure you have the GOPATH environmental variable set up 
 - Clone the project to any directory where you do development work
 ```
 git clone https://github.com/benc-uk/vuego-demoapp.git
@@ -85,4 +85,4 @@ Templates for deployment to Azure with "quick deploy" buttons are [here](azure/)
 |April 2018|Project created|
 |July 2018|Updated Vue CLI config & moved to Golang 1.11|
 |Sept 2018|Updated with weather API and weather view|
-
+|Sept 2019|New release pipelines and config moved to env vars|
