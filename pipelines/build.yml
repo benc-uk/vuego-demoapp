@@ -7,8 +7,7 @@ trigger:
   branches:
     include: [ master ] 
 
-pool:
-  name: Hosted Ubuntu 1604
+
 
 #
 # NOTE! The shared-secrets variable group must be pre-created and populated
@@ -32,6 +31,8 @@ stages:
   jobs:  
   # ==============================================================
   - job: unitTestJob  
+    pool:
+      name: Hosted Ubuntu 1604
     displayName: Run Unit Tests
 
     steps:
@@ -48,6 +49,8 @@ stages:
 
   # ==============================================================
   - job: buildJob
+    pool:
+      name: Hosted Ubuntu 1604
     dependsOn: unitTestJob
     displayName: Run Docker Build
     steps:
