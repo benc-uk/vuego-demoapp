@@ -48,7 +48,8 @@ func main() {
 	muxrouter.PathPrefix("/js").Handler(http.StripPrefix("/", fileServer))
 	muxrouter.PathPrefix("/css").Handler(http.StripPrefix("/", fileServer))
 	muxrouter.PathPrefix("/img").Handler(http.StripPrefix("/", fileServer))
-
+	muxrouter.PathPrefix("/favicon.ico").Handler(http.StripPrefix("/", fileServer))
+	
 	// EVERYTHING else redirect to index.html
 	muxrouter.NotFoundHandler = http.HandlerFunc(routes.spaIndexRoute)
 
