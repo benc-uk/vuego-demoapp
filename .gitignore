@@ -17,3 +17,4 @@
 server/server
 server/server.exe
 **/go.sum
+**/.env
