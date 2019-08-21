@@ -7,8 +7,6 @@ trigger:
   branches:
     include: [ master ] 
 
-
-
 #
 # NOTE! The shared-secrets variable group must be pre-created and populated
 # - Expected variables: acr-password, dockerhub-password
