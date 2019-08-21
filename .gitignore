@@ -17,4 +17,9 @@
 server/server
 server/server.exe
 **/go.sum
+
+# secrets, ssssh!
 **/.env
+
+# unit test reports, yawn!
+**/report.xml
