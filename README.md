@@ -70,7 +70,10 @@ Public Docker image is [available on Dockerhub](https://hub.docker.com/r/bencuk/
 
 Run with `docker run -d -p 4000:4000 bencuk/vuego-demoapp`
 
-
+## Config Environmental Variables
+- `WEATHER_API_KEY` - Enable the weather feature with a DarkSky API key 
+- `IPSTACK_API_KEY` - Enable the weather feature with a IPStack API key 
+  
 ## Application Insights 
 Waiting for golang support
 
