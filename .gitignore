@@ -23,3 +23,5 @@ server/server.exe
 
 # unit test reports, yawn!
 **/report.xml
+
+secrets.sh

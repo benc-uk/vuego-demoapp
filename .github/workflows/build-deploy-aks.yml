@@ -94,6 +94,14 @@ jobs:
             tag: '${{ env.imageTag }}'
             repository: ${{ env.acrName }}.azurecr.io/apps/${{ env.imageName }}
 
+          secretEnv:
+            WEATHER_API_KEY:
+              secretName: vuego-demoapp
+              secretKey: weatherKey
+            IPSTACK_API_KEY:
+              secretName: vuego-demoapp
+              secretKey: ipStackKey
+
           ingress:
             enabled: true
             annotations:
