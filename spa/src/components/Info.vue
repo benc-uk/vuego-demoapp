@@ -91,6 +91,9 @@ export default {
       if(!this.info) return "";
       var result = "";
       for (let e of this.info.envVars) {
+        if(e.includes('API_KEY')) continue;
+        if(e.includes('PWD')) continue;
+        if(e.includes('SECRET')) continue;
         result += e + "\n";
       }
       return result;
