@@ -89,3 +89,4 @@ Templates for deployment to Azure with "quick deploy" buttons are [here](azure/)
 |July 2018|Updated Vue CLI config & moved to Golang 1.11|
 |Sept 2018|Updated with weather API and weather view|
 |Sept 2019|New release pipelines and config moved to env vars|
+|Dec 2019|Github Actions and AKS|
