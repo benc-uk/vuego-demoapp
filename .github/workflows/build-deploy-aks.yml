@@ -93,21 +93,5 @@ jobs:
           image:
             tag: '${{ env.imageTag }}'
             repository: ${{ env.acrName }}.azurecr.io/apps/${{ env.imageName }}
-
-          secretEnv:
-            WEATHER_API_KEY:
-              secretName: vuego-demoapp
-              secretKey: weatherKey
-            IPSTACK_API_KEY:
-              secretName: vuego-demoapp
-              secretKey: ipStackKey
-
           ingress:
-            enabled: true
-            annotations:
-              kubernetes.io/ingress.class: addon-http-application-routing
-              nginx.ingress.kubernetes.io/ssl-redirect: "true"
             host: ${{ env.host }}
-            tls: 
-              enabled: true
-              secretName: kube-benco-io-cert

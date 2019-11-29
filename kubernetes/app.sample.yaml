@@ -1,0 +1,13 @@
+#
+# See this Helm chart for options
+# https://github.com/benc-uk/helm-charts/tree/master/webapp
+#
+
+image:
+  repository: bencuk/vuego-demoapp
+  tag: latest
+  pullPolicy: Always
+
+service:
+  targetPort: 4000
+  type: LoadBalancer
