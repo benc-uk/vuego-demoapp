@@ -82,6 +82,15 @@ Run with `docker run -d -p 4000:4000 bencuk/vuego-demoapp`
 Waiting for golang support
 
 
+# GitHub Actions CI/CD 
+A working CI and release GitHub Actions workflow is provided `.github/workflows/build-deploy-aks.yml`, automated builds are run in GitHub hosted runners
+
+### [GitHub Actions](https://github.com/benc-uk/vuego-demoapp/actions)
+
+![](https://img.shields.io/github/workflow/status/benc-uk/vuego-demoapp/Build%20%26%20Deploy%20AKS)  
+![](https://img.shields.io/github/last-commit/benc-uk/vuego-demoapp)  
+
+
 ## Azure Templates
 Templates for deployment to Azure with "quick deploy" buttons are [here](azure/)
 
