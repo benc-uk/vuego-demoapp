@@ -1,8 +1,12 @@
-## Overview
-This is a simple web application with a Go server/backend and a Vue.js SPA (Single Page Application) frontend. Designed for running in Azure & containers for demos. 
+## Go & Vue.js - Demo Web Application
+This is a simple web application with a Go server/backend and a Vue.js SPA (Single Page Application) frontend.
+
+The app has been designed with cloud native demos & containers in mind, in order to provide a real working application for deployment, something more than "hello-world" but with the minimum of pre-reqs. It is not intended as a complete example of a fully functioning architecture or complex software design.
+
+Typical uses would be deployment to Kubernetes, demos of Docker, CI/CD (build pipelines are provided), deployment to cloud (Azure) monitoring, auto-scaling
 
 - The SPA component was created using the Vue CLI and uses [Bootstrap-Vue](https://bootstrap-vue.js.org/) and [Font Awesome](https://fontawesome.com/). In addition [Gauge.js](http://bernii.github.io/gauge.js/) is used for the dials in the monitoring view
-- The Go component is a vanilla Go HTTP server using [gopsutils](https://github.com/shirou/gopsutil) for monitoring metrics, and [Mux](https://github.com/gorilla/mux) for routing
+- The Go component is a vanilla Go HTTP server using [gopsutils](https://github.com/shirou/gopsutil) for monitoring metrics, and [Gorilla Mux](https://github.com/gorilla/mux) for routing
 
 ![screenshot](https://user-images.githubusercontent.com/14982936/38804618-e1a5c1bc-416a-11e8-9cf3-c64689faf6cb.png)
 
