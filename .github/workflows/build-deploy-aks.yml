@@ -41,7 +41,7 @@ jobs:
         password: ${{ secrets.acrPassword }}   
             
     - name: Push to ACR
-      run: docker push $acrName.azurecr.io/apps/${{ github.run_id }}
+      run: docker push $acrName.azurecr.io/apps/$imageName
 
 # ================================================================
 
