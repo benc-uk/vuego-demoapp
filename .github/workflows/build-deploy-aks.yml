@@ -18,17 +18,11 @@ env:
 jobs:
   buildJob:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v1
       
-    - name: Set imageTag variable
-      run: |
-        echo "echo \"::set-env name=imageTag::$(date +%Y%m%d.%H%M)\"" > vars.sh
-        source ./vars.sh
-      
     - name: Build the Docker image
-      run: docker build . --file ./Dockerfile --tag $dockerUser/$imageName:latest --tag $acrName.azurecr.io/apps/$imageName:$imageTag --tag $acrName.azurecr.io/apps/$imageName:latest
+      run: docker build . --file ./Dockerfile --tag $dockerUser/$imageName:latest --tag $acrName.azurecr.io/apps/$imageName:${{ github.run_id }} --tag $acrName.azurecr.io/apps/$imageName:latest
     
     - name: Dockerhub Login
       uses: Azure/docker-login@v1
@@ -47,13 +41,7 @@ jobs:
         password: ${{ secrets.acrPassword }}   
             
     - name: Push to ACR
-      run: docker push $acrName.azurecr.io/apps/$imageName
-
-    - name: Upload vars artifact
-      uses: actions/upload-artifact@v1
-      with:
-        name: vars
-        path: ./vars.sh
+      run: docker push $acrName.azurecr.io/apps/${{ github.run_id }}
 
 # ================================================================
 
@@ -72,9 +60,6 @@ jobs:
       with:
         name: vars
 
-    - name: Set vars
-      run: source vars/vars.sh
-
     - name: ACR Login
       uses: Azure/docker-login@v1
       with:
@@ -92,7 +77,7 @@ jobs:
         value-files: ./kubernetes/app.yaml
         values: |
           image:
-            tag: '${{ env.imageTag }}'
+            tag: '${{ github.run_id }}'
             repository: ${{ env.acrName }}.azurecr.io/apps/${{ env.imageName }}
           ingress:
             host: ${{ env.host }}
