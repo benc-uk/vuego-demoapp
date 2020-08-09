@@ -131,7 +131,7 @@ func (r Routes) apiMetricsRoute(resp http.ResponseWriter, req *http.Request) {
 	metrics.MemUsed = memStats.Used
 
 	// CPU / processor stuff
-	cpuStats, err := cpu.Percent(time.Millisecond*1000, false)
+	cpuStats, err := cpu.Percent(0, false)
 	if err != nil {
 		http.Error(resp, err.Error(), http.StatusInternalServerError)
 		return

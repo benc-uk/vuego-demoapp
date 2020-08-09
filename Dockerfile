@@ -1,7 +1,7 @@
 #
 # Build and bundle the Vue.js SPA 
 #
-FROM node:10-alpine AS vue-build
+FROM node:12-alpine AS vue-build
 WORKDIR /build
 
 COPY spa/package*.json ./
@@ -13,7 +13,7 @@ RUN npm run build
 #
 # Build the Go server
 #
-FROM golang:1.12-alpine as go-build
+FROM golang:1.14-alpine as go-build
 
 WORKDIR /build/src/server
 
@@ -35,7 +35,7 @@ FROM scratch
 WORKDIR /app 
 LABEL org.label-schema.name="vuego-demoapp" \
       org.label-schema.description="Demonstration Vue.js and Go web app" \    
-      org.label-schema.version="1.5.2" \
+      org.label-schema.version="1.8.0" \
       org.label-schema.vcs-url=https://github.com/benc-uk/vuego-demoapp
 
 COPY --from=vue-build /build/dist . 

@@ -11,7 +11,7 @@ Ben C, June 2019
     </div>
     <div class="card-body">
       <p style="text-align:center">
-        <img src="../assets/error.png" />
+        <img src="../assets/error.png">
       </p>
     </div>
   </div>

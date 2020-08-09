@@ -12,15 +12,15 @@ Ben C, April 2018
 </template>
 
 <script>
-import { Gauge } from '../js/gauge.min.js';
+import { Gauge } from '../js/gauge.min.js'
 
-var staticZones = [
-  { strokeStyle: "#30B32D", min: 0, max: 70 },
-  { strokeStyle: "#FFDD00", min: 70, max: 90 },
-  { strokeStyle: "#F03E3E", min: 90, max: 100 }
+let staticZones = [
+  { strokeStyle: '#30B32D', min: 0, max: 70 },
+  { strokeStyle: '#FFDD00', min: 70, max: 90 },
+  { strokeStyle: '#F03E3E', min: 90, max: 100 }
 ]
 
-var opts = {
+let opts = {
   angle: -0.15,
   lineWidth: 0.3,
   radiusScale: 1,
@@ -36,25 +36,10 @@ var opts = {
   generateGradient: true,
   highDpiSupport: true,
   fontSize: 40
-};
+}
 
 export default {
-  name: 'dial',
-
-  mounted: function() {
-    var target = this.$refs.can;
-    
-    if(this.percentage) {
-      this.opts.staticZones = staticZones;
-    } else {
-      this.opts.staticZones = null;
-    } 
-    this.opts.limitMax = this.percentage;
-    this.gauge = new Gauge(target).setOptions(this.opts); 
-    this.gauge.maxValue = this.percentage ? 100 : 1;
-    this.gauge.setMinValue(0);    
-    this.gauge.set(this.value);
-  },
+  name: 'Dial',
 
   props: {
     value: {
@@ -62,12 +47,12 @@ export default {
       type: Number
     },
     title: {
-      default: "No Label",
+      default: 'No Label',
       type: String
     },
     percentage: {
       default: true,
-      type: Boolean    
+      type: Boolean
     }
   },
 
@@ -80,12 +65,27 @@ export default {
 
   computed: {
     valComputed: function () {
-      let rounded = Math.round(this.value * Math.pow(10, 2))  / Math.pow(10, 2);
-      if(this.value && this.gauge) {
-        this.gauge.set(rounded);
+      let rounded = Math.round(this.value * Math.pow(10, 2))  / Math.pow(10, 2)
+      if (this.value && this.gauge) {
+        this.gauge.set(rounded)
       }
-      return rounded;
+      return rounded
     }
+  },
+
+  mounted: function() {
+    let target = this.$refs.can
+
+    if (this.percentage) {
+      this.opts.staticZones = staticZones
+    } else {
+      this.opts.staticZones = null
+    }
+    this.opts.limitMax = this.percentage
+    this.gauge = new Gauge(target).setOptions(this.opts)
+    this.gauge.maxValue = this.percentage ? 100 : 1
+    this.gauge.setMinValue(0)
+    this.gauge.set(this.value)
   }
 }
 </script>

@@ -37,21 +37,21 @@ export default new Router({
       path: '/monitor',
       name: 'monitor',
       component: Monitor
-    },    
+    },
     {
       path: '/weather',
       name: 'weather',
       component: Weather
-    },   
+    },
     {
       path: '/about',
       name: 'about',
       component: About
-    }, 
+    },
     {
       path: '*',
       name: 'catchall',
       component: Error
-    }    
+    }
   ]
 })

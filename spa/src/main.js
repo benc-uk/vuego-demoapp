@@ -27,13 +27,13 @@ Vue.component('fa', FontAwesomeIcon)
 import VueSkycons from 'vue-skycons'
 Vue.use(VueSkycons)
 
-// Init Vue 
-Vue.use(BootstrapVue);
+// Init Vue
+Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 
 // Root Vue instance
 // Mount on the <div id="root"> and render the template of the App component
 new Vue({
   router,
-  render: h => h(App)
+  render: (h) => h(App)
 }).$mount('#app')

@@ -6,15 +6,15 @@ Ben C, April 2018
 
 <template>
   <div class="spinner">
-    <div class="bounce1"></div>
-    <div class="bounce2"></div>
-    <div class="bounce3"></div>
+    <div class="bounce1" />
+    <div class="bounce2" />
+    <div class="bounce3" />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'spinner'
+  name: 'Spinner'
 }
 </script>
 
@@ -58,10 +58,10 @@ export default {
 }
 
 @keyframes sk-bouncedelay {
-  0%, 80%, 100% { 
+  0%, 80%, 100% {
     -webkit-transform: scale(0);
     transform: scale(0);
-  } 40% { 
+  } 40% {
     -webkit-transform: scale(1.0);
     transform: scale(1.0);
   }
