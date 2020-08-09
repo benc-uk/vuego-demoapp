@@ -17,6 +17,7 @@ env:
 
 jobs:
   buildJob:
+    name: Build and ACR Push
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -46,6 +47,7 @@ jobs:
 # ================================================================
 
   releaseJob:
+    name: Deploy to AKS with Helm
     needs: buildJob
     env:
       KUBECONFIG_FILE: '${{ secrets.KUBE_CONFIG }}'
@@ -62,7 +64,7 @@ jobs:
         username: ${{ env.ACR_NAME }}
         password: ${{ secrets.ACR_PASSWORD }}  
 
-    - name: Helm install VueGo-Demoapp
+    - name: Helm install web app
       uses: deliverybot/helm@v1
       with:
         helm: helm3
