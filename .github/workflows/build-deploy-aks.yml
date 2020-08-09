@@ -3,17 +3,17 @@ name: Build & Deploy AKS
 on: 
   workflow_dispatch:
   push: 
-    branches: [master]
+    branches: [ master ]
   pull_request:
-    branches: [master]
+    branches: [ master ]
 
 # Note. Required secrets: dockerPassword, acrPassword & kubeConfig
 
 env:
-  dockerUser: bencuk
-  acrName: bcdemo
-  imageName: vuego-demoapp
-  host: vuego-demoapp.kube.benco.io
+  DOCKER_USER: bencuk
+  ACR_NAME: bcdemo
+  IMAGE_NAME: vuego-demoapp
+  INGRESS_DNS_HOST: vuego-demoapp.kube.benco.io
 
 jobs:
   buildJob:
@@ -22,26 +22,26 @@ jobs:
     - uses: actions/checkout@v1
       
     - name: Build the Docker image
-      run: docker build . --file ./Dockerfile --tag $dockerUser/$imageName:latest --tag $acrName.azurecr.io/apps/$imageName:${{ github.run_id }} --tag $acrName.azurecr.io/apps/$imageName:latest
+      run: docker build . --file ./Dockerfile --tag $DOCKER_USER/$IMAGE_NAME:latest --tag $ACR_NAME.azurecr.io/apps/$IMAGE_NAME:${{ github.run_id }} --tag $ACR_NAME.azurecr.io/apps/$IMAGE_NAME:latest
     
     - name: Dockerhub Login
       uses: Azure/docker-login@v1
       with:
-        username: ${{ env.dockerUser }}
+        username: ${{ env.DOCKER_USER }}
         password: ${{ secrets.DOCKER_PASSWORD }} 
 
     - name: Push to Dockerhub
-      run: docker push $dockerUser/$imageName
+      run: docker push $DOCKER_USER/$IMAGE_NAME
       
     - name: ACR Login
       uses: Azure/docker-login@v1
       with:
-        login-server: ${{ env.acrName }}.azurecr.io
-        username: ${{ env.acrName }}
+        login-server: ${{ env.ACR_NAME }}.azurecr.io
+        username: ${{ env.ACR_NAME }}
         password: ${{ secrets.ACR_PASSWORD }}   
             
     - name: Push to ACR
-      run: docker push $acrName.azurecr.io/apps/$imageName
+      run: docker push $ACR_NAME.azurecr.io/apps/$IMAGE_NAME
 
 # ================================================================
 
@@ -58,9 +58,9 @@ jobs:
     - name: ACR Login
       uses: Azure/docker-login@v1
       with:
-        login-server: ${{ env.acrName }}.azurecr.io
-        username: ${{ env.acrName }}
-        password: ${{ secrets.acrPassword }}  
+        login-server: ${{ env.ACR_NAME }}.azurecr.io
+        username: ${{ env.ACR_NAME }}
+        password: ${{ secrets.ACR_PASSWORD }}  
 
     - name: Helm install VueGo-Demoapp
       uses: deliverybot/helm@v1
@@ -73,6 +73,6 @@ jobs:
         values: |
           image:
             tag: '${{ github.run_id }}'
-            repository: ${{ env.acrName }}.azurecr.io/apps/${{ env.imageName }}
+            repository: ${{ env.ACR_NAME }}.azurecr.io/apps/${{ env.IMAGE_NAME }}
           ingress:
-            host: ${{ env.host }}
+            host: ${{ env.INGRESS_DNS_HOST }}
