@@ -28,7 +28,7 @@ jobs:
       uses: Azure/docker-login@v1
       with:
         username: ${{ env.dockerUser }}
-        password: ${{ secrets.dockerPassword }} 
+        password: ${{ secrets.DOCKER_PASSWORD }} 
 
     - name: Push to Dockerhub
       run: docker push $dockerUser/$imageName
@@ -38,7 +38,7 @@ jobs:
       with:
         login-server: ${{ env.acrName }}.azurecr.io
         username: ${{ env.acrName }}
-        password: ${{ secrets.acrPassword }}   
+        password: ${{ secrets.ACR_PASSWORD }}   
             
     - name: Push to ACR
       run: docker push $acrName.azurecr.io/apps/$imageName
@@ -48,17 +48,12 @@ jobs:
   releaseJob:
     needs: buildJob
     env:
-      KUBECONFIG_FILE: '${{ secrets.kubeConfig }}'
+      KUBECONFIG_FILE: '${{ secrets.KUBE_CONFIG }}'
 
     runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v1
-
-    - name: Download vars artifact
-      uses: actions/download-artifact@v1
-      with:
-        name: vars
 
     - name: ACR Login
       uses: Azure/docker-login@v1
