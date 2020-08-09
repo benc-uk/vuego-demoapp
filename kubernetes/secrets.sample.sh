@@ -1,3 +1,3 @@
-kubectl create secret generic nodejs-demoapp \
+kubectl create secret generic vuego-demoapp \
 --from-literal=weatherKey=CHANGEME \
 --from-literal=ipStackKey=CHANGEME

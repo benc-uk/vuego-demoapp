@@ -172,7 +172,7 @@ func (r Routes) apiMetricsRoute(resp http.ResponseWriter, req *http.Request) {
 // Special route to handle serving static SPA content with a JS router
 //
 func (r Routes) spaIndexRoute(resp http.ResponseWriter, req *http.Request) {
-	http.ServeFile(resp, req, contentDir + "/index.html")
+	http.ServeFile(resp, req, contentDir+"/index.html")
 }
 
 //

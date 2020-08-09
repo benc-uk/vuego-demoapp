@@ -25,3 +25,6 @@ server/server.exe
 **/report.xml
 
 secrets.sh
+
+infra/bicep
+infra/*.json
