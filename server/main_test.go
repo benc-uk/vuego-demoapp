@@ -1,10 +1,10 @@
 package main
 
 import (
-	"testing"
-  "net/http/httptest"
 	"net/http"
+	"net/http/httptest"
 	"strings"
+	"testing"
 )
 
 //
@@ -34,7 +34,7 @@ func TestApiInfoRoute(t *testing.T) {
 
 	// Check the response body is what we expect.
 	expected := "hostname"
-	if !strings.Contains (rr.Body.String(), expected) {
+	if !strings.Contains(rr.Body.String(), expected) {
 		t.Errorf("TestApiInfoRoute returned unexpected body: got %v want %v",
 			rr.Body.String(), expected)
 	}

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/gorilla/mux"
 	"github.com/benc-uk/go-starter/pkg/envhelper"
+	"github.com/gorilla/mux"
 )
 
 var contentDir string
@@ -15,16 +15,16 @@ func main() {
 	// Get server PORT setting or default
 	serverPort := envhelper.GetEnvString("PORT", "4000")
 	// Get CONTENT_DIR setting for static content or default
-	contentDir = envhelper.GetEnvString("CONTENT_DIR", ".") 
+	contentDir = envhelper.GetEnvString("CONTENT_DIR", ".")
 
 	// API keys
-	darkskyAPIKey := envhelper.GetEnvString("WEATHER_API_KEY", "") 
-	ipstackAPIKey := envhelper.GetEnvString("IPSTACK_API_KEY", "") 
+	darkskyAPIKey := envhelper.GetEnvString("WEATHER_API_KEY", "")
+	ipstackAPIKey := envhelper.GetEnvString("IPSTACK_API_KEY", "")
 
-	if(len(ipstackAPIKey) > 0) {
+	if len(ipstackAPIKey) > 0 {
 		fmt.Println("### Weather API enabled with DarkSky API key")
 	}
-	if(len(ipstackAPIKey) > 0) {
+	if len(ipstackAPIKey) > 0 {
 		fmt.Println("### Weather API enabled with IPStack API key")
 	}
 
@@ -49,7 +49,7 @@ func main() {
 	muxrouter.PathPrefix("/css").Handler(http.StripPrefix("/", fileServer))
 	muxrouter.PathPrefix("/img").Handler(http.StripPrefix("/", fileServer))
 	muxrouter.PathPrefix("/favicon.ico").Handler(http.StripPrefix("/", fileServer))
-	
+
 	// EVERYTHING else redirect to index.html
 	muxrouter.NotFoundHandler = http.HandlerFunc(routes.spaIndexRoute)
 

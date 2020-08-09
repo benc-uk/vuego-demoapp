@@ -70,9 +70,9 @@ Then access **http://localhost:4000/**
 - During development you can run the Go server directly without building the exe, by running `go run *.go` or `go run *.go ../spa/dist`
 
 ## Containers 
-Public Docker image is [available on Dockerhub](https://hub.docker.com/r/bencuk/vuego-demoapp/) 
+Public Docker image is [available on GitHub Container Registry](https://github.com/users/benc-uk/packages/container/package/vuego-demoapp) 
 
-Run with `docker run -d -p 4000:4000 bencuk/vuego-demoapp`
+Run with `docker run -d -p 4000:4000 ghcr.io/benc-uk/vuego-demoapp:latest`
 
 ## Config Environmental Variables
 - `WEATHER_API_KEY` - Enable the weather feature with a DarkSky API key 
@@ -96,10 +96,10 @@ Templates for deployment to Azure with "quick deploy" buttons are [here](azure/)
 
 
 ## Updates
-|When|What|
-|-|-|
-|April 2018|Project created|
-|July 2018|Updated Vue CLI config & moved to Golang 1.11|
-|Sept 2018|Updated with weather API and weather view|
-|Sept 2019|New release pipelines and config moved to env vars|
-|Dec 2019|Github Actions and AKS|
+| When       | What                                               |
+| ---------- | -------------------------------------------------- |
+| April 2018 | Project created                                    |
+| July 2018  | Updated Vue CLI config & moved to Golang 1.11      |
+| Sept 2018  | Updated with weather API and weather view          |
+| Sept 2019  | New release pipelines and config moved to env vars |
+| Dec 2019   | Github Actions and AKS                             |
