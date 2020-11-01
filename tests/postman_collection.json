@@ -1,0 +1,168 @@
+{
+	"info": {
+		"_postman_id": "e715c092-9681-4556-a6d2-3c21e7d6ae96",
+		"name": "VueGo Demoapp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Check Home Page",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "15e488a2-6b19-48d4-922a-1072952b8e14",
+						"exec": [
+							"pm.test(\"Home Page: Successful GET request\", function () {",
+							"    pm.response.to.be.ok;",
+							"});",
+							"",
+							"pm.test(\"Home Page: Response valid & HTML body\", function () {",
+							"    pm.response.to.be.withBody;",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.contain('text/html');",
+							"});",
+							"",
+							"pm.test(\"Home Page: Check content\", function () {",
+							"    pm.expect(pm.response.text()).to.include('Vue.js');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{apphost}}/",
+					"protocol": "http",
+					"host": [
+						"{{apphost}}"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check Weather API",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "844b11e9-1364-43a1-b091-4d679a1fac96",
+						"exec": [
+							"pm.test(\"Weather API: Successful GET request\", function () {",
+							"    pm.response.to.be.ok;",
+							"});",
+							"",
+							"pm.test(\"Weather API: Response valid & JSON body\", function () {",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Weather API: Check API response\", function () {",
+							"    var weatherData = pm.response.json();",
+							"    pm.expect(weatherData.location).to.be.an('object')",
+							"    pm.expect(weatherData.weather).to.exist;",
+							"    pm.expect(weatherData.weather.currently.temperature).to.be.an('number')",
+							"    pm.expect(weatherData.weather.currently.summary).to.be.an('string')",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{apphost}}/api/weather",
+					"protocol": "https",
+					"host": [
+						"{{apphost}}"
+					],
+					"path": [
+						"api",
+						"weather"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check Metric API",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "221473ff-0732-4a3b-9bcc-f108785efc87",
+						"exec": [
+							"pm.test(\"Metric API: Successful GET request\", function () {",
+							"    pm.response.to.be.ok;",
+							"});",
+							"",
+							"pm.test(\"Metric API: Response valid & JSON body\", function () {",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Metric API: Check API response\", function () {",
+							"    var metricData = pm.response.json();",
+							"    pm.expect(metricData).to.be.an('object')",
+							"    pm.expect(metricData.memTotal).to.be.an('number')",
+							"    pm.expect(metricData.cpuPerc).to.be.an('number')",
+							"    pm.expect(metricData.netBytesSent).to.be.an('number')",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{apphost}}/api/metrics",
+					"protocol": "https",
+					"host": [
+						"{{apphost}}"
+					],
+					"path": [
+						"api",
+						"metrics"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "c245488c-86bd-4944-aaa5-558322c58993",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "d242a124-0cbd-4da1-b3cc-df7275419fa6",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
