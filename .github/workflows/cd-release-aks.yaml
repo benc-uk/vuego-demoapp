@@ -7,14 +7,14 @@ name: CD Release - AKS
 
 on:
   # Run when CI completes but ONLY in master branch
-  workflow_run:
-    workflows: [CI Build App]
-    branches: [master]
-    types:
-      - completed
+  # workflow_run:
+  #   workflows: [CI Build App]
+  #   branches: [master]
+  #   types:
+  #     - completed
   workflow_dispatch:
     inputs:
-      imagetag:
+      IMAGE_TAG:
         description: "Image tag to be deployed"
         required: true
         default: "latest"
@@ -44,8 +44,8 @@ jobs:
 
     steps:
       # Note. This trick allows both manual running with workflow_dispatch and CD triggered runs
-      - name: "Set IMAGE_TAG variable"
-        run: echo "IMAGE_TAG=${{ github.event.workflow_run.id }}${{ github.event.inputs.imagetag }}" >> $GITHUB_ENV
+      # - name: "Set IMAGE_TAG variable"
+      #   run: echo "IMAGE_TAG=${{ github.event.workflow_run.id }}${{ github.event.inputs.imagetag }}" >> $GITHUB_ENV
 
       - name: "Checkout"
         uses: actions/checkout@v1
@@ -74,7 +74,7 @@ jobs:
           --install \
           --namespace ${{ env.HELM_NAMESPACE }} \
           --values ./kubernetes/app.yaml \
-          --set image.tag=dev-${{ env.IMAGE_TAG }},image.repository=${{ env.IMAGE_REG }}/${{ env.IMAGE_REPO }},ingress.host=${{ env.INGRESS_DNS_HOST }}
+          --set image.tag=${{ github.event.inputs.IMAGE_TAG }},image.repository=${{ env.IMAGE_REG }}/${{ env.IMAGE_REPO }},ingress.host=${{ env.INGRESS_DNS_HOST }}
 
       - name: "End deployment - failure"
         if: ${{ failure() }}

@@ -7,14 +7,14 @@ name: CD Release - Webapp
 
 on:
   # Run when CI completes but ONLY in master branch
-  workflow_run:
-    workflows: [CI Build App]
-    branches: [master]
-    types:
-      - completed
+  # workflow_run:
+  #   workflows: [CI Build App]
+  #   branches: [master]
+  #   types:
+  #     - completed
   workflow_dispatch:
     inputs:
-      imagetag:
+      IMAGE_TAG:
         description: "Image tag to be deployed"
         required: true
         default: "latest"
@@ -78,7 +78,7 @@ jobs:
           subscriptionId: ${{ env.ARM_SUB_ID }}
           resourceGroupName: ${{ env.ARM_RES_GROUP }}
           template: ./infra/webapp.json
-          parameters: webappName=${{ env.APP_NAME }} webappImage=${{ env.IMAGE_REG }}/${{ env.IMAGE_REPO }}:dev-${{ env.IMAGE_TAG }} weatherKey=${{ secrets.WEATHER_API_KEY }} ipStackKey=${{ secrets.IPSTACK_API_KEY }}
+          parameters: webappName=${{ env.APP_NAME }} webappImage=${{ env.IMAGE_REG }}/${{ env.IMAGE_REPO }}:${{ github.event.inputs.IMAGE_TAG }} weatherKey=${{ secrets.WEATHER_API_KEY }} ipStackKey=${{ secrets.IPSTACK_API_KEY }}
           deploymentName: webapp-deploy-${{ github.run_id }}
 
       - name: "End deployment - failure"

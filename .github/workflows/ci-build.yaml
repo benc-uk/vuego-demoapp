@@ -58,3 +58,10 @@ jobs:
       - name: "Docker push image to ${{ env.IMAGE_REG }}"
         if: github.ref == 'refs/heads/master'
         run: docker push $IMAGE_REG/$IMAGE_REPO
+
+      - name: "Trigger AKS release"
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: Another Workflow
+          token: ${{ secrets.CR_PAT }}
+          inputs: '{ "IMAGE_TAG": "dev-${{ github.run_id }}" }'
