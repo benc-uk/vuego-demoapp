@@ -66,3 +66,11 @@ jobs:
           workflow: "CD Release - AKS"
           token: ${{ secrets.CR_PAT }}
           inputs: '{ "IMAGE_TAG": "dev-${{ github.run_id }}" }'
+
+      - name: "Trigger Azure web app release pipeline"
+        if: github.ref == 'refs/heads/master'
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: "CD Release - Webapp"
+          token: ${{ secrets.CR_PAT }}
+          inputs: '{ "IMAGE_TAG": "dev-${{ github.run_id }}" }'

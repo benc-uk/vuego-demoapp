@@ -6,12 +6,6 @@
 name: CD Release - AKS
 
 on:
-  # Run when CI completes but ONLY in master branch
-  # workflow_run:
-  #   workflows: [CI Build App]
-  #   branches: [master]
-  #   types:
-  #     - completed
   workflow_dispatch:
     inputs:
       IMAGE_TAG:
@@ -37,16 +31,10 @@ jobs:
   deploy-aks:
     name: Deploy to AKS with Helm
     runs-on: ubuntu-latest
-    # Important! workaround to not being able to trigger on "type:success"
-    #if: ${{ github.event.workflow_run.conclusion == 'success' }}
     outputs:
       deployment_id: ${{ steps.deploy.outputs.deployment_id }}
 
     steps:
-      # Note. This trick allows both manual running with workflow_dispatch and CD triggered runs
-      # - name: "Set IMAGE_TAG variable"
-      #   run: echo "IMAGE_TAG=${{ github.event.workflow_run.id }}${{ github.event.inputs.imagetag }}" >> $GITHUB_ENV
-
       - name: "Checkout"
         uses: actions/checkout@v1
 
