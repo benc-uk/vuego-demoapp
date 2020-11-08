@@ -32,42 +32,60 @@ The Go server component performs two tasks
 
 ## Building & Running Locally
 
-### 1. Pre-reqs
+### Pre-reqs
 - Install [Node.js](https://nodejs.org/en/)
 - Install [Vue CLI](https://github.com/vuejs/vue-cli)
-- You will need [Go v1.12+ installed and configured](https://golang.org/dl/).
-- Once Go v1.15+ is installed, also make sure you have the GOPATH environmental variable set up 
+- You will need [Go v1.15+ installed and configured](https://golang.org/dl/).
 - Clone the project to any directory where you do development work
 ```
 git clone https://github.com/benc-uk/vuego-demoapp.git
 ```
 
-### 2. Building the Vue.js SPA
-To build and bundle the SPA run the following. This will output the resulting app (HTML, CSS, JS, assets, etc) to `spa/dist`
+### Run Locally with Hot Reload 
+This is a dynamic way of working locally which will support hot reloading for both the server and the frontend
+
+[Install `air`, a tool for hot-reloading Go projects](https://github.com/cosmtrek/air#installation)
+```
+go get -u github.com/cosmtrek/air
+```
+
+Run the server using air, Note. the serving of static files is not used in this configuration
+```
+cd server
+air
+```
+
+Open a second terminal/session. Run the Vue.js SPA using the built in dev server, Note. In this mode the config file `.env.development` will be picked up, which directs API calls to `http://localhost:4000/api` (which is what the above server will be exposing)
+```
+cd spa
+npm install
+npm run serve
+```
+
+Then access **http://localhost:4000/**
+
+### Run Locally with a Static Build
+This method carries out a full "production" build of both components, and reflects the steps within the [Dockerfile](./Dockerfile)
+
+First build and bundle the SPA, running the following. This will output the resulting app (HTML, CSS, JS, assets, etc) into `spa/dist`
 ```
 cd spa
 npm install
 npm run build
 ```
 
-### 3. Building the Go server
-To build the Go server component run the following. This will create an executable called `server` or `server.exe` 
+To build the Go server component run the following. This will create an executable called `server`
 ```
 cd server
-go build
+CGO_ENABLED=0 GOOS=linux go build -o server
 ```
 
-### 4. Running the combined app
-To start the app, launch the server exe and pass the directory containing the content you wish to serve as a command line parameter. The server will listen on port 4000 by default, change this by setting the environmental variable `PORT`
+To start the combined app, launch the server binary and pass the directory containing the content you wish to serve as the environmental variable `CONTENT_DIR`. The server will listen on port 4000 by default, change this by setting the environmental variable `PORT`
 ```
 CONTENT_DIR=../spa/dist ./server 
 ```
 Then access **http://localhost:4000/**
 
-
-### Notes on running locally
-- You can run the Vue.js app standalone with by running `npm run serve`, this will start a dev server on port 8080. This will serve the app content and will auto reload when code changes. However the API endpoint will not be available so the 'Sys Info' & 'Monitor' pages will not receive any data
-- During development you can run the Go server directly without building the exe, by running `go run *.go` or `go run *.go ../spa/dist`
 
 ## Containers 
 Public Docker image is [available on GitHub Container Registry](https://github.com/users/benc-uk/packages/container/package/vuego-demoapp) 

@@ -15,6 +15,7 @@
 
 # Go stuff
 server/server
+server/tmp/**
 server/server.exe
 **/go.sum
 

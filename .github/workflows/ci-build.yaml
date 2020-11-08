@@ -23,18 +23,22 @@ jobs:
       - name: "Run golint"
         run: go get -u golang.org/x/lint/golint && $(go env GOPATH)/bin/golint -set_exit_status ./server/...
 
-      # - name: "Upload test results"
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: test-results
-      #     path: ./src/test-results.xml
-      # - name: "Report on test results"
-      #   uses: ashley-taylor/junit-report-annotations-action@master
-      #   if: always()
-      #   with:
-      #     access-token: ${{ secrets.GITHUB_TOKEN }}
-      #     path: ./src/test-results.xml
-      #     name: Unit test results
+      - name: "Run tests"
+        run: go get gotest.tools/gotestsum && $(go env GOPATH)/bin/gotestsum --format testname --junitfile test-results.xml
+
+      - name: "Upload test results"
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results
+          path: ./server/test-results.xml
+
+      - name: "Report on test results"
+        uses: ashley-taylor/junit-report-annotations-action@master
+        if: always()
+        with:
+          access-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./server/test-results.xml
+          name: Unit test results
 
   build:
     name: "Build & Push Image"
