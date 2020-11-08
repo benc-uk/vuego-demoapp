@@ -1,10 +1,13 @@
-module server
+module github.com/benc-uk/vuego-demoapp
 
-go 1.14
+go 1.15
 
 require (
+	github.com/StackExchange/wmi v0.0.0-20190523213315-cbe66965904d // indirect
 	github.com/benc-uk/go-starter v1.0.0
-	github.com/gorilla/mux v1.7.4
-	github.com/shirou/gopsutil v2.20.7+incompatible
-	golang.org/x/sys v0.0.0-20200808120158-1030fc2bf1d9 // indirect
+	github.com/go-ole/go-ole v1.2.4 // indirect
+	github.com/gorilla/mux v1.8.0
+	github.com/shirou/gopsutil v3.20.10+incompatible
+	github.com/stretchr/testify v1.6.1 // indirect
+	golang.org/x/sys v0.0.0-20201107080550-4d91cf3a1aaf // indirect
 )
