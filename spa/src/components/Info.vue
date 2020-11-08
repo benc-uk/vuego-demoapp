@@ -10,7 +10,14 @@ Ben C, April 2018
       <fa icon="cogs" />&nbsp; System Information
     </div>
     <div class="card-body">
-      <spinner v-if="!info" />
+      <b-alert v-if="error" show variant="warning">
+        <h4>There was a problem 😥</h4>
+        <div class="errmsg">
+          {{ error }}
+        </div>
+      </b-alert>
+
+      <spinner v-if="!info && !error" />
 
       <table v-if="info" class="table table-hover">
         <tbody>
@@ -35,7 +42,6 @@ import Spinner from './Spinner.vue'
 const info = null
 
 export default {
-
   components: {
     Spinner
   },
@@ -49,11 +55,14 @@ export default {
       return value
     }
   },
-  mixins: [apiMixin],
+
+  // Adds functions to call the API
+  mixins: [ apiMixin ],
 
   data: function() {
     return {
-      info: info
+      info: info,
+      error: null
     }
   },
 
@@ -82,21 +91,15 @@ export default {
 
   created() {
     this.getInfo()
-    setInterval(this.getInfo, 5000)
   },
 
   methods: {
-    getInfo: function() {
-      fetch(`${this.apiEndpoint}/info`)
-        .then((resp) => {
-          return resp.json()
-        })
-        .then((json) => {
-          this.info = json
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+    getInfo: async function() {
+      try {
+        this.info = await this.apiGetInfo()
+      } catch (err) {
+        this.error = err
+      }
     }
   }
 }

@@ -1,19 +1,19 @@
 #
-# Build and bundle the Vue.js SPA 
+# Build and bundle the Vue.js frontend SPA 
 #
-FROM node:12-alpine AS vue-build
+FROM node:14-alpine AS vue-build
 WORKDIR /build
 
 COPY spa/package*.json ./
 RUN npm install
 
 COPY spa/ .
-RUN npm run build
+RUN npm run build -- --mode development
 
 #
-# Build the Go server
+# Build the Go server backend
 #
-FROM golang:1.14-alpine as go-build
+FROM golang:1.15-alpine as go-build
 
 WORKDIR /build/src/server
 
@@ -25,17 +25,16 @@ COPY server/go.sum ./
 
 ENV GO111MODULE=on
 # Disabling cgo results in a fully static binary that can run without C libs
-RUN CGO_ENABLED=0 GOOS=linux go build
+RUN CGO_ENABLED=0 GOOS=linux go build -o server
 
 #
 # Assemble the server binary and Vue bundle into a single app
 #
-# FROM alpine:3.8
 FROM scratch
 WORKDIR /app 
 LABEL org.label-schema.name="vuego-demoapp" \
       org.label-schema.description="Demonstration Vue.js and Go web app" \    
-      org.label-schema.version="1.8.1" \
+      org.label-schema.version="1.8.2" \
       org.label-schema.vcs-url=https://github.com/benc-uk/vuego-demoapp
 
 COPY --from=vue-build /build/dist . 

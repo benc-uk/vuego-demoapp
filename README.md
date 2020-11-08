@@ -6,7 +6,7 @@ The app has been designed with cloud native demos & containers in mind, in order
 Typical uses would be deployment to Kubernetes, demos of Docker, CI/CD (build pipelines are provided), deployment to cloud (Azure) monitoring, auto-scaling
 
 - The SPA component was created using the Vue CLI and uses [Bootstrap-Vue](https://bootstrap-vue.js.org/) and [Font Awesome](https://fontawesome.com/). In addition [Gauge.js](http://bernii.github.io/gauge.js/) is used for the dials in the monitoring view
-- The Go component is a vanilla Go HTTP server using [gopsutils](https://github.com/shirou/gopsutil) for monitoring metrics, and [Gorilla Mux](https://github.com/gorilla/mux) for routing
+- The Go component is a Go HTTP server based on the std http package and using [gopsutils](https://github.com/shirou/gopsutil) for monitoring metrics, and [Gorilla Mux](https://github.com/gorilla/mux) for routing
 
 ![screenshot](https://user-images.githubusercontent.com/14982936/38804618-e1a5c1bc-416a-11e8-9cf3-c64689faf6cb.png)
 
@@ -15,7 +15,8 @@ Typical uses would be deployment to Kubernetes, demos of Docker, CI/CD (build pi
 /
 ├── spa            Root of the Vue.js project
 │   └── src        Vue.js source code
-├── azure          Supporting files for Azure deployment etc
+├── infra          Supporting files for Azure deployment etc
+├── kubernetes     Instructions for Kubernetes deployment with Helm
 └── server         Go backend server
     └── vendor     Vendor libraries used by the server 
 ```
@@ -35,7 +36,7 @@ The Go server component performs two tasks
 - Install [Node.js](https://nodejs.org/en/)
 - Install [Vue CLI](https://github.com/vuejs/vue-cli)
 - You will need [Go v1.12+ installed and configured](https://golang.org/dl/).
-- Once Go v1.12+ is installed, also make sure you have the GOPATH environmental variable set up 
+- Once Go v1.15+ is installed, also make sure you have the GOPATH environmental variable set up 
 - Clone the project to any directory where you do development work
 ```
 git clone https://github.com/benc-uk/vuego-demoapp.git
@@ -59,8 +60,7 @@ go build
 ### 4. Running the combined app
 To start the app, launch the server exe and pass the directory containing the content you wish to serve as a command line parameter. The server will listen on port 4000 by default, change this by setting the environmental variable `PORT`
 ```
-cd server
-./server ../spa/dist
+CONTENT_DIR=../spa/dist ./server 
 ```
 Then access **http://localhost:4000/**
 
@@ -83,23 +83,25 @@ Waiting for golang support
 
 
 # GitHub Actions CI/CD 
-A working CI and release GitHub Actions workflow is provided `.github/workflows/build-deploy-aks.yml`, automated builds are run in GitHub hosted runners
+A working set of CI and CD release GitHub Actions workflows are provided `.github/workflows/`, automated builds are run in GitHub hosted runners
 
 ### [GitHub Actions](https://github.com/benc-uk/vuego-demoapp/actions)
 
-![](https://img.shields.io/github/workflow/status/benc-uk/vuego-demoapp/Build%20%26%20Deploy%20AKS)  
-![](https://img.shields.io/github/last-commit/benc-uk/vuego-demoapp)  
+[![](https://img.shields.io/github/workflow/status/benc-uk/vuego-demoapp/CI%20Build%20App)](https://github.com/benc-uk/vuego-demoapp/actions?query=workflow%3A%22CI+Build+App%22)
 
+[![](https://img.shields.io/github/workflow/status/benc-uk/vuego-demoapp/CD%20Release%20-%20AKS?label=release-kubernetes)](https://github.com/benc-uk/vuego-demoapp/actions?query=workflow%3A%22CD+Release+-+AKS%22)
 
-## Azure Templates
-Templates for deployment to Azure with "quick deploy" buttons are [here](azure/)
+[![](https://img.shields.io/github/workflow/status/benc-uk/vuego-demoapp/CD%20Release%20-%20Webapp?label=release-azure)](https://github.com/benc-uk/vuego-demoapp/actions?query=workflow%3A%22CD+Release+-+Webapp%22)
+
+[![](https://img.shields.io/github/last-commit/benc-uk/vuego-demoapp)](https://github.com/benc-uk/vuego-demoapp/commits/master)
 
 
 ## Updates
 | When       | What                                               |
 | ---------- | -------------------------------------------------- |
-| April 2018 | Project created                                    |
-| July 2018  | Updated Vue CLI config & moved to Golang 1.11      |
-| Sept 2018  | Updated with weather API and weather view          |
-| Sept 2019  | New release pipelines and config moved to env vars |
+| Nov 2020   | New pipelines & code/ API robustness               |
 | Dec 2019   | Github Actions and AKS                             |
+| Sept 2019  | New release pipelines and config moved to env vars |
+| Sept 2018  | Updated with weather API and weather view          |
+| July 2018  | Updated Vue CLI config & moved to Golang 1.11      |
+| April 2018 | Project created                                    |

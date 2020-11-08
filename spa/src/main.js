@@ -21,11 +21,12 @@ import { faGithub, faDocker } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 // Register icons and component
 fontAwesomeLib.add([faHome, faCogs, faTachometerAlt, faInfoCircle, faGithub, faDocker, faUmbrella, faBomb])
+// eslint-disable-next-line
 Vue.component('fa', FontAwesomeIcon)
 
 // We have to register this globally for some reason
 import VueSkycons from 'vue-skycons'
-Vue.use(VueSkycons)
+Vue.component('Skycon', VueSkycons)
 
 // Init Vue
 Vue.use(BootstrapVue)

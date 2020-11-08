@@ -10,7 +10,14 @@ Ben C, April 2018
       <fa icon="tachometer-alt" />&nbsp; Monitoring
     </div>
     <div class="card-body">
-      <spinner v-if="!metrics" />
+      <b-alert v-if="error" show variant="warning">
+        <h4>There was a problem 😥</h4>
+        <div class="errmsg">
+          {{ error }}
+        </div>
+      </b-alert>
+
+      <spinner v-if="!metrics && !error" />
 
       <b-container v-if="metrics" fluid>
         <b-row align-h="around">
@@ -40,6 +47,7 @@ import Spinner from './Spinner.vue'
 import Dial from './Dial.vue'
 
 let prevNetBytes
+let refreshId
 
 export default {
   components: {
@@ -47,12 +55,14 @@ export default {
     Dial
   },
 
-  mixins: [apiMixin],
+  // Adds functions to call the API
+  mixins: [ apiMixin ],
 
   data: function() {
     return {
       metrics: null,
-      prevNetBytes: null
+      prevNetBytes: null,
+      error: null
     }
   },
 
@@ -61,14 +71,17 @@ export default {
       if (!this.metrics) { return 0 }
       return this.metrics.cpuPerc
     },
+
     mem: function() {
       if (!this.metrics) { return 0 }
       return (this.metrics.memUsed / this.metrics.memTotal) * 100
     },
+
     disk: function() {
       if (!this.metrics) { return 0 }
       return 100 - ((this.metrics.diskFree / this.metrics.diskTotal) * 100)
     },
+
     net: function() {
       let newTot = this.metrics.netBytesSent + this.metrics.netBytesRecv
       let delta = newTot - prevNetBytes
@@ -85,13 +98,22 @@ export default {
 
   created() {
     this.update()
-    setInterval(this.update, 2500)
+    refreshId = setInterval(this.update, 2500)
+  },
+
+  beforeDestroy () {
+    clearInterval(refreshId)
   },
 
   methods: {
-    update: function() {
-      this.apiGetMetrics()
-        .then((json) => { this.metrics = json })
+    // Update the data with an API call
+    update: async function() {
+      this.error = null
+      try {
+        this.metrics = await this.apiGetMetrics()
+      } catch (err) {
+        this.error = err
+      }
     }
   }
 }

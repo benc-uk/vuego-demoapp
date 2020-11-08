@@ -6,5 +6,9 @@
   "[typescript]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
-  "editor.semanticHighlighting.enabled": true
+  "editor.semanticHighlighting.enabled": true,
+  // Otherwise go.mod needs to be at root of repo
+  "gopls": {
+    "experimentalWorkspaceModule": true,
+  }
 }
