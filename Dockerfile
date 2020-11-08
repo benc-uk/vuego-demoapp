@@ -8,7 +8,7 @@ COPY spa/package*.json ./
 RUN npm install
 
 COPY spa/ .
-RUN npm run build -- --mode development
+RUN npm run build
 
 #
 # Build the Go server backend
