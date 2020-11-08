@@ -194,7 +194,7 @@ func (r Routes) weatherRoute(resp http.ResponseWriter, req *http.Request) {
 
 	// Try to deduce calling IP address
 	ip := req.Header.Get("x-forwarded-for")
-	ip = "86.134.117.146"
+	//ip = "86.134.117.146" // Only uncomment for local testing!
 
 	// If not in the header try the RemoteAddr field
 	if len(ip) == 0 {
