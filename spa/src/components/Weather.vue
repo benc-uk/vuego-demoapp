@@ -10,10 +10,17 @@ Ben C, Sept 2018
       <fa icon="umbrella" />&nbsp; Weather
     </div>
     <div class="card-body">
-      <spinner v-if="!weather" />
+      <b-alert v-if="error" show variant="warning">
+        <h4>There was a problem 😥</h4>
+        <div class="errmsg">
+          {{ error }}
+        </div>
+      </b-alert>
+
+      <spinner v-if="!weather && !error" />
 
       <div v-if="weather" id="weather-div">
-        <skycon :condition="weather.weather.currently.icon" :width="256" :height="256" />
+        <skycon :condition="weather.weather.currently.icon" :width="256" :height="256" color="#223322" />
       </div>
 
       <table v-if="weather" class="table table-hover">
@@ -65,12 +72,14 @@ export default {
   components: {
     Spinner
   },
-  mixins: [apiMixin],
+
+  // Adds functions to call the API
+  mixins: [ apiMixin ],
 
   data: function() {
     return {
       weather: null,
-      skycons: null
+      error: null
     }
   },
 
@@ -82,11 +91,14 @@ export default {
   },
 
   methods: {
-    update: function() {
-      this.apiGetWeather()
-        .then((json) => {
-          this.weather = json
-        })
+    // Update the data with an API call
+    update: async function() {
+      this.error = null
+      try {
+        this.weather = await this.apiGetWeather()
+      } catch (err) {
+        this.error = err
+      }
     }
   }
 }
