@@ -25,6 +25,7 @@ jobs:
 
       - name: "Run tests"
         run: go get gotest.tools/gotestsum && $(go env GOPATH)/bin/gotestsum --format testname --junitfile test-results.xml
+        working-directory: ./server
 
       - name: "Upload test results"
         uses: actions/upload-artifact@v2
