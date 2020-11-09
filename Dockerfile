@@ -34,7 +34,7 @@ FROM scratch
 WORKDIR /app 
 LABEL org.label-schema.name="vuego-demoapp" \
       org.label-schema.description="Demonstration Vue.js and Go web app" \    
-      org.label-schema.version="1.8.2" \
+      org.label-schema.version="1.8.3" \
       org.label-schema.vcs-url=https://github.com/benc-uk/vuego-demoapp
 
 COPY --from=vue-build /build/dist . 

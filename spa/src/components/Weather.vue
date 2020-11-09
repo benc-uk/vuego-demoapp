@@ -98,6 +98,9 @@ export default {
         this.weather = await this.apiGetWeather()
       } catch (err) {
         this.error = err
+        if (err.toString().includes('Not Implemented')) {
+          this.error = 'Feature not enabled on the server, WEATHER_API_KEY & IPSTACK_API_KEY need to be set'
+        }
       }
     }
   }

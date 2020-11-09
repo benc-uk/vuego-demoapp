@@ -189,6 +189,16 @@ func (r Routes) weatherRoute(resp http.ResponseWriter, req *http.Request) {
 	}
 	resp.Header().Set("Content-Type", "application/json")
 
+	// Check if required config is set
+	if r.ipstackAPIKey == "" {
+		apiError(resp, http.StatusNotImplemented, "Feature disabled, IPSTACK_API_KEY is not set")
+		return
+	}
+	if r.darkskyAPIKey == "" {
+		apiError(resp, http.StatusNotImplemented, "Feature disabled, WEATHER_API_KEY is not set")
+		return
+	}
+
 	// Top level JSON container struct
 	var weather Weather
 
@@ -236,7 +246,7 @@ func (r Routes) weatherRoute(resp http.ResponseWriter, req *http.Request) {
 		return
 	}
 	if len(ipstackData.City) == 0 {
-		apiError(resp, http.StatusNotFound, fmt.Sprintf("No weather data for this IP %v", ip))
+		apiError(resp, http.StatusNotFound, fmt.Sprintf("No location data for this IP %v", ip))
 		return
 	}
 	weather.GeoInfo = ipstackData
