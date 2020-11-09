@@ -16,13 +16,10 @@ on:
 # Note. Required secrets: CR_PAT & AZURE_CREDENTIALS
 
 env:
-  IMAGE_REG: ghcr.io
-  IMAGE_REPO: benc-uk/vuego-demoapp
   AKS_NAME: benc
   AKS_RES_GROUP: aks
   HELM_RELEASE: vuego
   HELM_NAMESPACE: demoapps
-  INGRESS_DNS_HOST: vuego-demoapp.kube.benco.io
 
 jobs:
   #
@@ -57,12 +54,12 @@ jobs:
 
       - name: "Helm release"
         run: |
-          helm upgrade ${{ env.HELM_RELEASE }} \
-          https://code.benco.io/helm-charts/webapp-1.2.0.tgz \
+          helm repo add benc-uk https://benc-uk.github.io/helm-charts
+          helm upgrade ${{ env.HELM_RELEASE }} benc-uk/webapp \
           --install \
           --namespace ${{ env.HELM_NAMESPACE }} \
-          --values ./kubernetes/app.yaml \
-          --set image.tag=${{ github.event.inputs.IMAGE_TAG }},image.repository=${{ env.IMAGE_REG }}/${{ env.IMAGE_REPO }},ingress.host=${{ env.INGRESS_DNS_HOST }}
+          --values ./kubernetes/aks-live.yaml \
+          --set image.tag=${{ github.event.inputs.IMAGE_TAG }}
 
       - name: "End deployment - failure"
         if: ${{ failure() }}

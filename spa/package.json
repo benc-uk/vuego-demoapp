@@ -1,7 +1,15 @@
 {
   "name": "vuego-demoapp-spa",
-  "version": "1.8.3",
+  "version": "1.8.4",
   "private": true,
+  "description": "Frontend web client SPA for vuego-demoapp",
+  "author": {
+    "name": "Ben Coleman"
+  },
+  "repository": {
+    "url": "https://github.com/benc-uk/vuego-demoapp"
+  },
+  "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
