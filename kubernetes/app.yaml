@@ -16,7 +16,6 @@ ingress:
   enabled: true
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
-  host: ${{ env.host }}
-  tls: 
+  tls:
     enabled: true
     secretName: kube-benco-io-cert

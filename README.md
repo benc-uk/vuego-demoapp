@@ -92,13 +92,17 @@ Public Docker image is [available on GitHub Container Registry](https://github.c
 
 Run with `docker run -d -p 4000:4000 ghcr.io/benc-uk/vuego-demoapp:latest`
 
-## Config Environmental Variables
+## Kubernetes
+App can easily be deployed with Helm see [kubernetes/readme.md](kubernetes/readme.md) for details
+
+
+# Config 
+Environmental variables
 - `WEATHER_API_KEY` - Enable the weather feature with a DarkSky API key 
 - `IPSTACK_API_KEY` - Enable the weather feature with a IPStack API key 
+- `PORT` - Port to listen on (default: `4000`) 
+- `CONTENT_DIR` - Directory to serve static content from (default: `.`) 
   
-## Application Insights 
-Waiting for golang support
-
 
 # GitHub Actions CI/CD 
 A working set of CI and CD release GitHub Actions workflows are provided `.github/workflows/`, automated builds are run in GitHub hosted runners
