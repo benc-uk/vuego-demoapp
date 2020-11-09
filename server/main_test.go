@@ -60,9 +60,9 @@ func TestWeatherRoute(t *testing.T) {
 	handler.ServeHTTP(rr, req)
 
 	// Check resp code - it will fail!
-	if status := rr.Code; status != http.StatusInternalServerError {
+	if status := rr.Code; status != http.StatusNotImplemented {
 		t.Errorf("TestWeatherRoute returned wrong status code: got %v want %v",
-			status, http.StatusOK)
+			status, http.StatusNotImplemented)
 	}
 }
 
@@ -88,6 +88,6 @@ func TestSpaRoute(t *testing.T) {
 	// Check resp code
 	if status := rr.Code; status != http.StatusNotFound {
 		t.Errorf("TestSpaRoute returned wrong status code: got %v want %v",
-			status, http.StatusOK)
+			status, http.StatusNotFound)
 	}
 }
