@@ -1,6 +1,7 @@
 package main
 
 import (
+	// #include <unistd.h>
 	"crypto/tls"
 	"encoding/json"
 	"fmt"
@@ -11,8 +12,11 @@ import (
 	"strings"
 	"time"
 
+	"github.com/pbnjay/memory"
+
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/disk"
+	"github.com/shirou/gopsutil/host"
 	"github.com/shirou/gopsutil/mem"
 	"github.com/shirou/gopsutil/net"
 )
@@ -20,12 +24,18 @@ import (
 // SysInfo is generic holder for passsing data back
 type SysInfo struct {
 	Hostname      string   `json:"hostname"`
+	Platform      string   `json:"platform"`
 	OS            string   `json:"os"`
+	Uptime        uint64   `json:"uptime"`
 	Arch          string   `json:"architecture"`
 	CPUs          int      `json:"cpuCount"`
+	CPUModel      string   `json:"cpuModel"`
+	Mem           uint64   `json:"mem"`
 	GoVersion     string   `json:"goVersion"`
 	NetRemoteAddr string   `json:"netRemoteAddress"`
 	NetHost       string   `json:"netHost"`
+	IsContainer   bool     `json:"isContainer"`
+	IsKubernetes  bool     `json:"isKubernetes"`
 	EnvVars       []string `json:"envVars"`
 }
 
@@ -94,14 +104,33 @@ func (r Routes) apiInfoRoute(resp http.ResponseWriter, req *http.Request) {
 
 	var info SysInfo
 
+	hostInfo, err := host.Info()
+	if err != nil {
+		apiError(resp, http.StatusInternalServerError, err.Error())
+		return
+	}
+	cpuInfo, err := cpu.Info()
+	if err != nil {
+		apiError(resp, http.StatusInternalServerError, err.Error())
+		return
+	}
+
 	// Grab various bits of infomation from where we can
 	info.Hostname, _ = os.Hostname()
 	info.GoVersion = runtime.Version()
-	info.OS = runtime.GOOS
+	info.OS = hostInfo.Platform + " " + hostInfo.PlatformVersion
+	info.Platform = hostInfo.OS
+	info.Uptime = hostInfo.Uptime
+	info.Mem = memory.TotalMemory()
 	info.Arch = runtime.GOARCH
 	info.CPUs = runtime.NumCPU()
+	info.CPUModel = cpuInfo[0].ModelName
 	info.NetRemoteAddr = req.RemoteAddr
 	info.NetHost = req.Host
+	info.IsContainer = fileExists("/.dockerenv")
+	info.IsKubernetes = fileExists("/var/run/secrets/kubernetes.io")
+
+	// Full grab of all env vars
 	info.EnvVars = os.Environ()
 
 	// JSON-ify our info
@@ -298,4 +327,14 @@ func apiError(resp http.ResponseWriter, code int, message string) {
 		return
 	}
 	resp.Write(errorResp)
+}
+
+// fileExists checks if a file exists and is not a directory before we
+// try using it to prevent further errors.
+func fileExists(filename string) bool {
+	info, err := os.Stat(filename)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return !info.IsDir()
 }

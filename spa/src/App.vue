@@ -9,25 +9,25 @@ Ben C, April 2018
     <b-navbar toggleable="md" type="dark" variant="primary">
       <b-navbar-toggle target="nav_collapse" />
       <b-navbar-brand to="/">
-        <img src="./assets/vuejs.svg" height="50px">
+        <img src="./assets/vuejs.svg" height="50px">Vue.js &amp; Go
       </b-navbar-brand>
       <b-collapse id="nav_collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item to="/home">
+          <b-button to="/home" variant="dark">
             <fa icon="home" />&nbsp; Home
-          </b-nav-item>
-          <b-nav-item to="/info">
-            <fa icon="cogs" />&nbsp; Sys Info
-          </b-nav-item>
-          <b-nav-item to="/monitor">
+          </b-button>
+          <b-button to="/info" variant="dark">
+            <fa icon="cogs" />&nbsp; Info
+          </b-button>
+          <b-button to="/monitor" variant="dark">
             <fa icon="tachometer-alt" />&nbsp; Monitor
-          </b-nav-item>
-          <b-nav-item to="/weather">
+          </b-button>
+          <b-button to="/weather" variant="dark">
             <fa icon="umbrella" />&nbsp; Weather
-          </b-nav-item>
-          <b-nav-item to="/about">
+          </b-button>
+          <b-button to="/about" variant="dark">
             <fa icon="info-circle" />&nbsp; About
-          </b-nav-item>
+          </b-button>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -59,5 +59,12 @@ Ben C, April 2018
   }
   .slidedown-enter {
     transform: scaleY(0);
+  }
+</style>
+
+<style scoped>
+  .btn {
+    margin-right: 0.3rem;
+    width: 7rem;
   }
 </style>
