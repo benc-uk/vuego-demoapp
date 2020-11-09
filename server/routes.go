@@ -329,12 +329,12 @@ func apiError(resp http.ResponseWriter, code int, message string) {
 	resp.Write(errorResp)
 }
 
-// fileExists checks if a file exists and is not a directory before we
-// try using it to prevent further errors.
+// fileExists checks if a file or directory exists
 func fileExists(filename string) bool {
 	info, err := os.Stat(filename)
 	if os.IsNotExist(err) {
 		return false
 	}
-	return !info.IsDir()
+	//return !info.IsDir()
+	return info != nil
 }
