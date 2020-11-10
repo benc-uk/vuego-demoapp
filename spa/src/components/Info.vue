@@ -84,10 +84,6 @@ export default {
         const parts = envVar.split('=')
         const name = parts[0]
         const value = parts[1]
-        if (name.includes('API_KEY')) { continue }
-        if (name.includes('SECRET')) { continue }
-        if (name.includes('PWD')) { continue }
-        if (name.includes('PASSWORD')) { continue }
         if (name.includes('PATH')) { continue }
         if (name.includes('NPM_')) { continue }
         if (name.includes('VSCODE_')) { continue }
