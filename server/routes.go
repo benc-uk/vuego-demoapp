@@ -133,6 +133,15 @@ func (r Routes) apiInfoRoute(resp http.ResponseWriter, req *http.Request) {
 	// Full grab of all env vars
 	info.EnvVars = os.Environ()
 
+	// Basic attempt to remove sensitive vars
+	// Strange for means we can delete elements while looping over
+	for i := len(info.EnvVars) - 1; i >= 0; i-- {
+		envVarName := strings.Split(info.EnvVars[i], "=")[0]
+		if strings.Contains(envVarName, "_KEY") || strings.Contains(envVarName, "SECRET") || strings.Contains(envVarName, "PWD") || strings.Contains(envVarName, "PASSWORD") {
+			info.EnvVars = sliceRemove(info.EnvVars, i)
+		}
+	}
+
 	// JSON-ify our info
 	js, err := json.Marshal(info)
 	if err != nil {
@@ -337,4 +346,13 @@ func fileExists(filename string) bool {
 	}
 	//return !info.IsDir()
 	return info != nil
+}
+
+func sliceRemove(slice []string, i int) []string {
+	if i < len(slice)-1 {
+		slice = append(slice[:i], slice[i+1:]...)
+	} else if i == len(slice)-1 {
+		slice = slice[:len(slice)-1]
+	}
+	return slice
 }
