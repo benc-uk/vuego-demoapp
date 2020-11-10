@@ -20,6 +20,7 @@ env:
   AKS_RES_GROUP: aks
   HELM_RELEASE: vuego
   HELM_NAMESPACE: demoapps
+  INGRESS_DNS_HOST: vuego-demoapp.kube.benco.io
 
 jobs:
   #
@@ -59,7 +60,7 @@ jobs:
           --install \
           --namespace ${{ env.HELM_NAMESPACE }} \
           --values ./kubernetes/aks-live.yaml \
-          --set image.tag=${{ github.event.inputs.IMAGE_TAG }}
+          --set image.tag=${{ github.event.inputs.IMAGE_TAG }},ingress.host=$INGRESS_DNS_HOST
 
       - name: "End deployment - failure"
         if: ${{ failure() }}
