@@ -6,9 +6,7 @@ Ben C, April 2018
 
 <template>
   <div class="card">
-    <div class="card-header bg-success h3">
-      <fa icon="tachometer-alt" />&nbsp; Monitoring
-    </div>
+    <div class="card-header bg-success h3"><fa icon="tachometer-alt" />&nbsp; Monitoring</div>
     <div class="card-body">
       <b-alert v-if="error" show variant="warning">
         <h4>There was a problem 😥</h4>
@@ -56,7 +54,7 @@ export default {
   },
 
   // Adds functions to call the API
-  mixins: [ apiMixin ],
+  mixins: [apiMixin],
 
   data: function() {
     return {
@@ -68,18 +66,24 @@ export default {
 
   computed: {
     cpu: function() {
-      if (!this.metrics) { return 0 }
+      if (!this.metrics) {
+        return 0
+      }
       return this.metrics.cpuPerc
     },
 
     mem: function() {
-      if (!this.metrics) { return 0 }
+      if (!this.metrics) {
+        return 0
+      }
       return (this.metrics.memUsed / this.metrics.memTotal) * 100
     },
 
     disk: function() {
-      if (!this.metrics) { return 0 }
-      return 100 - ((this.metrics.diskFree / this.metrics.diskTotal) * 100)
+      if (!this.metrics) {
+        return 0
+      }
+      return 100 - (this.metrics.diskFree / this.metrics.diskTotal) * 100
     },
 
     net: function() {
@@ -101,7 +105,7 @@ export default {
     refreshId = setInterval(this.update, 2500)
   },
 
-  beforeDestroy () {
+  beforeDestroy() {
     clearInterval(refreshId)
   },
 
@@ -120,7 +124,7 @@ export default {
 </script>
 
 <style scoped>
-  .card-body {
-    background-color: #ddd;
-  }
+.card-body {
+  background-color: #ddd;
+}
 </style>

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/benc-uk/go-starter/pkg/envhelper"
@@ -9,7 +10,6 @@ import (
 )
 
 var contentDir string
-var serverPort string
 
 func main() {
 	// Get server PORT setting or default
@@ -21,11 +21,8 @@ func main() {
 	darkskyAPIKey := envhelper.GetEnvString("WEATHER_API_KEY", "")
 	ipstackAPIKey := envhelper.GetEnvString("IPSTACK_API_KEY", "")
 
-	if len(ipstackAPIKey) > 0 {
-		fmt.Println("### Weather API enabled with DarkSky API key")
-	}
-	if len(ipstackAPIKey) > 0 {
-		fmt.Println("### Weather API enabled with IPStack API key")
+	if len(darkskyAPIKey) > 0 && len(ipstackAPIKey) > 0 {
+		fmt.Println("### 🌞 Weather API enabled with WEATHER_API_KEY & IPSTACK_API_KEY")
 	}
 
 	// Routing
@@ -54,7 +51,10 @@ func main() {
 	muxrouter.NotFoundHandler = http.HandlerFunc(routes.spaIndexRoute)
 
 	// Start server
-	fmt.Printf("### Starting server listening on %v\n", serverPort)
-	fmt.Printf("### Serving static content from '%v'\n", contentDir)
-	http.ListenAndServe(":"+serverPort, muxrouter)
+	fmt.Printf("### 🌐 Starting server listening on %v\n", serverPort)
+	fmt.Printf("### 📁 Serving static content from '%v'\n", contentDir)
+	err := http.ListenAndServe(":"+serverPort, muxrouter)
+	if err != nil {
+		log.Fatalln("Can't start server, that's super bad")
+	}
 }

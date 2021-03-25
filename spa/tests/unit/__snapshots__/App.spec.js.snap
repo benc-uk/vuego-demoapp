@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App.vue renders main app screen 1`] = `
+<div id="app">
+  <b-navbar toggleable="md" type="dark" variant="primary">
+    <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+    <b-navbar-brand to="/"><img src="./assets/vuejs.svg" height="50px">Vue.js &amp; Go
+    </b-navbar-brand>
+    <b-collapse id="nav_collapse" is-nav="">
+      <b-navbar-nav>
+        <b-button to="/home" variant="dark">
+          <fa icon="home"></fa>&nbsp; Home
+        </b-button>
+        <b-button to="/info" variant="dark">
+          <fa icon="cogs"></fa>&nbsp; Info
+        </b-button>
+        <b-button to="/monitor" variant="dark">
+          <fa icon="tachometer-alt"></fa>&nbsp; Monitor
+        </b-button>
+        <b-button to="/weather" variant="dark">
+          <fa icon="umbrella"></fa>&nbsp; Weather
+        </b-button>
+        <b-button to="/about" variant="dark">
+          <fa icon="info-circle"></fa>&nbsp; About
+        </b-button>
+      </b-navbar-nav>
+    </b-collapse>
+  </b-navbar> <br>
+  <b-container>
+    <transition-stub name="slidedown">
+      <router-view-stub name="default"></router-view-stub>
+    </transition-stub>
+  </b-container>
+</div>
+`;

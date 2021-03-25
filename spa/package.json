@@ -1,6 +1,6 @@
 {
   "name": "vuego-demoapp-spa",
-  "version": "1.8.4",
+  "version": "1.8.5",
   "private": true,
   "description": "Frontend web client SPA for vuego-demoapp",
   "author": {
@@ -13,7 +13,10 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint --no-fix",
+    "lint-fix": "vue-cli-service lint",
+    "test": "vue-cli-service test:unit",
+    "test-update": "vue-cli-service test:unit --updateSnapshot"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
@@ -26,14 +29,20 @@
     "vue-skycons": "^4.0.3"
   },
   "devDependencies": {
-    "@vue/cli-service": "^4.5.8",
-    "node-sass": "4.14.1",
-    "sass-loader": "^10.0.4",
-    "vue-template-compiler": "^2.6.12",
+    "@vue/cli-plugin-eslint": "^4.5.12",
+    "@vue/cli-plugin-unit-jest": "~4.4.6",
+    "@vue/cli-service": "^4.5.12",
+    "@vue/test-utils": "1.0.3",
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.12.1",
-    "eslint-plugin-vue": "^7.1.0",
-    "@vue/cli-plugin-eslint": "~4.5.8"
+    "eslint": "^6.7.2",
+    "eslint-plugin-prettier-vue": "^2.1.1",
+    "eslint-plugin-vue": "^7.8.0",
+    "flush-promises": "^1.0.2",
+    "jest-canvas-mock": "^2.3.1",
+    "jest-html-reporter": "^3.3.0",
+    "node-sass": "^5.0.0",
+    "sass-loader": "^10.0.4",
+    "vue-template-compiler": "^2.6.12"
   },
   "postcss": {
     "plugins": {

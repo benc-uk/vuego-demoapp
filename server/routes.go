@@ -150,7 +150,7 @@ func (r Routes) apiInfoRoute(resp http.ResponseWriter, req *http.Request) {
 	}
 
 	// Fire JSON result back down the internet tubes
-	resp.Write(js)
+	_, _ = resp.Write(js)
 }
 
 //
@@ -208,7 +208,7 @@ func (r Routes) apiMetricsRoute(resp http.ResponseWriter, req *http.Request) {
 	}
 
 	// Fire JSON result back down the internet tubes
-	resp.Write(js)
+	_, _ = resp.Write(js)
 }
 
 //
@@ -242,7 +242,11 @@ func (r Routes) weatherRoute(resp http.ResponseWriter, req *http.Request) {
 
 	// Try to deduce calling IP address
 	ip := req.Header.Get("x-forwarded-for")
-	//ip = "86.134.117.146" // Only uncomment for local testing!
+
+	// Special trick to work with local dev
+	if hostname, _ := os.Hostname(); hostname == "BENSL3" {
+		ip = "212.36.160.18" // Only uncomment for local testing!
+	}
 
 	// If not in the header try the RemoteAddr field
 	if len(ip) == 0 {
@@ -274,7 +278,7 @@ func (r Routes) weatherRoute(resp http.ResponseWriter, req *http.Request) {
 		apiError(resp, http.StatusInternalServerError, err.Error())
 		return
 	}
-	body, err := ioutil.ReadAll(apiresponse.Body)
+	body, _ := ioutil.ReadAll(apiresponse.Body)
 
 	// Handle response and create object from JSON, and store in weather object
 	var ipstackData ipstackAPIData
@@ -296,7 +300,7 @@ func (r Routes) weatherRoute(resp http.ResponseWriter, req *http.Request) {
 		apiError(resp, http.StatusInternalServerError, err.Error())
 		return
 	}
-	body, err = ioutil.ReadAll(apiresponse.Body)
+	body, _ = ioutil.ReadAll(apiresponse.Body)
 
 	// Handle response and create object from JSON, and store in weather object
 	var darkskyData darkskyAPIData
@@ -316,7 +320,7 @@ func (r Routes) weatherRoute(resp http.ResponseWriter, req *http.Request) {
 	}
 
 	// Fire JSON result back down the internet tubes
-	resp.Write(jsonResp)
+	_, _ = resp.Write(jsonResp)
 }
 
 //
@@ -335,7 +339,7 @@ func apiError(resp http.ResponseWriter, code int, message string) {
 		fmt.Printf("### ERROR! httpError unable to marshal to JSON. Message was %s\n", message)
 		return
 	}
-	resp.Write(errorResp)
+	_, _ = resp.Write(errorResp)
 }
 
 // fileExists checks if a file or directory exists
