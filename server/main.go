@@ -25,7 +25,7 @@ func main() {
 		fmt.Println("### 🌞 Weather API enabled with WEATHER_API_KEY & IPSTACK_API_KEY")
 	}
 
-	// Routing
+	// Routing using mux
 	muxrouter := mux.NewRouter()
 	routes := Routes{
 		contentDir:    contentDir,

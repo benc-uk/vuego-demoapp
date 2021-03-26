@@ -7,6 +7,7 @@ param webappName string = 'vuego-demoapp'
 param webappImage string = 'ghcr.io/benc-uk/vuego-demoapp:latest'
 param weatherKey string = ''
 param ipStackKey string = ''
+param releaseInfo string = 'Released on ${utcNow('f')}'
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2020-10-01' = {
   name: planName
