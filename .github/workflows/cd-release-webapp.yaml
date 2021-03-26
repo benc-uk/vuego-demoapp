@@ -22,6 +22,7 @@ env:
   ARM_SUB_ID: 52512f28-c6ed-403e-9569-82a9fb9fec91
   ARM_REGION: westeurope
   ARM_RES_GROUP: apps
+  DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: 1 # Fixes weird Azure CLI + Bicep + GHA bug
 
 jobs:
   #
@@ -49,7 +50,7 @@ jobs:
       - name: 'Deploy resources'
         run: |
           az deployment group create --template-file deploy/webapp.bicep -g $ARM_RES_GROUP -p \ 
-          webappName=$APP_NAME 
+          webappName=$APP_NAME \
           webappImage=$IMAGE_REG/$IMAGE_REPO:${{ github.event.inputs.IMAGE_TAG }} \
           weatherKey=${{ secrets.WEATHER_API_KEY }} \
           releaseInfo="Ref=${{ github.ref }} RunId=${{ github.run_id }}" \

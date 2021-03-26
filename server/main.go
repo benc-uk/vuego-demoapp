@@ -47,7 +47,7 @@ func main() {
 	muxrouter.PathPrefix("/img").Handler(http.StripPrefix("/", fileServer))
 	muxrouter.PathPrefix("/favicon.ico").Handler(http.StripPrefix("/", fileServer))
 
-	// EVERYTHING else redirect to index.html
+	// EVERYTHING else redirect to index.html - that's now hosted SPAs work :)
 	muxrouter.NotFoundHandler = http.HandlerFunc(routes.spaIndexRoute)
 
 	// Start server
