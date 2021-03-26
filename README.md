@@ -73,14 +73,14 @@ clean                🧹 Clean up **project**
 
 Make file variables and default values, pass these in when calling `make`, e.g. `make image IMAGE_REPO=blah/foo`
 
-| Makefile Variable | Default                |
-| ----------------- | ---------------------- |
-| IMAGE_REG         | ghcr<span>.</span>io   |
-| IMAGE_REPO        | benc-uk/nodejs-demoapp |
-| IMAGE_TAG         | latest                 |
-| AZURE_RES_GROUP   | temp-demoapps          |
-| AZURE_REGION      | uksouth                |
-| AZURE_SITE_NAME   | nodeapp-{git-sha}      |
+| Makefile Variable | Default               |
+| ----------------- | --------------------- |
+| IMAGE_REG         | ghcr<span>.</span>io  |
+| IMAGE_REPO        | benc-uk/vuego-demoapp |
+| IMAGE_TAG         | latest                |
+| AZURE_RES_GROUP   | temp-demoapps         |
+| AZURE_REGION      | uksouth               |
+| AZURE_SITE_NAME   | nodeapp-{git-sha}     |
 
 - The server will listen on port 4000 by default, change this by setting the environmental variable `PORT`
 - The server will ry to serve static content (i.e. bundled SPA frontend) from the same directory as the server binary, change this by setting the environmental variable `CONTENT_DIR`

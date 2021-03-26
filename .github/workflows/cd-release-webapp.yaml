@@ -54,7 +54,7 @@ jobs:
           weatherKey=${{ secrets.WEATHER_API_KEY }} \
           releaseInfo="Ref=${{ github.ref }} RunId=${{ github.run_id }}" \
           weatherKey=${{ secrets.WEATHER_API_KEY }} \
-          ipStackKey=${{ env.IPSTACK_API_KEY }}
+          ipStackKey=${{ secrets.IPSTACK_API_KEY }}
 
   #
   # Post deployment testing stage
@@ -72,7 +72,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: 'Validate site is running'
-        run: .github/scripts/url-check.sh -u https://${APP_NAME}.azurewebsites.net/ -s ".NET Core" -t 200
+        run: .github/scripts/url-check.sh -u https://${APP_NAME}.azurewebsites.net/ -s "Vue.js" -t 200
 
       - name: 'Run API tests'
         run: |

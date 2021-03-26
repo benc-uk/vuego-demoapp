@@ -71,7 +71,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: 'Validate site is running'
-        run: .github/scripts/url-check.sh -u https://${{ env.INGRESS_DNS_HOST }} -s ".NET Core" -t 200
+        run: .github/scripts/url-check.sh -u https://${{ env.INGRESS_DNS_HOST }} -s "Vue.js" -t 200
 
       - name: 'Run API tests'
         run: |
