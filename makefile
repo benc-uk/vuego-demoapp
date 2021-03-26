@@ -16,7 +16,7 @@ SPA_DIR := spa
 SRC_DIR := server
 GOLINT_PATH := $(shell go env GOPATH)/bin/golangci-lint
 
-.PHONY: help lint lint-fix image push run deploy undeploy clean .EXPORT_ALL_VARIABLES
+.PHONY: help lint lint-fix image push run deploy undeploy clean test test-api test-report test-snapshot watch-server watch-spa .EXPORT_ALL_VARIABLES
 .DEFAULT_GOAL := help
 
 help:  ## 💬 This help message

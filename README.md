@@ -68,7 +68,7 @@ test                 🎯 Unit tests for server and frontend
 test-report          🎯 Unit tests for server and frontend (with report output)
 test-snapshot        📷 Update snapshots for frontend tests
 test-api             🚦 Run integration API tests, server must be running
-clean                🧹 Clean up **project**
+clean                🧹 Clean up project
 ```
 
 Make file variables and default values, pass these in when calling `make`, e.g. `make image IMAGE_REPO=blah/foo`
@@ -101,6 +101,16 @@ Should you want to build your own container, use `make image` and the above vari
 ## Kubernetes
 
 The app can easily be deployed to Kubernetes using Helm, see [deploy/kubernetes/readme.md](deploy/kubernetes/readme.md) for details
+
+## Running in Azure App Service (Linux)
+
+If you want to deploy to an Azure Web App as a container (aka Linux Web App), a Bicep template is provided in the [deploy](deploy/) directory
+
+For a super quick deployment, use `make deploy` which will deploy to a resource group, temp-demoapps and use the git ref to create a unique site name
+
+```bash
+make deploy
+```
 
 # Config
 
