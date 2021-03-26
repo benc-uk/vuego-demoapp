@@ -1,6 +1,6 @@
 {
   "name": "vuego-demoapp-spa",
-  "version": "1.8.5",
+  "version": "1.8.6",
   "private": true,
   "description": "Frontend web client SPA for vuego-demoapp",
   "author": {
@@ -40,6 +40,7 @@
     "flush-promises": "^1.0.2",
     "jest-canvas-mock": "^2.3.1",
     "jest-html-reporter": "^3.3.0",
+    "newman": "^5.2.2",
     "node-sass": "^5.0.0",
     "sass-loader": "^10.0.4",
     "vue-template-compiler": "^2.6.12"

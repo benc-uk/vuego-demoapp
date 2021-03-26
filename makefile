@@ -22,15 +22,14 @@ GOLINT_PATH := $(shell go env GOPATH)/bin/golangci-lint
 help:  ## 💬 This help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
-lint:  ## 🔎 Lint & format, will not fix but sets exit code on error 
-	@which $(GOLINT_PATH) > /dev/null || cd $(SRC_DIR); go get github.com/golangci/golangci-lint/cmd/golangci-lint
-	cd $(SRC_DIR); GO111MODULE=on $(GOLINT_PATH) run *.go
-
-#cd $(SPA_DIR); npm run lint
+lint: $(SPA_DIR)/node_modules  ## 🔎 Lint & format, will not fix but sets exit code on error 
+	@$(GOLINT_PATH) > /dev/null || cd $(SRC_DIR); go get github.com/golangci/golangci-lint/cmd/golangci-lint
+	cd $(SRC_DIR); $(GOLINT_PATH) run --modules-download-mode=mod *.go
+	cd $(SPA_DIR); npm run lint
 
 lint-fix: $(SPA_DIR)/node_modules  ## 📜 Lint & format, will try to fix errors and modify code
-	@which golangci-lint > /dev/null || go get github.com/golangci/golangci-lint/cmd/golangci-lint
-	cd $(SRC_DIR); golangci-lint run *.go --fix
+	@$(GOLINT_PATH) > /dev/null || cd $(SRC_DIR); go get github.com/golangci/golangci-lint/cmd/golangci-lint
+	cd $(SRC_DIR); golangci-lint run --modules-download-mode=mod *.go --fix
 	cd $(SPA_DIR); npm run lint-fix
 
 image:  ## 🔨 Build container image from Dockerfile 
@@ -44,7 +43,7 @@ run: $(SPA_DIR)/node_modules  ## 🏃 Run BOTH components locally using Vue CLI 
 	cd $(SRC_DIR); go run main.go routes.go &
 	cd $(SPA_DIR); npm run serve
 
-watch-server:  ## 👀 Run API server with hot reload file watcher
+watch-server:  ## 👀 Run API server with hot reload file watcher, needs cosmtrek/air
 	cd $(SRC_DIR); air
 
 watch-spa: $(SPA_DIR)/node_modules  ## 👀 Run frontend SPA with hot reload file watcher
@@ -71,10 +70,8 @@ test-report: test  ## 🎯 Unit tests for server and frontend (with report outpu
 test-snapshot:  ## 📷 Update snapshots for frontend tests
 	cd $(SPA_DIR); npm run test-update
 
-# test-api: $(SPA_DIR)/node_modules .EXPORT_ALL_VARIABLES  ## 🚦 Run integration API tests, server must be running 
-# 	rm -rf $(SPA_DIR)/api-test-results.xml
-# 	cd $(SRC_DIR); npm run test-postman
-# 	cat $(SRC_DIR)/api-test-results.xml
+test-api: $(SPA_DIR)/node_modules .EXPORT_ALL_VARIABLES  ## 🚦 Run integration API tests, server must be running 
+	$(SPA_DIR)/node_modules/.bin/newman run tests/postman_collection.json --env-var apphost=$(TEST_HOST)
 
 clean:  ## 🧹 Clean up project
 	rm -rf $(SPA_DIR)/dist
