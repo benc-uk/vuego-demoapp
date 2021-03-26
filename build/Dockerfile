@@ -5,6 +5,7 @@ FROM node:14-alpine AS vue-build
 WORKDIR /build
 
 COPY spa/package*.json ./
+RUN npm i -g npm
 RUN npm install
 
 COPY spa/ .
@@ -13,7 +14,7 @@ RUN npm run build
 #
 # Build the Go server backend
 #
-FROM golang:1.15-alpine as go-build
+FROM golang:1.16-alpine as go-build
 
 WORKDIR /build/src/server
 
@@ -35,7 +36,7 @@ WORKDIR /app
 LABEL org.label-schema.name="vuego-demoapp" \
       org.label-schema.description="Demonstration Vue.js and Go web app" \    
       org.label-schema.version="1.8.4" \
-      org.label-schema.vcs-url=https://github.com/benc-uk/vuego-demoapp
+      org.opencontainers.image.source="https://github.com/benc-uk/vuego-demoapp"
 
 COPY --from=vue-build /build/dist . 
 COPY --from=go-build /build/src/server/server . 

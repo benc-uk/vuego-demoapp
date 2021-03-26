@@ -64,8 +64,8 @@ export default {
   },
 
   computed: {
-    valComputed: function () {
-      let rounded = Math.round(this.value * Math.pow(10, 2))  / Math.pow(10, 2)
+    valComputed: function() {
+      let rounded = Math.round(this.value * Math.pow(10, 2)) / Math.pow(10, 2)
       if (this.value && this.gauge) {
         this.gauge.set(rounded)
       }
@@ -91,16 +91,17 @@ export default {
 </script>
 
 <style scoped>
-  canvas {
-    width: 100%; height: 100%;
-  }
-  h5 {
-    text-align: center;
-  }
-  div {
-    border: 3px solid #ccc;
-    border-radius: 6px;
-    margin: 5px;
-    background-color: white;
-  }
+canvas {
+  width: 100%;
+  height: 100%;
+}
+h5 {
+  text-align: center;
+}
+div {
+  border: 3px solid #ccc;
+  border-radius: 6px;
+  margin: 5px;
+  background-color: white;
+}
 </style>

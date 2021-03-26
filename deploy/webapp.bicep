@@ -8,7 +8,7 @@ param webappImage string = 'ghcr.io/benc-uk/vuego-demoapp:latest'
 param weatherKey string = ''
 param ipStackKey string = ''
 
-resource appServicePlan 'Microsoft.Web/serverFarms@2020-06-01' = {
+resource appServicePlan 'Microsoft.Web/serverfarms@2020-10-01' = {
   name: planName
   location: location
   kind: 'linux'
@@ -20,7 +20,7 @@ resource appServicePlan 'Microsoft.Web/serverFarms@2020-06-01' = {
   }
 }
 
-resource webApp 'Microsoft.Web/sites@2018-11-01' = {
+resource webApp 'Microsoft.Web/sites@2020-10-01' = {
   name: webappName
   location: location
   properties: {

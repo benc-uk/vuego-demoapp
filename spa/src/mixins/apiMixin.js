@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 //
 // Mixin added to components, all API logic here
 // ----------------------------------------------
@@ -6,18 +8,17 @@
 
 export default {
   methods: {
-    apiGetWeather: function () {
+    apiGetWeather: function() {
       return apiCall('/weather')
     },
 
-    apiGetMetrics: function () {
+    apiGetMetrics: function() {
       return apiCall('/metrics')
     },
 
-    apiGetInfo: function () {
+    apiGetInfo: function() {
       return apiCall('/info')
-    },
-
+    }
   }
 }
 
@@ -26,13 +27,13 @@ export default {
 //
 async function apiCall(apiPath, method = 'get', data = null) {
   let headers = {}
-  const url = `${(process.env.VUE_APP_API_ENDPOINT || '/api')}${apiPath}`
+  const url = `${process.env.VUE_APP_API_ENDPOINT || '/api'}${apiPath}`
   //console.log(`### API CALL ${method} ${url}`)
 
   // Build request
   const request = {
     method,
-    headers,
+    headers
   }
 
   // Add payload if required

@@ -23,7 +23,7 @@ Ben C, Sept 2018
         <skycon :condition="weather.weather.currently.icon" :width="256" :height="256" color="#223322" />
       </div>
 
-      <table v-if="weather" class="table table-hover">
+      <table v-if="weather" class="table table-hover table-sm table-striped ">
         <tbody>
           <tr>
             <td><b>IP Address:</b></td>
