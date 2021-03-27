@@ -11,6 +11,15 @@ Typical uses would be deployment to Kubernetes, demos of Docker, CI/CD (build pi
 
 ![screenshot](https://user-images.githubusercontent.com/14982936/38804618-e1a5c1bc-416a-11e8-9cf3-c64689faf6cb.png)
 
+# Status
+
+![](https://img.shields.io/github/last-commit/benc-uk/vuego-demoapp) ![](https://img.shields.io/github/release-date/benc-uk/vuego-demoapp) ![](https://img.shields.io/github/v/release/benc-uk/vuego-demoapp) ![](https://img.shields.io/github/commit-activity/y/benc-uk/vuego-demoapp)
+
+Live instances:
+
+[![](https://img.shields.io/website?label=Hosted%3A%20Azure%20App%20Service&up_message=online&url=https%3A%2F%2Fvuego-demoapp.azurewebsites.net%2F)](https://vuego-demoapp.azurewebsites.net/)  
+[![](https://img.shields.io/website?label=Hosted%3A%20Kubernetes&up_message=online&url=https%3A%2F%2Fvuego-demoapp.kube.benco.io%2F)](https://vuego-demoapp.kube.benco.io/)
+
 ## Repo Structure
 
 ```
