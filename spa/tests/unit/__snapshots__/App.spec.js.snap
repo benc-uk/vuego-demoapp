@@ -4,8 +4,7 @@ exports[`App.vue renders main app screen 1`] = `
 <div id="app">
   <b-navbar toggleable="md" type="dark" variant="primary">
     <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-    <b-navbar-brand to="/"><img src="./assets/vuejs.svg" height="50px">Vue.js &amp; Go
-    </b-navbar-brand>
+    <b-navbar-brand to="/"><img src="./assets/vuejs.svg" height="50px">Vue.js &amp; Go </b-navbar-brand>
     <b-collapse id="nav_collapse" is-nav="">
       <b-navbar-nav>
         <b-button to="/home" variant="dark">
@@ -24,6 +23,7 @@ exports[`App.vue renders main app screen 1`] = `
           <fa icon="info-circle"></fa>&nbsp; About
         </b-button>
       </b-navbar-nav>
+      <!---->
     </b-collapse>
   </b-navbar> <br>
   <b-container>
