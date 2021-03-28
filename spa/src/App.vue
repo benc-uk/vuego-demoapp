@@ -43,6 +43,7 @@ export default {
   data: function() {
     return {
       user: {},
+      // We swicth the user sign-in feature on or off depending if auth has been configured
       authEnabled: auth.isConfigured()
     }
   },

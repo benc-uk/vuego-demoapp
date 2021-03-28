@@ -130,9 +130,9 @@ Environmental variables
 - `IPSTACK_API_KEY` - Enable the weather feature with a IPStack API key
 - `PORT` - Port to listen on (default: `4000`)
 - `CONTENT_DIR` - Directory to serve static content from (default: `.`)
-- `AUTH_CLIENT_ID` - Set to a Azure AD registered app if you wish to enable the optional user login feature
+- `AUTH_CLIENT_ID` - Set to a Azure AD registered app if you wish to enable the optional user sign-in feature
 
-### Optional User Login Feature
+### Optional User Sign-In Feature
 
 The application can be configured with an optional user sign-in feature which uses Azure Active Directory as an identity platform. This uses wrapper & helper libraries from https://github.com/benc-uk/msal-graph-vue
 
@@ -140,7 +140,7 @@ If you wish to enable this, carry out the following steps:
 
 - Register an application with Azure AD, [see these steps](https://github.com/benc-uk/msal-graph-vue#set-up--deployment)
 - Set the environmental variable `AUTH_CLIENT_ID` on the Go server, with the value of the client id. This can be done in the `.env` file if working locally.
-- _Optional_ when testing/debugging the Vue.js SPA without the Go server, you can place the client in `.env.development` under the value `VUE_APP_AUTH_CLIENT_ID`
+- _Optional_ when testing/debugging the Vue.js SPA without the Go server, you can place the client-id in `.env.development` under the value `VUE_APP_AUTH_CLIENT_ID`
 
 # GitHub Actions CI/CD
 
@@ -160,7 +160,7 @@ A working set of CI and CD release GitHub Actions workflows are provided `.githu
 
 | When       | What                                               |
 | ---------- | -------------------------------------------------- |
-| Mar 2021   | Auth using MSAL added                              |
+| Mar 2021   | Auth using MSAL.js v2 added                        |
 | Mar 2021   | Refresh, makefile, more tests                      |
 | Nov 2020   | New pipelines & code/ API robustness               |
 | Dec 2019   | Github Actions and AKS                             |

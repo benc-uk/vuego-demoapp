@@ -78,11 +78,11 @@ appStartup()
 // App start up synchronized using await with the config API call
 //
 async function appStartup() {
-  // Take Azure AD client-id from .env.development or .env.development.local
-  // Or fall back to empty string which disables the auth feature
+  // Take Azure AD client-id from .env.development or .env.development.local if it's set
+  // Fall back to empty string which disables the auth feature
   let AUTH_CLIENT_ID = process.env.VUE_APP_AUTH_CLIENT_ID || ''
 
-  // Load config at runtime from special `/config` endpoint on frontend-host
+  // Load config at runtime from special `/config` endpoint on Go server backend
   const apiEndpoint = process.env.VUE_APP_API_ENDPOINT || '/api'
   try {
     let configResp = await fetch(`${apiEndpoint}/config`)
@@ -98,6 +98,7 @@ async function appStartup() {
   }
 
   // Setup auth helper but disable dummy user
+  // if AUTH_CLIENT_ID isn't set at this point, then the user sign-in will be dynamically disabled
   auth.configure(AUTH_CLIENT_ID, false)
 
   // Actually mount & start the Vue app, kinda important
