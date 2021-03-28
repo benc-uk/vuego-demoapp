@@ -6,7 +6,7 @@ exports[`About.vue renders about screen 1`] = `
     <fa icon="info-circle"></fa>&nbsp; About
   </div>
   <div class="card-body">
-    Developed by Ben Coleman, 2018~2021<br><br> <b>App Version:</b> 1.8.6<br> <b>API Endpoint:</b> /api
+    Developed by Ben Coleman, 2018~2021<br><br> <b>App Version:</b> 2.0.1<br> <b>API Endpoint:</b> /api
   </div>
 </div>
 `;

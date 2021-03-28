@@ -53,7 +53,8 @@ jobs:
           webappImage=$IMAGE_REG/$IMAGE_REPO:${{ github.event.inputs.IMAGE_TAG }} \
           releaseInfo="Ref=${{ github.ref }} RunId=${{ github.run_id }}" \
           weatherKey=${{ secrets.WEATHER_API_KEY }} \
-          ipStackKey=${{ secrets.IPSTACK_API_KEY }}
+          ipStackKey=${{ secrets.IPSTACK_API_KEY }} \
+          authClientId=${{ secrets.AUTH_CLIENT_ID }}
 
   #
   # Post deployment testing stage

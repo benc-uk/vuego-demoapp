@@ -12,6 +12,7 @@ import Error from './components/Error.vue'
 import Info from './components/Info.vue'
 import Monitor from './components/Monitor.vue'
 import Weather from './components/Weather.vue'
+import User from './components/User.vue'
 
 Vue.use(Router)
 
@@ -47,6 +48,11 @@ export default new Router({
       path: '/about',
       name: 'about',
       component: About
+    },
+    {
+      path: '/user',
+      name: 'user',
+      component: User
     },
     {
       path: '*',

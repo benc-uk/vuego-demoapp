@@ -7,6 +7,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import auth from './services/auth'
 
 // UI and Bootstrap stuff
 import BootstrapVue from 'bootstrap-vue'
@@ -16,11 +17,49 @@ import './scss/theme.scss'
 
 // Font Awesome has Vue.js support, import some icons we'll use
 import { library as fontAwesomeLib } from '@fortawesome/fontawesome-svg-core'
-import { faHome, faCogs, faTachometerAlt, faInfoCircle, faUmbrella, faBomb, faCommentDollar, faLaptopCode, faCube, faDharmachakra, faMicrochip, faWrench, faMemory, faFlask, faProjectDiagram } from '@fortawesome/free-solid-svg-icons'
+import {
+  faHome,
+  faCogs,
+  faTachometerAlt,
+  faInfoCircle,
+  faUmbrella,
+  faBomb,
+  faCommentDollar,
+  faLaptopCode,
+  faCube,
+  faDharmachakra,
+  faMicrochip,
+  faWrench,
+  faMemory,
+  faFlask,
+  faProjectDiagram,
+  faUser,
+  faSignInAlt
+} from '@fortawesome/free-solid-svg-icons'
 import { faGithub, faDocker } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 // Register icons and component
-fontAwesomeLib.add([faHome, faCogs, faTachometerAlt, faInfoCircle, faGithub, faDocker, faUmbrella, faBomb, faCommentDollar, faLaptopCode, faCube, faDharmachakra, faMicrochip, faWrench, faMemory, faFlask, faProjectDiagram])
+fontAwesomeLib.add([
+  faHome,
+  faCogs,
+  faTachometerAlt,
+  faInfoCircle,
+  faGithub,
+  faDocker,
+  faUmbrella,
+  faBomb,
+  faCommentDollar,
+  faLaptopCode,
+  faCube,
+  faDharmachakra,
+  faMicrochip,
+  faWrench,
+  faMemory,
+  faFlask,
+  faProjectDiagram,
+  faUser,
+  faSignInAlt
+])
 // eslint-disable-next-line
 Vue.component('fa', FontAwesomeIcon)
 
@@ -32,9 +71,39 @@ Vue.component('Skycon', VueSkycons)
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 
-// Root Vue instance
-// Mount on the <div id="root"> and render the template of the App component
-new Vue({
-  router,
-  render: (h) => h(App)
-}).$mount('#app')
+// Let's go!
+appStartup()
+
+//
+// App start up synchronized using await with the config API call
+//
+async function appStartup() {
+  // Take Azure AD client-id from .env.development or .env.development.local if it's set
+  // Fall back to empty string which disables the auth feature
+  let AUTH_CLIENT_ID = process.env.VUE_APP_AUTH_CLIENT_ID || ''
+
+  // Load config at runtime from special `/config` endpoint on Go server backend
+  const apiEndpoint = process.env.VUE_APP_API_ENDPOINT || '/api'
+  try {
+    let configResp = await fetch(`${apiEndpoint}/config`)
+    if (configResp.ok) {
+      const config = await configResp.json()
+      AUTH_CLIENT_ID = config.AUTH_CLIENT_ID
+      console.log('### Config loaded from server API:', config)
+    }
+  } catch (err) {
+    console.warn(
+      `### Failed to fetch remote '${apiEndpoint}' endpoint. Local value for AUTH_CLIENT_ID '${AUTH_CLIENT_ID}' will be used`
+    )
+  }
+
+  // Setup auth helper but disable dummy user
+  // if AUTH_CLIENT_ID isn't set at this point, then the user sign-in will be dynamically disabled
+  auth.configure(AUTH_CLIENT_ID, false)
+
+  // Actually mount & start the Vue app, kinda important
+  new Vue({
+    router,
+    render: (h) => h(App)
+  }).$mount('#app')
+}

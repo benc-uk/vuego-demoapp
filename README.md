@@ -9,7 +9,8 @@ Typical uses would be deployment to Kubernetes, demos of Docker, CI/CD (build pi
 - The SPA component was created using the Vue CLI and uses [Bootstrap-Vue](https://bootstrap-vue.js.org/) and [Font Awesome](https://fontawesome.com/). In addition [Gauge.js](http://bernii.github.io/gauge.js/) is used for the dials in the monitoring view
 - The Go component is a Go HTTP server based on the std http package and using [gopsutils](https://github.com/shirou/gopsutil) for monitoring metrics, and [Gorilla Mux](https://github.com/gorilla/mux) for routing
 
-![screenshot](https://user-images.githubusercontent.com/14982936/38804618-e1a5c1bc-416a-11e8-9cf3-c64689faf6cb.png)
+![screenshot](https://user-images.githubusercontent.com/14982936/112730706-e77c1800-8f2a-11eb-880d-6f2298fd49b3.png)
+![screenshot](https://user-images.githubusercontent.com/14982936/112730741-23af7880-8f2b-11eb-8b61-7b9c88766182.png)
 
 # Status
 
@@ -129,6 +130,17 @@ Environmental variables
 - `IPSTACK_API_KEY` - Enable the weather feature with a IPStack API key
 - `PORT` - Port to listen on (default: `4000`)
 - `CONTENT_DIR` - Directory to serve static content from (default: `.`)
+- `AUTH_CLIENT_ID` - Set to a Azure AD registered app if you wish to enable the optional user sign-in feature
+
+### Optional User Sign-In Feature
+
+The application can be configured with an optional user sign-in feature which uses Azure Active Directory as an identity platform. This uses wrapper & helper libraries from https://github.com/benc-uk/msal-graph-vue
+
+If you wish to enable this, carry out the following steps:
+
+- Register an application with Azure AD, [see these steps](https://github.com/benc-uk/msal-graph-vue#set-up--deployment)
+- Set the environmental variable `AUTH_CLIENT_ID` on the Go server, with the value of the client id. This can be done in the `.env` file if working locally.
+- _Optional_ when testing/debugging the Vue.js SPA without the Go server, you can place the client-id in `.env.development` under the value `VUE_APP_AUTH_CLIENT_ID`
 
 # GitHub Actions CI/CD
 
@@ -148,6 +160,7 @@ A working set of CI and CD release GitHub Actions workflows are provided `.githu
 
 | When       | What                                               |
 | ---------- | -------------------------------------------------- |
+| Mar 2021   | Auth using MSAL.js v2 added                        |
 | Mar 2021   | Refresh, makefile, more tests                      |
 | Nov 2020   | New pipelines & code/ API robustness               |
 | Dec 2019   | Github Actions and AKS                             |
