@@ -23,14 +23,15 @@ Live instances:
 
 ## Repo Structure
 
-```
+```txt
 /
 ├── spa              Root of the Vue.js project
 │   └── src          Vue.js source code
 ├── deploy           Supporting files for Azure deployment etc
 │   └── kubernetes   Instructions for Kubernetes deployment with Helm
-└── server           Go backend server
-    └── vendor       Vendor libraries used by the server
+├── server           Go backend server
+├── build            Supporting build scripts and Dockerfile
+└── test             API / integration tests
 ```
 
 ## Server API

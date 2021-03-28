@@ -10,18 +10,21 @@ image:
 
 service:
   targetPort: 4000
+  # Use ClusterIP if you set up ingress
   type: LoadBalancer
-
 #
-# Create these secrets if you want to enable optional features
+# Create these secrets if you want to enable optional features, see secrets.sample.sh
 #
 # secretEnv:
 #   WEATHER_API_KEY:
 #     secretName: vuego-secrets
-#     secretKey: weatherKey
+#     secretKey: WEATHER_API_KEY
 #   IPSTACK_API_KEY:
 #     secretName: vuego-secrets
-#     secretKey: ipStackKey
+#     secretKey: IPSTACK_API_KEY
+#   AUTH_CLIENT_ID:
+#     secretName: vuego-demoapp
+#     secretKey: AUTH_CLIENT_ID
 
 #
 # If you have an ingress controller set up
