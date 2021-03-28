@@ -18,8 +18,8 @@ Ben C, April 2018
           <b-button to="/about" variant="dark"> <fa icon="info-circle" />&nbsp; About </b-button>
         </b-navbar-nav>
 
-        <b-navbar-nav class="ml-auto" v-if="authEnabled">
-          <b-button v-if="!user" @click="doLogin()" variant="light"> <fa icon="sign-in-alt" />&nbsp; Login </b-button>
+        <b-navbar-nav v-if="authEnabled" class="ml-auto">
+          <b-button v-if="!user" variant="light" @click="doLogin()"> <fa icon="sign-in-alt" />&nbsp; Login </b-button>
           <b-button v-if="user" to="/user" variant="light"> <fa icon="user" />&nbsp; User </b-button>
         </b-navbar-nav>
       </b-collapse>

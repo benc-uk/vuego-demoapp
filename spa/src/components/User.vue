@@ -7,8 +7,8 @@ Ben C, April 2021
 <template>
   <div class="card">
     <div class="card-header bg-success h3"><fa icon="user" />&nbsp; User Account</div>
-    <div class="card-body" v-if="user">
-      <b-button @click="doLogout()" variant="warning" class="float-right" size="lg">LOGOUT</b-button>
+    <div v-if="user" class="card-body">
+      <b-button variant="warning" class="float-right" size="lg" @click="doLogout()">LOGOUT</b-button>
 
       <table>
         <tr>
@@ -50,18 +50,18 @@ import graph from '../services/graph'
 import router from '../router'
 
 export default {
-  async mounted() {
-    this.user = auth.user()
-    this.graphDetails = await graph.getSelf()
-    this.graphPhoto = await graph.getPhoto()
-  },
-
   data: function() {
     return {
       user: {},
       graphDetails: {},
       graphPhoto: null
     }
+  },
+
+  async mounted() {
+    this.user = auth.user()
+    this.graphDetails = await graph.getSelf()
+    this.graphPhoto = await graph.getPhoto()
   },
 
   methods: {
