@@ -93,6 +93,32 @@ type Routes struct {
 }
 
 //
+// Simple config API for the frontend
+//
+func (r Routes) configRoute(resp http.ResponseWriter, req *http.Request) {
+	// CORS is for wimps
+	if r.disableCORS {
+		resp.Header().Set("Access-Control-Allow-Origin", "*")
+	}
+	resp.Header().Set("Content-Type", "application/json")
+
+	// Passes through a single env var, AUTH_CLIENT_ID
+	config := struct {
+		AuthClientAd string `json:"AUTH_CLIENT_ID"`
+	}{}
+	config.AuthClientAd = os.Getenv("AUTH_CLIENT_ID")
+
+	jsonResp, err := json.Marshal(config)
+	if err != nil {
+		apiError(resp, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	// Fire JSON result back down the internet tubes
+	_, _ = resp.Write(jsonResp)
+}
+
+//
 // /api/info - Return system information and properties
 //
 func (r Routes) apiInfoRoute(resp http.ResponseWriter, req *http.Request) {

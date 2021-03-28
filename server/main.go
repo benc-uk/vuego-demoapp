@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/benc-uk/go-starter/pkg/envhelper"
 	"github.com/gorilla/mux"
@@ -21,8 +22,14 @@ func main() {
 	darkskyAPIKey := envhelper.GetEnvString("WEATHER_API_KEY", "")
 	ipstackAPIKey := envhelper.GetEnvString("IPSTACK_API_KEY", "")
 
+	fmt.Println("### 🚀 Go server backend and REST API is starting...")
+
 	if len(darkskyAPIKey) > 0 && len(ipstackAPIKey) > 0 {
 		fmt.Println("### 🌞 Weather API enabled with WEATHER_API_KEY & IPSTACK_API_KEY")
+	}
+
+	if len(os.Getenv("AUTH_CLIENT_ID")) > 0 {
+		fmt.Printf("### 🔐 Azure AD configured with client id: %s\n", os.Getenv("AUTH_CLIENT_ID"))
 	}
 
 	// Routing using mux
@@ -38,6 +45,7 @@ func main() {
 	muxrouter.HandleFunc("/api/info", routes.apiInfoRoute)
 	muxrouter.HandleFunc("/api/metrics", routes.apiMetricsRoute)
 	muxrouter.HandleFunc("/api/weather", routes.weatherRoute)
+	muxrouter.HandleFunc("/api/config", routes.configRoute)
 
 	// Handle static content, we have to explicitly put our top level dirs in here
 	// - otherwise the NotFoundHandler will catch them
@@ -51,7 +59,7 @@ func main() {
 	muxrouter.NotFoundHandler = http.HandlerFunc(routes.spaIndexRoute)
 
 	// Start server
-	fmt.Printf("### 🌐 Starting server listening on %v\n", serverPort)
+	fmt.Printf("### 🌐 HTTP server listening on %v\n", serverPort)
 	fmt.Printf("### 📁 Serving static content from '%v'\n", contentDir)
 	err := http.ListenAndServe(":"+serverPort, muxrouter)
 	if err != nil {
