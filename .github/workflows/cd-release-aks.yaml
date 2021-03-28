@@ -6,7 +6,7 @@
 name: CD Release - AKS
 
 on:
-  workflow_dispatch:
+  workflow_dispatchZZZ:
     inputs:
       IMAGE_TAG:
         description: 'Image tag to be deployed'

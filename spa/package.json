@@ -1,6 +1,6 @@
 {
   "name": "vuego-demoapp-spa",
-  "version": "1.9.0",
+  "version": "2.0.1",
   "private": true,
   "description": "Frontend web client SPA for vuego-demoapp",
   "author": {
