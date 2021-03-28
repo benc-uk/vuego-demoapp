@@ -51,7 +51,7 @@ jobs:
         run: |
           az deployment group create --template-file deploy/webapp.bicep -g $ARM_RES_GROUP -p webappName=$APP_NAME \
           webappImage=$IMAGE_REG/$IMAGE_REPO:${{ github.event.inputs.IMAGE_TAG }} \
-          releaseInfo="Ref=${{ github.ref }} RunId=${{ github.run_id }}" \
+          releaseInfo="Ref:${{ github.ref }} RunId:${{ github.run_id }}" \
           weatherKey=${{ secrets.WEATHER_API_KEY }} \
           ipStackKey=${{ secrets.IPSTACK_API_KEY }} \
           authClientId=${{ secrets.AUTH_CLIENT_ID }}
