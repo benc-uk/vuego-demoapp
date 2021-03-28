@@ -40,7 +40,11 @@ resource webApp 'Microsoft.Web/sites@2020-10-01' = {
         {
           name: 'AUTH_CLIENT_ID'
           value: authClientId
-        }        
+        }
+        {
+          name: 'RELEASE_INFO'
+          value: releaseInfo
+        }
       ]
       linuxFxVersion: 'DOCKER|${webappImage}'
     }
