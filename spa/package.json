@@ -13,8 +13,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint --no-fix",
-    "lint-fix": "vue-cli-service lint",
+    "lint-fix": "vue-cli-service lint && prettier --write src",
+    "lint": "vue-cli-service lint --no-fix && prettier --check src",
     "test": "vue-cli-service test:unit",
     "test-update": "vue-cli-service test:unit --updateSnapshot"
   },
@@ -43,6 +43,7 @@
     "jest-html-reporter": "^3.3.0",
     "newman": "^5.2.2",
     "node-sass": "^5.0.0",
+    "prettier": "^2.2.1",
     "sass-loader": "^10.0.4",
     "vue-template-compiler": "^2.6.12"
   },

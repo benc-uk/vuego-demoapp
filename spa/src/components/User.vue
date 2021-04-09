@@ -50,7 +50,7 @@ import graph from '../services/graph'
 import router from '../router'
 
 export default {
-  data: function() {
+  data: function () {
     return {
       user: {},
       graphDetails: {},

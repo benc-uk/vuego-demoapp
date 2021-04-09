@@ -21,8 +21,8 @@ WORKDIR /build/src/server
 RUN apk update && apk add git gcc musl-dev
 
 COPY server/*.go ./
-COPY server/go.mod ./
-COPY server/go.sum ./
+COPY go.mod ./
+COPY go.sum ./
 
 ENV GO111MODULE=on
 # Disabling cgo results in a fully static binary that can run without C libs

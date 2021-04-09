@@ -7,6 +7,7 @@ require (
 	github.com/benc-uk/go-starter v1.0.0
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/go-ole/go-ole v1.2.5 // indirect
+	github.com/golangci/golangci-lint v1.39.0 // indirect
 	github.com/gorilla/mux v1.8.0
 	github.com/pbnjay/memory v0.0.0-20201129165224-b12e5d931931
 	github.com/shirou/gopsutil v3.21.2+incompatible

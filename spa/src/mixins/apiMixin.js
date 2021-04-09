@@ -8,15 +8,15 @@
 
 export default {
   methods: {
-    apiGetWeather: function() {
+    apiGetWeather: function () {
       return apiCall('/weather')
     },
 
-    apiGetMetrics: function() {
+    apiGetMetrics: function () {
       return apiCall('/metrics')
     },
 
-    apiGetInfo: function() {
+    apiGetInfo: function () {
       return apiCall('/info')
     }
   }

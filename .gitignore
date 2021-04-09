@@ -18,7 +18,6 @@ server/server
 server/tmp/**
 server/*.xml
 server/server.exe
-**/go.sum
 
 # secrets, ssssh!
 **/.env

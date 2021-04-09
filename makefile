@@ -23,12 +23,13 @@ help:  ## 💬 This help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
 lint: $(SPA_DIR)/node_modules  ## 🔎 Lint & format, will not fix but sets exit code on error 
-	@$(GOLINT_PATH) > /dev/null || cd $(SRC_DIR); go get github.com/golangci/golangci-lint/cmd/golangci-lint
+	echo $(GOLINT_PATH)
+	@$(GOLINT_PATH) > /dev/null || go get github.com/golangci/golangci-lint/cmd/golangci-lint
 	cd $(SRC_DIR); $(GOLINT_PATH) run --modules-download-mode=mod *.go
 	cd $(SPA_DIR); npm run lint
 
 lint-fix: $(SPA_DIR)/node_modules  ## 📜 Lint & format, will try to fix errors and modify code
-	@$(GOLINT_PATH) > /dev/null || cd $(SRC_DIR); go get github.com/golangci/golangci-lint/cmd/golangci-lint
+	@$(GOLINT_PATH) > /dev/null || go get github.com/golangci/golangci-lint/cmd/golangci-lint
 	cd $(SRC_DIR); golangci-lint run --modules-download-mode=mod *.go --fix
 	cd $(SPA_DIR); npm run lint-fix
 

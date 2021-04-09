@@ -6,9 +6,7 @@ Ben C, April 2018
 
 <template>
   <b-jumbotron bg-variant="primary" text-variant="white" border-variant="dark">
-    <template #header>
-      Go &amp; Vue.js Demo
-    </template>
+    <template #header>Go &amp; Vue.js Demo</template>
     <template #lead>
       This is a simple web application with a Go server/backend and a Vue.js single page application frontend. It has
       been designed with cloud demos &amp; containers in mind. Demonstrating capabilities such as auto scaling,
@@ -19,9 +17,7 @@ Ben C, April 2018
     <div class="dimmed-box">
       <p>
         <img src="../assets/octocat.png" class="icon" />
-        <b-button href="https://github.com/benc-uk/vuego-demoapp" variant="info">
-          GitHub Project
-        </b-button>
+        <b-button href="https://github.com/benc-uk/vuego-demoapp" variant="info"> GitHub Project </b-button>
         <img src="../assets/docker.png" class="icon" style="margin-left: 50px" />
 
         <b-button href="https://github.com/users/benc-uk/packages/container/package/vuego-demoapp" variant="info">

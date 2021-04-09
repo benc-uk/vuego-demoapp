@@ -5,9 +5,7 @@ exports[`Home.vue renders home screen 1`] = `
   <hr>
   <div class="dimmed-box">
     <p><img src="../assets/octocat.png" class="icon">
-      <b-button href="https://github.com/benc-uk/vuego-demoapp" variant="info">
-        GitHub Project
-      </b-button> <img src="../assets/docker.png" class="icon" style="margin-left: 50px;">
+      <b-button href="https://github.com/benc-uk/vuego-demoapp" variant="info"> GitHub Project </b-button> <img src="../assets/docker.png" class="icon" style="margin-left: 50px;">
       <b-button href="https://github.com/users/benc-uk/packages/container/package/vuego-demoapp" variant="info">
         Docker Images
       </b-button>

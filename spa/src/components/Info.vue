@@ -94,7 +94,7 @@ export default {
   // Adds functions to call the API
   mixins: [apiMixin],
 
-  data: function() {
+  data: function () {
     return {
       info: info,
       error: null
@@ -102,7 +102,7 @@ export default {
   },
 
   computed: {
-    envVars: function() {
+    envVars: function () {
       let vars = []
       for (const envVar of this.info.envVars) {
         const parts = envVar.split('=')
@@ -134,7 +134,7 @@ export default {
   },
 
   methods: {
-    getInfo: async function() {
+    getInfo: async function () {
       try {
         this.info = await this.apiGetInfo()
       } catch (err) {

@@ -56,7 +56,7 @@ export default {
   // Adds functions to call the API
   mixins: [apiMixin],
 
-  data: function() {
+  data: function () {
     return {
       metrics: null,
       prevNetBytes: null,
@@ -65,28 +65,28 @@ export default {
   },
 
   computed: {
-    cpu: function() {
+    cpu: function () {
       if (!this.metrics) {
         return 0
       }
       return this.metrics.cpuPerc
     },
 
-    mem: function() {
+    mem: function () {
       if (!this.metrics) {
         return 0
       }
       return (this.metrics.memUsed / this.metrics.memTotal) * 100
     },
 
-    disk: function() {
+    disk: function () {
       if (!this.metrics) {
         return 0
       }
       return 100 - (this.metrics.diskFree / this.metrics.diskTotal) * 100
     },
 
-    net: function() {
+    net: function () {
       let newTot = this.metrics.netBytesSent + this.metrics.netBytesRecv
       let delta = newTot - prevNetBytes
       if (prevNetBytes) {
@@ -111,7 +111,7 @@ export default {
 
   methods: {
     // Update the data with an API call
-    update: async function() {
+    update: async function () {
       this.error = null
       try {
         this.metrics = await this.apiGetMetrics()

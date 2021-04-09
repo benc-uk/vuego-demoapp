@@ -6,9 +6,7 @@ Ben C, Sept 2018
 
 <template>
   <div class="card">
-    <div class="card-header bg-success h3">
-      <fa icon="umbrella" />&nbsp; Weather
-    </div>
+    <div class="card-header bg-success h3"><fa icon="umbrella" />&nbsp; Weather</div>
     <div class="card-body">
       <b-alert v-if="error" show variant="warning">
         <h4>There was a problem 😥</h4>
@@ -23,7 +21,7 @@ Ben C, Sept 2018
         <skycon :condition="weather.weather.currently.icon" :width="256" :height="256" color="#223322" />
       </div>
 
-      <table v-if="weather" class="table table-hover table-sm table-striped ">
+      <table v-if="weather" class="table table-hover table-sm table-striped">
         <tbody>
           <tr>
             <td><b>IP Address:</b></td>
@@ -68,23 +66,21 @@ import apiMixin from '../mixins/apiMixin.js'
 import Spinner from './Spinner.vue'
 
 export default {
-
   components: {
     Spinner
   },
 
   // Adds functions to call the API
-  mixins: [ apiMixin ],
+  mixins: [apiMixin],
 
-  data: function() {
+  data: function () {
     return {
       weather: null,
       error: null
     }
   },
 
-  computed: {
-  },
+  computed: {},
 
   created() {
     this.update()
@@ -92,7 +88,7 @@ export default {
 
   methods: {
     // Update the data with an API call
-    update: async function() {
+    update: async function () {
       this.error = null
       try {
         this.weather = await this.apiGetWeather()
@@ -110,6 +106,6 @@ export default {
 <style>
 #weather-div {
   width: 100%;
-  text-align:center;
+  text-align: center;
 }
 </style>

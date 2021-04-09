@@ -40,7 +40,7 @@ import auth from './services/auth'
 import router from './router'
 
 export default {
-  data: function() {
+  data: function () {
     return {
       user: {},
       // We swicth the user sign-in feature on or off depending if auth has been configured

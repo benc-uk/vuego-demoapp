@@ -56,7 +56,7 @@ export default {
     }
   },
 
-  data: function() {
+  data: function () {
     return {
       gauge: null,
       opts: opts
@@ -64,7 +64,7 @@ export default {
   },
 
   computed: {
-    valComputed: function() {
+    valComputed: function () {
       let rounded = Math.round(this.value * Math.pow(10, 2)) / Math.pow(10, 2)
       if (this.value && this.gauge) {
         this.gauge.set(rounded)
@@ -73,7 +73,7 @@ export default {
     }
   },
 
-  mounted: function() {
+  mounted: function () {
     let target = this.$refs.can
 
     if (this.percentage) {
