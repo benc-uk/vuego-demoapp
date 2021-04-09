@@ -1,9 +1,12 @@
 {
-  "image": "ghcr.io/benc-uk/devcontainers/go:root",
-  //"remoteUser": "vscode",
-  //"forwardPorts": [3000],
+  "image": "ghcr.io/benc-uk/devcontainers/go:latest",
+  "remoteUser": "vscode",
+  "forwardPorts": [4000],
+  "appPort": 4000,
 
   "extensions": [
+    "golang.go",
+    "octref.vetur",
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "mikestead.dotenv",

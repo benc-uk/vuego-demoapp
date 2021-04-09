@@ -1,14 +1,4 @@
 {
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
-  "eslint.format.enable": true,
-  "[typescript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
   "editor.semanticHighlighting.enabled": true,
-  // Otherwise go.mod needs to be at root of repo
-  "gopls": {
-    "experimentalWorkspaceModule": true,
-  }
+  "go.lintTool": "golangci-lint"
 }
