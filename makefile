@@ -14,7 +14,8 @@ TEST_HOST ?= localhost:4000
 # Don't change
 SPA_DIR := spa
 SRC_DIR := server
-GOLINT_PATH := $(shell go env GOPATH)/bin/golangci-lint
+REPO_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
+GOLINT_PATH := $(REPO_DIR)/bin/golangci-lint
 
 .PHONY: help lint lint-fix image push run deploy undeploy clean test test-api test-report test-snapshot watch-server watch-spa .EXPORT_ALL_VARIABLES
 .DEFAULT_GOAL := help
@@ -23,13 +24,12 @@ help:  ## 💬 This help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
 lint: $(SPA_DIR)/node_modules  ## 🔎 Lint & format, will not fix but sets exit code on error 
-	echo $(GOLINT_PATH)
-	@$(GOLINT_PATH) > /dev/null || go get github.com/golangci/golangci-lint/cmd/golangci-lint
+	@$(GOLINT_PATH) > /dev/null || curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh
 	cd $(SRC_DIR); $(GOLINT_PATH) run --modules-download-mode=mod *.go
 	cd $(SPA_DIR); npm run lint
 
 lint-fix: $(SPA_DIR)/node_modules  ## 📜 Lint & format, will try to fix errors and modify code
-	@$(GOLINT_PATH) > /dev/null || go get github.com/golangci/golangci-lint/cmd/golangci-lint
+	@$(GOLINT_PATH) > /dev/null || curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh
 	cd $(SRC_DIR); golangci-lint run --modules-download-mode=mod *.go --fix
 	cd $(SPA_DIR); npm run lint-fix
 
@@ -80,6 +80,7 @@ clean:  ## 🧹 Clean up project
 	rm -rf $(SRC_DIR)/server_tests.txt
 	rm -rf $(SPA_DIR)/test*.html
 	rm -rf $(SPA_DIR)/coverage
+	rm -rf $(REPO_DIR)/bin
 
 # ============================================================================
 

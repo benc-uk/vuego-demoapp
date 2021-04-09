@@ -30,3 +30,4 @@ secrets.sh
 unit-tests-frontend.xml
 test-report.html
 server_tests.txt
+bin/**
