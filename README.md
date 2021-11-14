@@ -25,11 +25,13 @@ Live instances:
 
 ```txt
 /
-├── spa              Root of the Vue.js project
+├── frontend         Root of the Vue.js project
 │   └── src          Vue.js source code
 ├── deploy           Supporting files for Azure deployment etc
 │   └── kubernetes   Instructions for Kubernetes deployment with Helm
 ├── server           Go backend server
+│   └── cmd          Server main / exec
+│   └── pkg          Supporting packages
 ├── build            Supporting build scripts and Dockerfile
 └── test             API / integration tests
 ```
@@ -42,7 +44,7 @@ The Go server component performs two tasks
 - Provide a simple REST API for data to be displayed & rendered by the Vue.js app. This API is very simple currently has three routes:
   - `GET /api/info` - Returns system information and various properties as JSON
   - `GET /api/metrics` - Returns monitoring metrics for CPU, memory, disk and network. This data comes from the _gopsutils_ library
-  - `GET /api/weather` - Returns weather data for the location determined automatically from the calling IP address, uses IPStack and DarkSky REST APIs
+  - `GET /api/weather/{lat}/{long}` - Returns weather data from OpenWeather API
 
 ## Building & Running Locally
 
@@ -72,13 +74,13 @@ image                🔨 Build container image from Dockerfile
 push                 📤 Push container image to registry
 run                  🏃 Run BOTH components locally using Vue CLI and Go server backend
 watch-server         👀 Run API server with hot reload file watcher, needs cosmtrek/air
-watch-spa            👀 Run frontend SPA with hot reload file watcher
+watch-frontend       👀 Run frontend SPA with hot reload file watcher
 deploy               🚀 Deploy to Azure Web App
 undeploy             💀 Remove from Azure
 test                 🎯 Unit tests for server and frontend
 test-report          🎯 Unit tests for server and frontend (with report output)
 test-snapshot        📷 Update snapshots for frontend tests
-test-api             🚦 Run integration API tests, server must be running
+test-api             🚦  Run integration API tests, server must be running
 clean                🧹 Clean up project
 ```
 
@@ -127,8 +129,7 @@ make deploy
 
 Environmental variables
 
-- `WEATHER_API_KEY` - Enable the weather feature with a DarkSky API key
-- `IPSTACK_API_KEY` - Enable the weather feature with a IPStack API key
+- `WEATHER_API_KEY` - Enable the weather feature with a OpenWeather API key
 - `PORT` - Port to listen on (default: `4000`)
 - `CONTENT_DIR` - Directory to serve static content from (default: `.`)
 - `AUTH_CLIENT_ID` - Set to a Azure AD registered app if you wish to enable the optional user sign-in feature
@@ -161,6 +162,7 @@ A working set of CI and CD release GitHub Actions workflows are provided `.githu
 
 | When       | What                                               |
 | ---------- | -------------------------------------------------- |
+| Nov 2021   | Rewrite for Vue.js 3, new look & feel, huge refactor |
 | Mar 2021   | Auth using MSAL.js v2 added                        |
 | Mar 2021   | Refresh, makefile, more tests                      |
 | Nov 2020   | New pipelines & code/ API robustness               |

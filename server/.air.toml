@@ -3,7 +3,12 @@
 # Working directory
 # . or absolute path, please note that the directories following must be under root.
 root = "."
-tmp_dir = "tmp"
+tmp_dir = "./tmp"
+
+[build]
+# Just plain old shell command. You could use `make` as well.
+cmd = "go build -o tmp/main ./cmd"
+bin = "tmp/main"
 
 [misc]
 # Delete tmp directory on exit

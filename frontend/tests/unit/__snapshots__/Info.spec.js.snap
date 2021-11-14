@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Info.vue renders info screen 1`] = `
+<div>
+  <!--v-if-->
+  <!--v-if-->
+  <div class="card border-light bg-dark mb-3 rounded-3">
+    <h4 class="card-header bg-info"><i class="fas fa-cogs fa-fw me-3"></i> System Information</h4>
+    <div class="card-body">
+      <table class="table table-hover table-striped fs-5">
+        <tbody>
+          <tr class="table-dark">
+            <td><i class="fab fa-docker fa-fw me-1"></i> Containerized</td>
+            <td>Running in a container! 😁</td>
+          </tr>
+          <tr class="table-dark">
+            <td><i class="fas fa-dharmachakra fa-fw me-1"></i> Kubernetes</td>
+            <td>Running in Kubernetes! 😄</td>
+          </tr>
+          <tr class="table-dark">
+            <td><i class="fas fa-home fa-fw me-1"></i> Hostname</td>
+            <td>test</td>
+          </tr>
+          <tr class="table-dark">
+            <td><i class="fas fa-wrench fa-fw me-1"></i> Platform</td>
+            <td>PDP-11 98 bit</td>
+          </tr>
+          <tr class="table-dark">
+            <td><i class="fas fa-laptop-code fa-fw me-1"></i> Operating System</td>
+            <td>MegaOS: 3000</td>
+          </tr>
+          <tr class="table-dark">
+            <td><i class="fas fa-microchip fa-fw me-1"></i> Processors</td>
+            <td> x </td>
+          </tr>
+          <tr class="table-dark">
+            <td><i class="fas fa-memory fa-fw me-1"></i> Memory</td>
+            <td>1.15 GB</td>
+          </tr>
+          <tr class="table-dark">
+            <td><i class="fas fa-flask fa-fw me-1"></i> Go Version</td>
+            <td></td>
+          </tr>
+          <tr class="table-dark">
+            <td><i class="fas fa-project-diagram fa-fw me-1"></i> Network Address</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div><br>
+  <div class="card border-light bg-dark mb-3 rounded-3">
+    <h4 class="card-header bg-info"><i class="fas fa-comment-dollar fa-fw me-3"></i> Environment Variables</h4>
+    <div class="card-body">
+      <table class="vartable">
+        <tbody>
+          <tr>
+            <td>UNIT_TESTS</td>
+            <td class="value">Are pointless</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;

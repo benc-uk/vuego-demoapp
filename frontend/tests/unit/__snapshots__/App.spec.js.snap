@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App.vue renders main app screen 1`] = `
+<div>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid"><a class="navbar-brand text-light" href="#">Vue &amp; Go Demo</a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <div id="navbarSupportedContent" class="collapse navbar-collapse">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a href="#/home" class="nav-link active"><i class="fas fa-home fa-fw"></i> Home</a></li>
+          <li class="nav-item"><a href="#/info" class="nav-link active"><i class="fas fa-cog fa-fw"></i> Info</a></li>
+          <li class="nav-item"><a href="#/monitor" class="nav-link active"><i class="fas fa-tachometer-alt fa-fw"></i> Monitor</a></li>
+          <!--v-if-->
+          <li class="nav-item"><a href="#/about" class="nav-link active"><i class="fas fa-info-circle fa-fw"></i> About</a></li>
+        </ul>
+        <!--v-if-->
+      </div>
+    </div>
+  </nav>
+  <div class="container mt-5">
+    <transition-stub>
+      <!---->
+    </transition-stub>
+  </div>
+</div>
+`;
+
+exports[`App.vue renders navigates to about 1`] = `
+<div>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid"><a class="navbar-brand text-light" href="#">Vue &amp; Go Demo</a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <div id="navbarSupportedContent" class="collapse navbar-collapse">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a href="#/home" class="nav-link active"><i class="fas fa-home fa-fw"></i> Home</a></li>
+          <li class="nav-item"><a href="#/info" class="nav-link active"><i class="fas fa-cog fa-fw"></i> Info</a></li>
+          <li class="nav-item"><a href="#/monitor" class="nav-link active"><i class="fas fa-tachometer-alt fa-fw"></i> Monitor</a></li>
+          <!--v-if-->
+          <li class="nav-item"><a href="#/about" class="router-link-active router-link-exact-active nav-link active" aria-current="page"><i class="fas fa-info-circle fa-fw"></i> About</a></li>
+        </ul>
+        <!--v-if-->
+      </div>
+    </div>
+  </nav>
+  <div class="container mt-5">
+    <transition-stub>
+      <div class="card border-light mb-3 rounded-3">
+        <h4 class="card-header bg-info"><i class="fas fa-info-circle fa-fw"></i> About</h4>
+        <div class="card-body">
+          <div>Developed by Ben Coleman, 2018~2021</div>
+          <ul class="list-group m-4">
+            <li class="list-group-item d-flex justify-content-between align-items-center"> App Version <span class="badge bg-primary rounded-pill p-2">3.0.0</span></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center"> API Endpoint <span class="badge bg-primary rounded-pill p-2">/api</span></li>
+          </ul>
+        </div>
+      </div>
+    </transition-stub>
+  </div>
+</div>
+`;

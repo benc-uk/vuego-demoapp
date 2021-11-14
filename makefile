@@ -12,8 +12,8 @@ AZURE_SITE_NAME ?= vuegoapp-$(shell git rev-parse --short HEAD)
 TEST_HOST ?= localhost:4000
 
 # Don't change
-SPA_DIR := spa
-SRC_DIR := server
+FRONT_DIR := frontend
+SERVER_DIR := server
 REPO_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 GOLINT_PATH := $(REPO_DIR)/bin/golangci-lint
 
@@ -23,15 +23,15 @@ GOLINT_PATH := $(REPO_DIR)/bin/golangci-lint
 help:  ## 💬 This help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
-lint: $(SPA_DIR)/node_modules  ## 🔎 Lint & format, will not fix but sets exit code on error 
+lint: $(FRONT_DIR)/node_modules  ## 🔎 Lint & format, will not fix but sets exit code on error 
 	@$(GOLINT_PATH) > /dev/null || curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh
-	cd $(SRC_DIR); $(GOLINT_PATH) run --modules-download-mode=mod *.go
-	cd $(SPA_DIR); npm run lint
+	cd $(SERVER_DIR); $(GOLINT_PATH) run --modules-download-mode=mod ./...
+	cd $(FRONT_DIR); npm run lint
 
-lint-fix: $(SPA_DIR)/node_modules  ## 📜 Lint & format, will try to fix errors and modify code
+lint-fix: $(FRONT_DIR)/node_modules  ## 📜 Lint & format, will try to fix errors and modify code
 	@$(GOLINT_PATH) > /dev/null || curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh
-	cd $(SRC_DIR); golangci-lint run --modules-download-mode=mod *.go --fix
-	cd $(SPA_DIR); npm run lint-fix
+	cd $(SERVER_DIR); golangci-lint run --modules-download-mode=mod *.go --fix
+	cd $(FRONT_DIR); npm run lint-fix
 
 image:  ## 🔨 Build container image from Dockerfile 
 	docker build . --file build/Dockerfile \
@@ -40,15 +40,18 @@ image:  ## 🔨 Build container image from Dockerfile
 push:  ## 📤 Push container image to registry 
 	docker push $(IMAGE_REG)/$(IMAGE_REPO):$(IMAGE_TAG)
 
-run: $(SPA_DIR)/node_modules  ## 🏃 Run BOTH components locally using Vue CLI and Go server backend
-	cd $(SRC_DIR); go run main.go routes.go &
-	cd $(SPA_DIR); npm run serve
+run: $(FRONT_DIR)/node_modules  ## 🏃 Run BOTH components locally using Vue CLI and Go server backend
+	cd $(SERVER_DIR); go run ./cmd &
+	cd $(FRONT_DIR); npm run serve
 
 watch-server:  ## 👀 Run API server with hot reload file watcher, needs cosmtrek/air
-	cd $(SRC_DIR); air
+	cd $(SERVER_DIR); air -c .air.toml
 
-watch-spa: $(SPA_DIR)/node_modules  ## 👀 Run frontend SPA with hot reload file watcher
-	cd $(SPA_DIR); npm run serve
+watch-frontend: $(FRONT_DIR)/node_modules  ## 👀 Run frontend SPA with hot reload file watcher
+	cd $(FRONT_DIR); npm run serve
+
+build-frontend: $(FRONT_DIR)/node_modules  ## 🧰 Build and bundle the frontend SPA into dist
+	cd $(FRONT_DIR); npm run build
 
 deploy:  ## 🚀 Deploy to Azure Web App 
 	az group create --resource-group $(AZURE_RES_GROUP) --location $(AZURE_REGION) -o table
@@ -62,31 +65,29 @@ undeploy:  ## 💀 Remove from Azure
 	@echo "### WARNING! Going to delete $(AZURE_RES_GROUP) 😲"
 	az group delete -n $(AZURE_RES_GROUP) -o table --no-wait
 
-test: $(SPA_DIR)/node_modules  ## 🎯 Unit tests for server and frontend 
-	cd $(SRC_DIR); go test -v | tee server_tests.txt
-	cd $(SPA_DIR); npm run test
-
-test-report: test  ## 🎯 Unit tests for server and frontend (with report output)
+test: $(FRONT_DIR)/node_modules  ## 🎯 Unit tests for server and frontend 
+	cd $(SERVER_DIR); go test -v ./...
+	cd $(FRONT_DIR); npm run test
 
 test-snapshot:  ## 📷 Update snapshots for frontend tests
-	cd $(SPA_DIR); npm run test-update
+	cd $(FRONT_DIR); npm run test-update
 
-test-api: $(SPA_DIR)/node_modules .EXPORT_ALL_VARIABLES  ## 🚦 Run integration API tests, server must be running 
-	$(SPA_DIR)/node_modules/.bin/newman run tests/postman_collection.json --env-var apphost=$(TEST_HOST)
+test-api: $(FRONT_DIR)/node_modules .EXPORT_ALL_VARIABLES  ## 🚦 Run integration API tests, server must be running 
+	$(FRONT_DIR)/node_modules/.bin/newman run tests/postman_collection.json --env-var BASE_URL=$(TEST_HOST)
 
 clean:  ## 🧹 Clean up project
-	rm -rf $(SPA_DIR)/dist
-	rm -rf $(SPA_DIR)/node_modules
-	rm -rf $(SRC_DIR)/server_tests.txt
-	rm -rf $(SPA_DIR)/test*.html
-	rm -rf $(SPA_DIR)/coverage
+	rm -rf $(FRONT_DIR)/dist
+	rm -rf $(FRONT_DIR)/node_modules
+	rm -rf $(SERVER_DIR)/server_tests.txt
+	rm -rf $(FRONT_DIR)/test*.html
+	rm -rf $(FRONT_DIR)/coverage
 	rm -rf $(REPO_DIR)/bin
 
 # ============================================================================
 
-$(SPA_DIR)/node_modules: $(SPA_DIR)/package.json
-	cd $(SPA_DIR); npm install --silent
-	touch -m $(SPA_DIR)/node_modules
+$(FRONT_DIR)/node_modules: $(FRONT_DIR)/package.json
+	cd $(FRONT_DIR); npm install --silent
+	touch -m $(FRONT_DIR)/node_modules
 
-$(SPA_DIR)/package.json: 
+$(FRONT_DIR)/package.json: 
 	@echo "package.json was modified"

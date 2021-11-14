@@ -1,26 +1,26 @@
 #
 # Build and bundle the Vue.js frontend SPA 
 #
-FROM node:14-alpine AS vue-build
+FROM node:16-alpine AS vue-build
 WORKDIR /build
 
-COPY spa/package*.json ./
+COPY frontend/package*.json ./
 RUN npm i -g npm
-RUN npm install
+RUN npm install --silent
 
-COPY spa/ .
+COPY frontend/ .
 RUN npm run build
 
 #
 # Build the Go server backend
 #
-FROM golang:1.16-alpine as go-build
+FROM golang:1.17-alpine as go-build
 
 WORKDIR /build/src/server
 
 RUN apk update && apk add git gcc musl-dev
 
-COPY server/*.go ./
+COPY server/cmd/*.go ./
 COPY go.mod ./
 COPY go.sum ./
 

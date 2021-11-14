@@ -1,6 +1,5 @@
 linters-settings:
-  golint:
-    min-confidence: 0
+  revive:
 linters:
   enable:
     - golint
