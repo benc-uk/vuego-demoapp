@@ -13,9 +13,6 @@ secretEnv:
   WEATHER_API_KEY:
     secretName: vuego-demoapp
     secretKey: WEATHER_API_KEY
-  IPSTACK_API_KEY:
-    secretName: vuego-demoapp
-    secretKey: IPSTACK_API_KEY
   AUTH_CLIENT_ID:
     secretName: vuego-demoapp
     secretKey: AUTH_CLIENT_ID
@@ -27,4 +24,4 @@ ingress:
     nginx.ingress.kubernetes.io/ssl-redirect: 'true'
   tls:
     enabled: true
-    secretName: kube-benco-io-cert
+    secretName: benco-io-cert

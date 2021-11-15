@@ -18,15 +18,16 @@ FROM golang:1.17-alpine as go-build
 
 WORKDIR /build/src/server
 
-RUN apk update && apk add git gcc musl-dev
+RUN apk update && apk add git gcc musl-dev ca-certificates
 
-COPY server/cmd/*.go ./
-COPY go.mod ./
-COPY go.sum ./
+COPY server/cmd ./cmd/
+COPY server/pkg ./pkg/
+COPY server/go.mod ./
+COPY server/go.sum ./
 
 ENV GO111MODULE=on
 # Disabling cgo results in a fully static binary that can run without C libs
-RUN CGO_ENABLED=0 GOOS=linux go build -o server
+RUN CGO_ENABLED=0 GOOS=linux go build -o server ./cmd
 
 #
 # Assemble the server binary and Vue bundle into a single app
@@ -40,6 +41,7 @@ LABEL org.label-schema.name="vuego-demoapp" \
 
 COPY --from=vue-build /build/dist . 
 COPY --from=go-build /build/src/server/server . 
+COPY --from=go-build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
 ENV PORT 4000
 EXPOSE 4000

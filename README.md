@@ -6,7 +6,7 @@ The app has been designed with cloud native demos & containers in mind, in order
 
 Typical uses would be deployment to Kubernetes, demos of Docker, CI/CD (build pipelines are provided), deployment to cloud (Azure) monitoring, auto-scaling
 
-- The SPA component was created using the Vue CLI and uses [Bootstrap-Vue](https://bootstrap-vue.js.org/) and [Font Awesome](https://fontawesome.com/). In addition [Gauge.js](http://bernii.github.io/gauge.js/) is used for the dials in the monitoring view
+- The Frontend is a SPA written in Vue.js 3. It uses [Bootstrap 5](https://getbootstrap.com/) and [Font Awesome](https://fontawesome.com/). In addition [Gauge.js](http://bernii.github.io/gauge.js/) is used for the dials in the monitoring view
 - The Go component is a Go HTTP server based on the std http package and using [gopsutils](https://github.com/shirou/gopsutil) for monitoring metrics, and [Gorilla Mux](https://github.com/gorilla/mux) for routing
 
 ![screenshot](https://user-images.githubusercontent.com/14982936/112730706-e77c1800-8f2a-11eb-880d-6f2298fd49b3.png)
@@ -74,8 +74,9 @@ image                🔨 Build container image from Dockerfile
 push                 📤 Push container image to registry
 run                  🏃 Run BOTH components locally using Vue CLI and Go server backend
 watch-server         👀 Run API server with hot reload file watcher, needs cosmtrek/air
-watch-frontend       👀 Run frontend SPA with hot reload file watcher
-deploy               🚀 Deploy to Azure Web App
+watch-frontend       👀 Run frontend with hot reload file watcher
+build-frontend       🧰 Build and bundle the frontend into dist
+deploy               🚀 Deploy to Azure Container Apps
 undeploy             💀 Remove from Azure
 test                 🎯 Unit tests for server and frontend
 test-report          🎯 Unit tests for server and frontend (with report output)
@@ -93,11 +94,10 @@ Make file variables and default values, pass these in when calling `make`, e.g. 
 | IMAGE_TAG         | latest                |
 | AZURE_RES_GROUP   | temp-demoapps         |
 | AZURE_REGION      | uksouth               |
-| AZURE_SITE_NAME   | nodeapp-{git-sha}     |
 
 - The server will listen on port 4000 by default, change this by setting the environmental variable `PORT`
-- The server will ry to serve static content (i.e. bundled SPA frontend) from the same directory as the server binary, change this by setting the environmental variable `CONTENT_DIR`
-- The SPA frontend will use `/api` as the API endpoint, when working locally `VUE_APP_API_ENDPOINT` is set and overrides this to be `http://localhost:4000/api`
+- The server will ry to serve static content (i.e. bundled frontend) from the same directory as the server binary, change this by setting the environmental variable `CONTENT_DIR`
+- The frontend will use `/api` as the API endpoint, when working locally `VUE_APP_API_ENDPOINT` is set and overrides this to be `http://localhost:4000/api`
 
 # Containers
 
@@ -160,14 +160,14 @@ A working set of CI and CD release GitHub Actions workflows are provided `.githu
 
 ## Updates
 
-| When       | What                                               |
-| ---------- | -------------------------------------------------- |
+| When       | What                                                 |
+| ---------- | ---------------------------------------------------- |
 | Nov 2021   | Rewrite for Vue.js 3, new look & feel, huge refactor |
-| Mar 2021   | Auth using MSAL.js v2 added                        |
-| Mar 2021   | Refresh, makefile, more tests                      |
-| Nov 2020   | New pipelines & code/ API robustness               |
-| Dec 2019   | Github Actions and AKS                             |
-| Sept 2019  | New release pipelines and config moved to env vars |
-| Sept 2018  | Updated with weather API and weather view          |
-| July 2018  | Updated Vue CLI config & moved to Golang 1.11      |
-| April 2018 | Project created                                    |
+| Mar 2021   | Auth using MSAL.js v2 added                          |
+| Mar 2021   | Refresh, makefile, more tests                        |
+| Nov 2020   | New pipelines & code/ API robustness                 |
+| Dec 2019   | Github Actions and AKS                               |
+| Sept 2019  | New release pipelines and config moved to env vars   |
+| Sept 2018  | Updated with weather API and weather view            |
+| July 2018  | Updated Vue CLI config & moved to Golang 1.11        |
+| April 2018 | Project created                                      |

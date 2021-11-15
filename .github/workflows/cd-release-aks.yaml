@@ -76,4 +76,4 @@ jobs:
       - name: 'Run API tests'
         run: |
           npm install newman --silent
-          node_modules/newman/bin/newman.js run tests/postman_collection.json --global-var apphost=${{ env.INGRESS_DNS_HOST }}
+          node_modules/newman/bin/newman.js run tests/postman_collection.json --global-var BASE_URL=https://${{ env.INGRESS_DNS_HOST }}

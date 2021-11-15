@@ -19,9 +19,6 @@ service:
 #   WEATHER_API_KEY:
 #     secretName: vuego-secrets
 #     secretKey: WEATHER_API_KEY
-#   IPSTACK_API_KEY:
-#     secretName: vuego-secrets
-#     secretKey: IPSTACK_API_KEY
 #   AUTH_CLIENT_ID:
 #     secretName: vuego-demoapp
 #     secretKey: AUTH_CLIENT_ID
