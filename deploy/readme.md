@@ -1,3 +1,7 @@
+# Quick Deploy
+
+Deploy as a Azure Container App
+
 ```bash
 RES_GRP=vuego-demoapp
 REGION=northeurope
