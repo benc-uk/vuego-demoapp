@@ -35,7 +35,7 @@ resource logWorkspace 'Microsoft.OperationalInsights/workspaces@2020-08-01' = {
 }
 
 resource kubeEnv 'Microsoft.Web/kubeEnvironments@2021-02-01' = {
-  location: '${resourceGroup().name}-environment'
+  location: location
   name: environmentName
   kind: 'containerenvironment'
   
