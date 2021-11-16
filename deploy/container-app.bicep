@@ -2,28 +2,31 @@
 // Deploy a container app with app container environment and log analytics
 // ============================================================================
 
-@description('Name used for resource group, and default base name for all resources')
+@description('Name of container app')
 param appName string = 'vuego-demoapp'
 
-@description('Azure region for all resources')
+@description('Region to deploy into')
 param location string = resourceGroup().location
 
-@description('Container image')
+@description('Container image to deploy')
 param image string = 'ghcr.io/benc-uk/vuego-demoapp:latest'
 
-@description('Optional featiure: OpenWeather API Key')
+@description('Optional feature: OpenWeather API Key')
 param weatherKey string = ''
 
-@description('Optional featiure: Azure AD Client ID')
+@description('Optional feature: Azure AD Client ID')
 param azureClientId string = ''
 
 // ===== Variables ============================================================
+
+var logWorkspaceName = '${resourceGroup().name}-logs'
+var environmentName = '${resourceGroup().name}-environment'
 
 // ===== Modules & Resources ==================================================
 
 resource logWorkspace 'Microsoft.OperationalInsights/workspaces@2020-08-01' = {
   location: location
-  name: appName
+  name: logWorkspaceName
   properties:{
     sku:{
       name: 'Free'
@@ -32,8 +35,8 @@ resource logWorkspace 'Microsoft.OperationalInsights/workspaces@2020-08-01' = {
 }
 
 resource kubeEnv 'Microsoft.Web/kubeEnvironments@2021-02-01' = {
-  location: location
-  name: appName
+  location: '${resourceGroup().name}-environment'
+  name: environmentName
   kind: 'containerenvironment'
   
   properties: {
