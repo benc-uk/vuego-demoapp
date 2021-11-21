@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Monitor.vue renders monitor screen 1`] = `
+<div class="card border-light bg-dark mb-3 rounded-3">
+  <h4 class="card-header bg-info"><i class="fas fa-tachometer-alt fa-fw me-3"></i> Monitoring </h4>
+  <div class="card-body">
+    <!--v-if-->
+    <!--v-if-->
+    <div class="container" fluid="">
+      <div class="row">
+        <div class="col border-light">
+          <div class="card border-primary"><canvas height="0" width="0">42</canvas>
+            <h5>CPU Load: 42<span>%</span></h5>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card border-primary"><canvas height="0" width="0">50</canvas>
+            <h5>Memory Used: 50<span>%</span></h5>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="card border-primary"><canvas height="0" width="0">60</canvas>
+            <h5>Disk Used: 60<span>%</span></h5>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card border-primary"><canvas height="0" width="0">0</canvas>
+            <h5>Net I/O: 0
+              <!--v-if-->
+            </h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

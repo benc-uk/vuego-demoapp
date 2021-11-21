@@ -1,0 +1,60 @@
+{
+  "name": "vuego-demoapp-spa",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Frontend web client SPA for vuego-demoapp",
+  "author": {
+    "name": "Ben Coleman"
+  },
+  "repository": {
+    "url": "https://github.com/benc-uk/vuego-demoapp"
+  },
+  "license": "MIT",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint-fix": "vue-cli-service lint && prettier --write '**/*.{js,vue}'",
+    "lint": "vue-cli-service lint --no-fix && prettier --check '**/*.{js,vue}'",
+    "test": "vue-cli-service test:unit",
+    "test-report": "vue-cli-service test:unit --reporters='default' --reporters='./node_modules/jest-html-reporter'",
+    "test-update": "vue-cli-service test:unit --updateSnapshot"
+  },
+  "dependencies": {
+    "@azure/msal-browser": "^2.13.0",
+    "@fortawesome/fontawesome-free": "^5.15.4",
+    "bootstrap": "^5.1.3",
+    "bootswatch": "^5.1.3",
+    "gaugeJS": "^1.3.7",
+    "open-weather-icons": "^0.0.8",
+    "vue": "^3.2.0",
+    "vue-router": "^4.0.12"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^4.5.15",
+    "@vue/cli-plugin-eslint": "^4.5.15",
+    "@vue/cli-plugin-unit-jest": "^4.5.15",
+    "@vue/cli-service": "^4.5.12",
+    "@vue/compiler-sfc": "^3.0.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "@vue/test-utils": "^2.0.0-0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-vue": "^7.0.0",
+    "jest-canvas-mock": "^2.3.1",
+    "jest-html-reporter": "^3.3.0",
+    "newman": "^5.2.2",
+    "prettier": "^2.2.1",
+    "vue-jest": "^5.0.0-0",
+    "babel-jest": "^26.0.0"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

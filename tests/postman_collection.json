@@ -11,7 +11,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "15e488a2-6b19-48d4-922a-1072952b8e14",
 						"exec": [
 							"pm.test(\"Home Page: Successful GET request\", function () {",
 							"    pm.response.to.be.ok;",
@@ -35,10 +34,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{apphost}}/",
-					"protocol": "http",
+					"raw": "{{BASE_URL}}/",
 					"host": [
-						"{{apphost}}"
+						"{{BASE_URL}}"
 					],
 					"path": [
 						""
@@ -53,7 +51,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "844b11e9-1364-43a1-b091-4d679a1fac96",
 						"exec": [
 							"pm.test(\"Weather API: Successful GET request\", function () {",
 							"    pm.response.to.be.ok;",
@@ -66,10 +63,10 @@
 							"",
 							"pm.test(\"Weather API: Check API response\", function () {",
 							"    var weatherData = pm.response.json();",
-							"    pm.expect(weatherData.location).to.be.an('object')",
 							"    pm.expect(weatherData.weather).to.exist;",
-							"    pm.expect(weatherData.weather.currently.temperature).to.be.an('number')",
-							"    pm.expect(weatherData.weather.currently.summary).to.be.an('string')",
+							"    pm.expect(weatherData.main).to.exist;",
+							"    pm.expect(weatherData.weather).to.be.an('array')",
+							"    pm.expect(weatherData.main.temp).to.be.an('number')",
 							"});",
 							""
 						],
@@ -81,26 +78,26 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://{{apphost}}/api/weather",
-					"protocol": "https",
+					"raw": "{{BASE_URL}}/api/weather/51.5072/0.1276",
 					"host": [
-						"{{apphost}}"
+						"{{BASE_URL}}"
 					],
 					"path": [
 						"api",
-						"weather"
+						"weather",
+						"51.5072",
+						"0.1276"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Check Metric API",
+			"name": "Check Mnitor API",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "221473ff-0732-4a3b-9bcc-f108785efc87",
 						"exec": [
 							"pm.test(\"Metric API: Successful GET request\", function () {",
 							"    pm.response.to.be.ok;",
@@ -128,14 +125,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://{{apphost}}/api/metrics",
-					"protocol": "https",
+					"raw": "{{BASE_URL}}/api/monitor",
 					"host": [
-						"{{apphost}}"
+						"{{BASE_URL}}"
 					],
 					"path": [
 						"api",
-						"metrics"
+						"monitor"
 					]
 				}
 			},
@@ -146,7 +142,6 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "c245488c-86bd-4944-aaa5-558322c58993",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -156,13 +151,11 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "d242a124-0cbd-4da1-b3cc-df7275419fa6",
 				"type": "text/javascript",
 				"exec": [
 					""
 				]
 			}
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }

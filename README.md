@@ -6,11 +6,22 @@ The app has been designed with cloud native demos & containers in mind, in order
 
 Typical uses would be deployment to Kubernetes, demos of Docker, CI/CD (build pipelines are provided), deployment to cloud (Azure) monitoring, auto-scaling
 
-- The SPA component was created using the Vue CLI and uses [Bootstrap-Vue](https://bootstrap-vue.js.org/) and [Font Awesome](https://fontawesome.com/). In addition [Gauge.js](http://bernii.github.io/gauge.js/) is used for the dials in the monitoring view
+- The Frontend is a SPA written in Vue.js 3. It uses [Bootstrap 5](https://getbootstrap.com/) and [Font Awesome](https://fontawesome.com/). In addition [Gauge.js](http://bernii.github.io/gauge.js/) is used for the dials in the monitoring view
 - The Go component is a Go HTTP server based on the std http package and using [gopsutils](https://github.com/shirou/gopsutil) for monitoring metrics, and [Gorilla Mux](https://github.com/gorilla/mux) for routing
 
-![screenshot](https://user-images.githubusercontent.com/14982936/112730706-e77c1800-8f2a-11eb-880d-6f2298fd49b3.png)
-![screenshot](https://user-images.githubusercontent.com/14982936/112730741-23af7880-8f2b-11eb-8b61-7b9c88766182.png)
+Features:
+
+- System status / information view
+- Geolocated weather info (from OpenWeather API)
+- Realtime monitoring and metric view
+- Support for user authentication with Azure AD and MSAL
+- Prometheus metrics
+- API for generating CPU load, and allocating memory
+
+<a href="https://user-images.githubusercontent.com/14982936/142773574-dbe9e623-001a-404d-a871-2e1151f67d01.png"><img style="width:410px" src="https://user-images.githubusercontent.com/14982936/142773574-dbe9e623-001a-404d-a871-2e1151f67d01.png"/></a>
+<a href="https://user-images.githubusercontent.com/14982936/142773575-28d7dbf2-001e-48cc-a9b0-0b6c96f95be2.png"><img style="width:410px" src="https://user-images.githubusercontent.com/14982936/142773575-28d7dbf2-001e-48cc-a9b0-0b6c96f95be2.png"/></a>
+<a href="https://user-images.githubusercontent.com/14982936/142773576-8f5abb5f-880a-408d-9a2b-ea3d2792378a.png"><img style="width:410px" src="https://user-images.githubusercontent.com/14982936/142773576-8f5abb5f-880a-408d-9a2b-ea3d2792378a.png"/></a>
+<a href="https://user-images.githubusercontent.com/14982936/142773577-2e460ccd-b935-40bb-a41f-1f7a72e943bd.png"><img style="width:410px" src="https://user-images.githubusercontent.com/14982936/142773577-2e460ccd-b935-40bb-a41f-1f7a72e943bd.png"/></a>
 
 # Status
 
@@ -18,18 +29,20 @@ Typical uses would be deployment to Kubernetes, demos of Docker, CI/CD (build pi
 
 Live instances:
 
-[![](https://img.shields.io/website?label=Hosted%3A%20Azure%20App%20Service&up_message=online&url=https%3A%2F%2Fvuego-demoapp.azurewebsites.net%2F)](https://vuego-demoapp.azurewebsites.net/)  
 [![](https://img.shields.io/website?label=Hosted%3A%20Kubernetes&up_message=online&url=https%3A%2F%2Fvuego-demoapp.kube.benco.io%2F)](https://vuego-demoapp.kube.benco.io/)
 
 ## Repo Structure
 
 ```txt
 /
-├── spa              Root of the Vue.js project
+├── frontend         Root of the Vue.js project
 │   └── src          Vue.js source code
+│   └── tests        Unit tests
 ├── deploy           Supporting files for Azure deployment etc
 │   └── kubernetes   Instructions for Kubernetes deployment with Helm
 ├── server           Go backend server
+│   └── cmd          Server main / exec
+│   └── pkg          Supporting packages
 ├── build            Supporting build scripts and Dockerfile
 └── test             API / integration tests
 ```
@@ -41,8 +54,17 @@ The Go server component performs two tasks
 - Serve the Vue.js app to the user. As this is a SPA, this is static content, i.e. HTML, JS & CSS files and any images. Note. The Vue.js app needs to be 'built' before it can be served, this bundles everything up correctly.
 - Provide a simple REST API for data to be displayed & rendered by the Vue.js app. This API is very simple currently has three routes:
   - `GET /api/info` - Returns system information and various properties as JSON
-  - `GET /api/metrics` - Returns monitoring metrics for CPU, memory, disk and network. This data comes from the _gopsutils_ library
-  - `GET /api/weather` - Returns weather data for the location determined automatically from the calling IP address, uses IPStack and DarkSky REST APIs
+  - `GET /api/monitor` - Returns monitoring metrics for CPU, memory, disk and network. This data comes from the _gopsutils_ library
+  - `GET /api/weather/{lat}/{long}` - Returns weather data from OpenWeather API
+  - `GET /api/gc` - Force the garbage collector to run
+  - `POST /api/alloc` - Allocate a lump of memory, payload `{"size":int}`
+  - `POST /api/cpu` - Force CPU load, payload `{"seconds":int}`
+
+In addition to these application specific endpoints, the following REST operations are supported:
+
+- `GET /api/status` - Status and information about the service
+- `GET /api/health` - A health endpoint, returns HTTP 200 when OK
+- `GET /api/metrics` - Returns low level system and HTTP performance metrics for scraping with Prometheus
 
 ## Building & Running Locally
 
@@ -72,13 +94,14 @@ image                🔨 Build container image from Dockerfile
 push                 📤 Push container image to registry
 run                  🏃 Run BOTH components locally using Vue CLI and Go server backend
 watch-server         👀 Run API server with hot reload file watcher, needs cosmtrek/air
-watch-spa            👀 Run frontend SPA with hot reload file watcher
-deploy               🚀 Deploy to Azure Web App
+watch-frontend       👀 Run frontend with hot reload file watcher
+build-frontend       🧰 Build and bundle the frontend into dist
+deploy               🚀 Deploy to Azure Container Apps
 undeploy             💀 Remove from Azure
 test                 🎯 Unit tests for server and frontend
 test-report          🎯 Unit tests for server and frontend (with report output)
 test-snapshot        📷 Update snapshots for frontend tests
-test-api             🚦 Run integration API tests, server must be running
+test-api             🚦  Run integration API tests, server must be running
 clean                🧹 Clean up project
 ```
 
@@ -91,11 +114,10 @@ Make file variables and default values, pass these in when calling `make`, e.g. 
 | IMAGE_TAG         | latest                |
 | AZURE_RES_GROUP   | temp-demoapps         |
 | AZURE_REGION      | uksouth               |
-| AZURE_SITE_NAME   | nodeapp-{git-sha}     |
 
 - The server will listen on port 4000 by default, change this by setting the environmental variable `PORT`
-- The server will ry to serve static content (i.e. bundled SPA frontend) from the same directory as the server binary, change this by setting the environmental variable `CONTENT_DIR`
-- The SPA frontend will use `/api` as the API endpoint, when working locally `VUE_APP_API_ENDPOINT` is set and overrides this to be `http://localhost:4000/api`
+- The server will ry to serve static content (i.e. bundled frontend) from the same directory as the server binary, change this by setting the environmental variable `CONTENT_DIR`
+- The frontend will use `/api` as the API endpoint, when working locally `VUE_APP_API_ENDPOINT` is set and overrides this to be `http://localhost:4000/api`
 
 # Containers
 
@@ -127,8 +149,7 @@ make deploy
 
 Environmental variables
 
-- `WEATHER_API_KEY` - Enable the weather feature with a DarkSky API key
-- `IPSTACK_API_KEY` - Enable the weather feature with a IPStack API key
+- `WEATHER_API_KEY` - Enable the weather feature with a OpenWeather API key
 - `PORT` - Port to listen on (default: `4000`)
 - `CONTENT_DIR` - Directory to serve static content from (default: `.`)
 - `AUTH_CLIENT_ID` - Set to a Azure AD registered app if you wish to enable the optional user sign-in feature
@@ -153,19 +174,19 @@ A working set of CI and CD release GitHub Actions workflows are provided `.githu
 
 [![](https://img.shields.io/github/workflow/status/benc-uk/vuego-demoapp/CD%20Release%20-%20AKS?label=release-kubernetes)](https://github.com/benc-uk/vuego-demoapp/actions?query=workflow%3A%22CD+Release+-+AKS%22)
 
-[![](https://img.shields.io/github/workflow/status/benc-uk/vuego-demoapp/CD%20Release%20-%20Webapp?label=release-azure)](https://github.com/benc-uk/vuego-demoapp/actions?query=workflow%3A%22CD+Release+-+Webapp%22)
 
 [![](https://img.shields.io/github/last-commit/benc-uk/vuego-demoapp)](https://github.com/benc-uk/vuego-demoapp/commits/master)
 
 ## Updates
 
-| When       | What                                               |
-| ---------- | -------------------------------------------------- |
-| Mar 2021   | Auth using MSAL.js v2 added                        |
-| Mar 2021   | Refresh, makefile, more tests                      |
-| Nov 2020   | New pipelines & code/ API robustness               |
-| Dec 2019   | Github Actions and AKS                             |
-| Sept 2019  | New release pipelines and config moved to env vars |
-| Sept 2018  | Updated with weather API and weather view          |
-| July 2018  | Updated Vue CLI config & moved to Golang 1.11      |
-| April 2018 | Project created                                    |
+| When       | What                                                 |
+| ---------- | ---------------------------------------------------- |
+| Nov 2021   | Rewrite for Vue.js 3, new look & feel, huge refactor |
+| Mar 2021   | Auth using MSAL.js v2 added                          |
+| Mar 2021   | Refresh, makefile, more tests                        |
+| Nov 2020   | New pipelines & code/ API robustness                 |
+| Dec 2019   | Github Actions and AKS                               |
+| Sept 2019  | New release pipelines and config moved to env vars   |
+| Sept 2018  | Updated with weather API and weather view            |
+| July 2018  | Updated Vue CLI config & moved to Golang 1.11        |
+| April 2018 | Project created                                      |

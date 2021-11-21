@@ -21,10 +21,19 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@v2
 
+      # - uses: actions/setup-node@v2
+      #   with:
+      #     node-version: '16'
+
       - name: 'Run linting'
         run: make lint
 
-      - name: 'Run tests'
+      # - name: 'Install packages for tests'
+      #   run: |
+      #     npm install --silent
+      #   working-directory: frontend
+
+      - name: 'Run tests with report'
         run: make test-report
 
       - name: 'Upload test results'
@@ -34,9 +43,8 @@ jobs:
         with:
           name: test-results
           path: |
-            server/server_tests.txt
-            spa/coverage/
-            spa/test-report.html
+            server/test-report.html
+            frontend/test-report.html
 
   build:
     name: 'Build & Push Image'

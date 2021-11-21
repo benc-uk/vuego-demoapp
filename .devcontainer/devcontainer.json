@@ -1,17 +1,51 @@
 {
-  "image": "ghcr.io/benc-uk/devcontainers/go:latest",
-  "remoteUser": "vscode",
-  "forwardPorts": [4000],
-  "appPort": 4000,
+  "name": "Go + Node",
+  "image": "mcr.microsoft.com/vscode/devcontainers/go:1.17-bullseye",
 
+  // Set *default* container specific settings.json values on container create.
+  "settings": {},
+
+  // Add the IDs of extensions you want installed when the container is created.
   "extensions": [
-    "golang.go",
+    "golang.Go",
     "octref.vetur",
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "mikestead.dotenv",
     "ms-azuretools.vscode-bicep",
-    "cschleiden.vscode-github-actions",
     "github.vscode-pull-request-github"
-  ]
+  ],
+
+  // Optional features, uncomment to enable.
+  // See https://code.visualstudio.com/docs/remote/containers#_dev-container-features-preview
+  "features": {
+    // Do not remove this feature!
+    "node": {
+      "version": "lts",
+      "nodeGypDependencies": true
+    }
+    // "github": "latest"
+    // "azure-cli": "latest",
+    // "kubectl-helm-minikube": {
+    //   "version": "latest",
+    //   "helm": "latest",
+    //   "minikube": "none"
+    // },
+    // "docker-from-docker": {
+    //   "version": "latest",
+    //   "moby": true
+    // }
+  },
+
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  //"forwardPorts": [4000, 8000],
+
+  // This seems to work better with the Vue CLI hot-reload server
+  "appPort": [4000, 8080],
+
+  // Use 'postCreateCommand' to run commands after the container is created.
+  "postCreateCommand": "curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh -s -- -b /go/bin",
+
+  // Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+  "remoteUser": "vscode"
 }
