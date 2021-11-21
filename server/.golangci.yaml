@@ -2,7 +2,7 @@ linters-settings:
   revive:
 linters:
   enable:
-    - golint
+    - revive
     - gofmt
 #issues:
 #include:

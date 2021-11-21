@@ -23,6 +23,7 @@ server/server.exe
 **/.env
 secrets.sh
 .secrets
+myparams.json
 
 # unit test reports, yawn!
 **/report.xml
@@ -31,3 +32,4 @@ unit-tests-frontend.xml
 test-report.html
 server_tests.txt
 bin/**
+tmp/**

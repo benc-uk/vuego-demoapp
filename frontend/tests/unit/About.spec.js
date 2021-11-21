@@ -1,4 +1,4 @@
-import { mount, flushPromises } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import About from '@/components/About.vue'
 
 describe('About.vue', () => {
