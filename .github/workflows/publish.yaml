@@ -8,6 +8,9 @@ env:
   IMAGE_REG: ghcr.io
   IMAGE_REPO: benc-uk/vuego-demoapp
 
+permissions:
+  packages: write
+
 jobs:
   publish-image:
     name: 'Build & Publish'

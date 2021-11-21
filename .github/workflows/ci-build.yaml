@@ -13,6 +13,9 @@ env:
   IMAGE_REG: ghcr.io
   IMAGE_REPO: benc-uk/vuego-demoapp
 
+permissions:
+  packages: write
+
 jobs:
   test:
     name: 'Tests & Linting'
