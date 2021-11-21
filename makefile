@@ -67,7 +67,12 @@ undeploy: ## 💀 Remove from Azure
 
 test: $(FRONT_DIR)/node_modules ## 🎯 Unit tests for server and frontend 
 	cd $(SERVER_DIR); go test -v ./...
-	cd $(FRONT_DIR); npm run test
+	cd $(FRONT_DIR); npm run test 
+
+test-report: $(FRONT_DIR)/node_modules ## 📜 Unit tests for server and frontend with report
+	go get -u github.com/vakenbolt/go-test-report
+	cd $(SERVER_DIR); go test -json ./... | $(shell go env GOPATH)/bin/go-test-report --output test-report.html
+	cd $(FRONT_DIR); npm run test-report
 
 test-snapshot: ## 📷 Update snapshots for frontend tests
 	cd $(FRONT_DIR); npm run test-update
@@ -78,7 +83,7 @@ test-api: $(FRONT_DIR)/node_modules .EXPORT_ALL_VARIABLES ## 🚦 Run integratio
 clean: ## 🧹 Clean up project
 	rm -rf $(FRONT_DIR)/dist
 	rm -rf $(FRONT_DIR)/node_modules
-	rm -rf $(SERVER_DIR)/server_tests.txt
+	rm -rf $(SERVER_DIR)/test*.html
 	rm -rf $(FRONT_DIR)/test*.html
 	rm -rf $(FRONT_DIR)/coverage
 	rm -rf $(REPO_DIR)/bin

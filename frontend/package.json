@@ -16,6 +16,7 @@
     "lint-fix": "vue-cli-service lint && prettier --write '**/*.{js,vue}'",
     "lint": "vue-cli-service lint --no-fix && prettier --check '**/*.{js,vue}'",
     "test": "vue-cli-service test:unit",
+    "test-report": "vue-cli-service test:unit --reporters='default' --reporters='./node_modules/jest-html-reporter'",
     "test-update": "vue-cli-service test:unit --updateSnapshot"
   },
   "dependencies": {
@@ -43,7 +44,8 @@
     "jest-html-reporter": "^3.3.0",
     "newman": "^5.2.2",
     "prettier": "^2.2.1",
-    "vue-jest": "^5.0.0-0"
+    "vue-jest": "^5.0.0-0",
+    "babel-jest": "^26.0.0"
   },
   "postcss": {
     "plugins": {

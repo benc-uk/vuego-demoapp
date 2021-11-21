@@ -3,8 +3,6 @@ module.exports = {
   setupFiles: ['jest-canvas-mock'],
   verbose: true,
   silent: true,
-  collectCoverage: true,
-  coverageReporters: ['html', 'text-summary'],
   transform: {
     '^.+\\.vue$': 'vue-jest'
   },

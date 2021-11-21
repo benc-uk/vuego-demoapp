@@ -18,8 +18,10 @@ Features:
 - Prometheus metrics
 - API for generating CPU load, and allocating memory
 
-![screenshot](https://user-images.githubusercontent.com/14982936/112730706-e77c1800-8f2a-11eb-880d-6f2298fd49b3.png)
-![screenshot](https://user-images.githubusercontent.com/14982936/112730741-23af7880-8f2b-11eb-8b61-7b9c88766182.png)
+<a href="https://user-images.githubusercontent.com/14982936/142773574-dbe9e623-001a-404d-a871-2e1151f67d01.png"><img style="width:410px" src="https://user-images.githubusercontent.com/14982936/142773574-dbe9e623-001a-404d-a871-2e1151f67d01.png"/></a>
+<a href="https://user-images.githubusercontent.com/14982936/142773575-28d7dbf2-001e-48cc-a9b0-0b6c96f95be2.png"><img style="width:410px" src="https://user-images.githubusercontent.com/14982936/142773575-28d7dbf2-001e-48cc-a9b0-0b6c96f95be2.png"/></a>
+<a href="https://user-images.githubusercontent.com/14982936/142773576-8f5abb5f-880a-408d-9a2b-ea3d2792378a.png"><img style="width:410px" src="https://user-images.githubusercontent.com/14982936/142773576-8f5abb5f-880a-408d-9a2b-ea3d2792378a.png"/></a>
+<a href="https://user-images.githubusercontent.com/14982936/142773577-2e460ccd-b935-40bb-a41f-1f7a72e943bd.png"><img style="width:410px" src="https://user-images.githubusercontent.com/14982936/142773577-2e460ccd-b935-40bb-a41f-1f7a72e943bd.png"/></a>
 
 # Status
 
@@ -172,7 +174,6 @@ A working set of CI and CD release GitHub Actions workflows are provided `.githu
 
 [![](https://img.shields.io/github/workflow/status/benc-uk/vuego-demoapp/CD%20Release%20-%20AKS?label=release-kubernetes)](https://github.com/benc-uk/vuego-demoapp/actions?query=workflow%3A%22CD+Release+-+AKS%22)
 
-[![](https://img.shields.io/github/workflow/status/benc-uk/vuego-demoapp/CD%20Release%20-%20Webapp?label=release-azure)](https://github.com/benc-uk/vuego-demoapp/actions?query=workflow%3A%22CD+Release+-+Webapp%22)
 
 [![](https://img.shields.io/github/last-commit/benc-uk/vuego-demoapp)](https://github.com/benc-uk/vuego-demoapp/commits/master)
 

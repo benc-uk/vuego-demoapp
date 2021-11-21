@@ -33,3 +33,4 @@ test-report.html
 server_tests.txt
 bin/**
 tmp/**
+node_modules
