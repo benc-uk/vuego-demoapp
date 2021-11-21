@@ -26,7 +26,7 @@ help: ## 💬 This help message
 lint: $(FRONT_DIR)/node_modules ## 🔎 Lint & format, will not fix but sets exit code on error 
 	@$(GOLINT_PATH) > /dev/null || curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh
 	cd $(SERVER_DIR); $(GOLINT_PATH) run --modules-download-mode=mod ./...
-	cd $(FRONT_DIR); npm run lint && npm run format
+	cd $(FRONT_DIR); npm run lint
 
 lint-fix: $(FRONT_DIR)/node_modules ## 📜 Lint & format, will try to fix errors and modify code
 	@$(GOLINT_PATH) > /dev/null || curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh

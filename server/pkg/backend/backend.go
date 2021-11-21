@@ -29,6 +29,9 @@ func (a *API) AddRoutes(router *mux.Router) {
 	router.HandleFunc("/api/monitor", a.getMonitorMetrics).Methods("GET")
 	router.HandleFunc("/api/config", a.getConfig).Methods("GET")
 	router.HandleFunc("/api/weather/{lat}/{long}", a.getWeather).Methods("GET")
+	router.HandleFunc("/api/gc", a.getRunGC).Methods("GET")
+	router.HandleFunc("/api/alloc", a.postAllocMem).Methods("POST")
+	router.HandleFunc("/api/cpu", a.postForceCPU).Methods("POST")
 	a.Healthy = true
 }
 
@@ -38,14 +41,13 @@ func (a *API) AddRoutes(router *mux.Router) {
 func apiError(resp http.ResponseWriter, code int, message string) {
 	resp.WriteHeader(code)
 
-	//message = strings.ReplaceAll(message, "\"", "'")
 	errorData := &HTTPError{
 		Error: message,
 	}
 
 	errorResp, err := json.Marshal(errorData)
 	if err != nil {
-		fmt.Printf("### ERROR! httpError unable to marshal to JSON. Message was %s\n", message)
+		fmt.Printf("### ERROR! Unable to marshal to JSON. Message was %s\n", message)
 		return
 	}
 	_, _ = resp.Write(errorResp)

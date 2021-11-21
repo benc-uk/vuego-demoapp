@@ -118,7 +118,6 @@ export default {
       return
     }
 
-    //const LOGIN_SCOPES = ['user.read', 'openid', 'profile', 'email']
     await msalApp.loginPopup({
       scopes,
       prompt: 'select_account'

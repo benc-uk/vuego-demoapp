@@ -9,6 +9,15 @@ Typical uses would be deployment to Kubernetes, demos of Docker, CI/CD (build pi
 - The Frontend is a SPA written in Vue.js 3. It uses [Bootstrap 5](https://getbootstrap.com/) and [Font Awesome](https://fontawesome.com/). In addition [Gauge.js](http://bernii.github.io/gauge.js/) is used for the dials in the monitoring view
 - The Go component is a Go HTTP server based on the std http package and using [gopsutils](https://github.com/shirou/gopsutil) for monitoring metrics, and [Gorilla Mux](https://github.com/gorilla/mux) for routing
 
+Features:
+
+- System status / information view
+- Geolocated weather info (from OpenWeather API)
+- Realtime monitoring and metric view
+- Support for user authentication with Azure AD and MSAL
+- Prometheus metrics
+- API for generating CPU load, and allocating memory
+
 ![screenshot](https://user-images.githubusercontent.com/14982936/112730706-e77c1800-8f2a-11eb-880d-6f2298fd49b3.png)
 ![screenshot](https://user-images.githubusercontent.com/14982936/112730741-23af7880-8f2b-11eb-8b61-7b9c88766182.png)
 
@@ -18,7 +27,6 @@ Typical uses would be deployment to Kubernetes, demos of Docker, CI/CD (build pi
 
 Live instances:
 
-[![](https://img.shields.io/website?label=Hosted%3A%20Azure%20App%20Service&up_message=online&url=https%3A%2F%2Fvuego-demoapp.azurewebsites.net%2F)](https://vuego-demoapp.azurewebsites.net/)  
 [![](https://img.shields.io/website?label=Hosted%3A%20Kubernetes&up_message=online&url=https%3A%2F%2Fvuego-demoapp.kube.benco.io%2F)](https://vuego-demoapp.kube.benco.io/)
 
 ## Repo Structure
@@ -27,6 +35,7 @@ Live instances:
 /
 ├── frontend         Root of the Vue.js project
 │   └── src          Vue.js source code
+│   └── tests        Unit tests
 ├── deploy           Supporting files for Azure deployment etc
 │   └── kubernetes   Instructions for Kubernetes deployment with Helm
 ├── server           Go backend server
@@ -43,8 +52,17 @@ The Go server component performs two tasks
 - Serve the Vue.js app to the user. As this is a SPA, this is static content, i.e. HTML, JS & CSS files and any images. Note. The Vue.js app needs to be 'built' before it can be served, this bundles everything up correctly.
 - Provide a simple REST API for data to be displayed & rendered by the Vue.js app. This API is very simple currently has three routes:
   - `GET /api/info` - Returns system information and various properties as JSON
-  - `GET /api/metrics` - Returns monitoring metrics for CPU, memory, disk and network. This data comes from the _gopsutils_ library
+  - `GET /api/monitor` - Returns monitoring metrics for CPU, memory, disk and network. This data comes from the _gopsutils_ library
   - `GET /api/weather/{lat}/{long}` - Returns weather data from OpenWeather API
+  - `GET /api/gc` - Force the garbage collector to run
+  - `POST /api/alloc` - Allocate a lump of memory, payload `{"size":int}`
+  - `POST /api/cpu` - Force CPU load, payload `{"seconds":int}`
+
+In addition to these application specific endpoints, the following REST operations are supported:
+
+- `GET /api/status` - Status and information about the service
+- `GET /api/health` - A health endpoint, returns HTTP 200 when OK
+- `GET /api/metrics` - Returns low level system and HTTP performance metrics for scraping with Prometheus
 
 ## Building & Running Locally
 

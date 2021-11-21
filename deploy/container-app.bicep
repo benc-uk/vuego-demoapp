@@ -12,10 +12,10 @@ param location string = resourceGroup().location
 param image string = 'ghcr.io/benc-uk/vuego-demoapp:latest'
 
 @description('Optional feature: OpenWeather API Key')
-param weatherKey string = ''
+param weatherApiKey string = ''
 
 @description('Optional feature: Azure AD Client ID')
-param azureClientId string = ''
+param authClientId string = ''
 
 // ===== Variables ============================================================
 
@@ -69,11 +69,11 @@ resource containerApp 'Microsoft.Web/containerApps@2021-03-01' = {
           env: [
             {
               name: 'WEATHER_API_KEY'
-              value: weatherKey
+              value: weatherApiKey
             }
             {
-              name: 'AZURE_AD_CLIENT_ID'
-              value: azureClientId
+              name: 'AUTH_CLIENT_ID'
+              value: authClientId
             }
           ]
         }

@@ -8,8 +8,8 @@ import (
 	"strings"
 
 	"github.com/pbnjay/memory"
-	"github.com/shirou/gopsutil/cpu"
-	"github.com/shirou/gopsutil/host"
+	"github.com/shirou/gopsutil/v3/cpu"
+	"github.com/shirou/gopsutil/v3/host"
 )
 
 // SysInfo is generic holder for passsing data back
@@ -59,6 +59,10 @@ func (a *API) getInfo(resp http.ResponseWriter, req *http.Request) {
 	info.NetHost = req.Host
 	info.IsContainer = fileExists("/.dockerenv")
 	info.IsKubernetes = fileExists("/var/run/secrets/kubernetes.io")
+
+	if info.OS == " " {
+		info.OS = "Unable to get host OS details"
+	}
 
 	if info.IsKubernetes {
 		info.IsContainer = true

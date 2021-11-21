@@ -68,8 +68,8 @@ func main() {
 	router.PathPrefix("/").Handler(spa)
 
 	server := &http.Server{
-		ReadTimeout:       1 * time.Second,
-		WriteTimeout:      1 * time.Second,
+		ReadTimeout:       12 * time.Second,
+		WriteTimeout:      12 * time.Second,
 		IdleTimeout:       30 * time.Second,
 		ReadHeaderTimeout: 2 * time.Second,
 		Handler:           router,
