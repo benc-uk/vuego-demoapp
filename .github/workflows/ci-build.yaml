@@ -24,17 +24,8 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@v2
 
-      # - uses: actions/setup-node@v2
-      #   with:
-      #     node-version: '16'
-
       - name: 'Run linting'
         run: make lint
-
-      # - name: 'Install packages for tests'
-      #   run: |
-      #     npm install --silent
-      #   working-directory: frontend
 
       - name: 'Run tests with report'
         run: make test-report
@@ -76,13 +67,5 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: 'CD Release - AKS'
-          token: ${{ secrets.GH_PAT }}
-          inputs: '{ "IMAGE_TAG": "${{ env.IMAGE_TAG }}" }'
-
-      - name: 'Trigger Azure web app release pipeline'
-        if: github.ref == 'refs/heads/master'
-        uses: benc-uk/workflow-dispatch@v1
-        with:
-          workflow: 'CD Release - Webapp'
           token: ${{ secrets.GH_PAT }}
           inputs: '{ "IMAGE_TAG": "${{ env.IMAGE_TAG }}" }'

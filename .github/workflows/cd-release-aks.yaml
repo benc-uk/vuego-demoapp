@@ -13,11 +13,10 @@ on:
         required: true
         default: 'latest'
 
-# Note. Required secrets: CR_PAT & AZURE_CREDENTIALS
+# Note. Required secrets: CLUSTER_KUBECONFIG
 
 env:
-  AKS_NAME: benc
-  AKS_RES_GROUP: aks
+  CLUSTER_NAME: benc
   HELM_RELEASE: vuego
   HELM_NAMESPACE: demoapps
   INGRESS_DNS_HOST: vuego-demoapp.kube.benco.io
@@ -37,14 +36,12 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@v2
 
-      - name: 'Login to Azure'
-        uses: azure/login@v1.3.0
+      - name: 'Set kubeconfig'
+        uses: azure/k8s-set-context@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: 'Get AKS credentials'
-        run: |
-          az aks get-credentials -n $AKS_NAME -g $AKS_RES_GROUP
+          method: kubeconfig
+          kubeconfig: ${{ secrets.CLUSTER_KUBECONFIG }}
+          context: ${{ env.CLUSTER_NAME }}
 
       - name: 'Helm release'
         run: |
@@ -53,7 +50,7 @@ jobs:
           --install \
           --namespace ${{ env.HELM_NAMESPACE }} \
           --values deploy/kubernetes/aks-live.yaml \
-          --set image.tag=${{ github.event.inputs.IMAGE_TAG }},ingress.host=${{ env.INGRESS_DNS_HOST }},env.Weather__ApiKey=${{ secrets.WEATHER_API_KEY }},env.AzureAd__ClientSecret=${{ env.AD_CLIENT_ID }}
+          --set image.tag=${{ github.event.inputs.IMAGE_TAG }},ingress.host=${{ env.INGRESS_DNS_HOST }},env.AAD_REDIRECT_URL_BASE=https://${{ env.INGRESS_DNS_HOST }}
 
   #
   # Post deployment testing stage
